@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{bd8e3633-e483-46e2-8fa9-4922e0d70fc1}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="Source Files\ulib files">
+      <UniqueIdentifier>{29cae107-65d9-4977-bff1-bca41d7b82b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{74699162-b9e6-4b4b-95ed-45e9a17c06db}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{9d752acb-5c7f-4ae0-98cd-c1397ca45fac}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;manifest</Extensions>
+    </Filter>
+    <Filter Include="Source Files\ulib files\debug files">
+      <UniqueIdentifier>{ce0e8431-e7f2-4613-8666-2245127c0f1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ulib files\xml files">
+      <UniqueIdentifier>{9ddff608-d3a6-44db-873f-173f2f5d4d90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ulib files\win32 files">
+      <UniqueIdentifier>{930c91cf-0839-484e-afe8-d0efdd034501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ulib files\stream files">
+      <UniqueIdentifier>{f029344b-e881-49cf-a747-f1b4963cf59b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AppOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Debugger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugInfoXmlWriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MrCrash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveResultsDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectDebugTargetDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\win32\PrivilegeManager.cpp">
+      <Filter>Source Files\ulib files\win32 files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\win32\ProcessInfo.cpp">
+      <Filter>Source Files\ulib files\win32 files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\xml\XmlWriter.cpp">
+      <Filter>Source Files\ulib files\xml files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\CommandLineParser.cpp">
+      <Filter>Source Files\ulib files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\DateTime.cpp">
+      <Filter>Source Files\ulib files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\ProgramOptions.cpp">
+      <Filter>Source Files\ulib files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\ISO8601Parser.cpp">
+      <Filter>Source Files\ulib files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\win32\VersionInfoResource.cpp">
+      <Filter>Source Files\ulib files\win32 files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\debug\CallStack.cpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\debug\DebugLoop.cpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\debug\DecoratedName.cpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\debug\ProcessMemory.cpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\debug\SymbolManager.cpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\debug\Toolhelp.cpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\stream\FileStream.cpp">
+      <Filter>Source Files\ulib files\stream files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ulib\stream\TextStreamFilter.cpp">
+      <Filter>Source Files\ulib files\stream files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AppOptions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugeeInfo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugEvent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Debugger.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugInfoXmlWriter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExceptionInfo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleInfo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessInfo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveResultsDlg.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectDebugTargetDlg.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadInfo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\debug\CallStack.hpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\debug\DebugLoop.hpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\debug\DecoratedName.hpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\debug\ProcessMemory.hpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\debug\SymbolManager.hpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\debug\Toolhelp.hpp">
+      <Filter>Source Files\ulib files\debug files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\win32\PrivilegeManager.hpp">
+      <Filter>Source Files\ulib files\win32 files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\win32\ProcessInfo.hpp">
+      <Filter>Source Files\ulib files\win32 files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\win32\SystemTime.hpp">
+      <Filter>Source Files\ulib files\win32 files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\xml\Xml.hpp">
+      <Filter>Source Files\ulib files\xml files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\xml\XmlWriter.hpp">
+      <Filter>Source Files\ulib files\xml files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\CommandLineParser.hpp">
+      <Filter>Source Files\ulib files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\DateTime.hpp">
+      <Filter>Source Files\ulib files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\ProgramOptions.hpp">
+      <Filter>Source Files\ulib files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\Exception.hpp">
+      <Filter>Source Files\ulib files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\ISO8601Parser.hpp">
+      <Filter>Source Files\ulib files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\win32\ProcessHandle.hpp">
+      <Filter>Source Files\ulib files\win32 files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\win32\ErrorMessage.hpp">
+      <Filter>Source Files\ulib files\win32 files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\win32\VersionInfoResource.hpp">
+      <Filter>Source Files\ulib files\win32 files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\stream\FileStream.hpp">
+      <Filter>Source Files\ulib files\stream files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\stream\IStream.hpp">
+      <Filter>Source Files\ulib files\stream files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\stream\ITextStream.hpp">
+      <Filter>Source Files\ulib files\stream files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\stream\StreamException.hpp">
+      <Filter>Source Files\ulib files\stream files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\stream\TextFileStream.hpp">
+      <Filter>Source Files\ulib files\stream files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ulib\stream\TextStreamFilter.hpp">
+      <Filter>Source Files\ulib files\stream files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\MrCrash.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MrCrash.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

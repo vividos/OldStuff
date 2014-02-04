@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3736979A-27E0-4EB7-9D63-6FBA18377229}</ProjectGuid>
+    <RootNamespace>MrCrash</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Settings-Release.props" />
+    <Import Project="..\atl71-x86.props" />
+    <Import Project="..\wtl81.props" />
+    <Import Project="..\boost.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Settings-Debug.props" />
+    <Import Project="..\atl71-x86.props" />
+    <Import Project="..\wtl81.props" />
+    <Import Project="..\boost.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.61030.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+    </Midl>
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>comdlg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+    </Midl>
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>comdlg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ulib\CommandLineParser.cpp" />
+    <ClCompile Include="..\ulib\DateTime.cpp" />
+    <ClCompile Include="..\ulib\debug\CallStack.cpp" />
+    <ClCompile Include="..\ulib\debug\DebugLoop.cpp" />
+    <ClCompile Include="..\ulib\debug\DecoratedName.cpp" />
+    <ClCompile Include="..\ulib\debug\ProcessMemory.cpp" />
+    <ClCompile Include="..\ulib\debug\SymbolManager.cpp" />
+    <ClCompile Include="..\ulib\debug\Toolhelp.cpp" />
+    <ClCompile Include="..\ulib\ISO8601Parser.cpp" />
+    <ClCompile Include="..\ulib\ProgramOptions.cpp" />
+    <ClCompile Include="..\ulib\stream\FileStream.cpp" />
+    <ClCompile Include="..\ulib\stream\TextStreamFilter.cpp" />
+    <ClCompile Include="..\ulib\win32\VersionInfoResource.cpp" />
+    <ClCompile Include="AppOptions.cpp" />
+    <ClCompile Include="Debugger.cpp" />
+    <ClCompile Include="DebugInfoXmlWriter.cpp" />
+    <ClCompile Include="MrCrash.cpp" />
+    <ClCompile Include="SaveResultsDlg.cpp" />
+    <ClCompile Include="SelectDebugTargetDlg.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ulib\win32\PrivilegeManager.cpp" />
+    <ClCompile Include="..\ulib\win32\ProcessInfo.cpp" />
+    <ClCompile Include="..\ulib\xml\XmlWriter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ulib\CommandLineParser.hpp" />
+    <ClInclude Include="..\ulib\DateTime.hpp" />
+    <ClInclude Include="..\ulib\debug\CallStack.hpp" />
+    <ClInclude Include="..\ulib\debug\DebugLoop.hpp" />
+    <ClInclude Include="..\ulib\debug\DecoratedName.hpp" />
+    <ClInclude Include="..\ulib\debug\ProcessMemory.hpp" />
+    <ClInclude Include="..\ulib\debug\SymbolManager.hpp" />
+    <ClInclude Include="..\ulib\debug\Toolhelp.hpp" />
+    <ClInclude Include="..\ulib\Exception.hpp" />
+    <ClInclude Include="..\ulib\ISO8601Parser.hpp" />
+    <ClInclude Include="..\ulib\ProgramOptions.hpp" />
+    <ClInclude Include="..\ulib\stream\FileStream.hpp" />
+    <ClInclude Include="..\ulib\stream\IStream.hpp" />
+    <ClInclude Include="..\ulib\stream\ITextStream.hpp" />
+    <ClInclude Include="..\ulib\stream\StreamException.hpp" />
+    <ClInclude Include="..\ulib\stream\TextFileStream.hpp" />
+    <ClInclude Include="..\ulib\stream\TextStreamFilter.hpp" />
+    <ClInclude Include="..\ulib\win32\ErrorMessage.hpp" />
+    <ClInclude Include="..\ulib\win32\PrivilegeManager.hpp" />
+    <ClInclude Include="..\ulib\win32\ProcessHandle.hpp" />
+    <ClInclude Include="..\ulib\win32\ProcessInfo.hpp" />
+    <ClInclude Include="..\ulib\win32\SystemTime.hpp" />
+    <ClInclude Include="..\ulib\win32\VersionInfoResource.hpp" />
+    <ClInclude Include="..\ulib\xml\Xml.hpp" />
+    <ClInclude Include="..\ulib\xml\XmlWriter.hpp" />
+    <ClInclude Include="AppOptions.hpp" />
+    <ClInclude Include="DebugeeInfo.hpp" />
+    <ClInclude Include="DebugEvent.hpp" />
+    <ClInclude Include="Debugger.hpp" />
+    <ClInclude Include="DebugInfoXmlWriter.hpp" />
+    <ClInclude Include="ExceptionInfo.hpp" />
+    <ClInclude Include="ModuleInfo.hpp" />
+    <ClInclude Include="ProcessInfo.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="SaveResultsDlg.hpp" />
+    <ClInclude Include="SelectDebugTargetDlg.hpp" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ThreadInfo.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\MrCrash.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MrCrash.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
