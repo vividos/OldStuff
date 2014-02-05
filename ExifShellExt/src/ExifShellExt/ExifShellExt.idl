@@ -1,0 +1,42 @@
+//
+// ExifShellExt - Exif data shell extension
+// Copyright (C) 2008 Michael Fink
+//
+/// \file ExifShellExt.idl IDL source for ExifShellExt.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ExifShellExt.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(E340E674-2F03-4aee-B166-928BD54ACE74),
+		dual,
+		helpstring("IExifShellExtension Interface"),
+		pointer_default(unique)
+	]
+	interface IExifShellExtension : IDispatch
+	{
+	};
+
+[
+	uuid(7FADCD65-AB37-47cf-8699-1C90B5C8E6C2),
+	version(1.0),
+	helpstring("ExifShellExt 1.0 Type Library")
+]
+library ExifShellExtLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(A4220261-FF2C-4a1e-A7BB-1ED6E90BFA52),
+		helpstring("ExifShellExtension Class")
+	]
+	coclass ExifShellExtension
+	{
+		[default] interface IExifShellExtension;
+	};
+};

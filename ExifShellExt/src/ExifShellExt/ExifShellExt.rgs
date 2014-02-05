@@ -1,0 +1,33 @@
+HKCR
+{
+    NoRemove CLSID
+    {
+        ForceRemove {A4220261-FF2C-4a1e-A7BB-1ED6E90BFA52} = s 'ExifShellExt Class'
+        {
+            InprocServer32 = s '%MODULE%'
+            {
+                val ThreadingModel = s 'Apartment'
+            }
+        }
+    }
+    NoRemove *
+    {
+        NoRemove ShellEx
+        {
+            NoRemove ContextMenuHandlers
+            {
+                ForceRemove ExifShellExt = s '{A4220261-FF2C-4a1e-A7BB-1ED6E90BFA52}'
+            }
+        }
+    }
+    NoRemove Folder
+    {
+        NoRemove ShellEx
+        {
+            NoRemove ContextMenuHandlers
+            {
+                ForceRemove ExifShellExt = s '{A4220261-FF2C-4a1e-A7BB-1ED6E90BFA52}'
+            }
+        }
+    }
+}
