@@ -595,7 +595,7 @@ boolean dojump(char *s) /* Jump to planet name s */
   planetnum dest=matchsys(s);
   if(dest==currentplanet) { printf("\nBad jump"); return false; }
   d=distance(galaxy[dest],galaxy[currentplanet]);
-  if (d>fuel) { printf("\nJump to far"); return false; }
+  if (d>fuel) { printf("\nJump too far"); return false; }
   fuel-=d;
   gamejump(dest);
   prisys(galaxy[currentplanet],false);
@@ -873,7 +873,7 @@ int gen_rnd_number (void)
 
 void goat_soup(const char *source,plansys * psy)
 {	for(;;)
-	{	int c=*(source++);
+	{	uint8 c=*(source++);
 		if(c=='\0')	break;
 		if(c<0x80) printf("%c",c);
 		else
