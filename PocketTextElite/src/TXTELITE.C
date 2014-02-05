@@ -1,7 +1,10 @@
-/* txtelite.c  1.4 */
+/* txtelite.c  1.5 */
 /* Textual version of Elite trading (C implementation) */
 /* Converted by Ian Bell from 6502 Elite sources.
-   Original 6502 Elite by Ian Bell & David Braben. */
+   Original 6502 Elite by Ian Bell & David Braben.
+   Edited by Richard Carlsson to compile cleanly under gcc
+   and to fix a bug in the goat soup algorithm.
+ */
 
 
 /* ----------------------------------------------------------------------
@@ -80,6 +83,7 @@ typedef struct
    char name[12];
 } plansys ;
 
+void goat_soup(const char *source, plansys * psy);
 #define galsize (256)
 #define AlienItems (16)
 #define lasttrade AlienItems
@@ -137,9 +141,10 @@ const uint16 base2=0xB753;  /* Base seed for galaxy 1 */
 //							 "ERATENBERALAVETI"
 //							 "EDORQUANTEISRION";
 
-char pairs0[]="ABOUSEITILETSTONLONUTHNO";
-/* must continue into .. */
-char pairs[] = "..LEXEGEZACEBISO"
+/* fixed (R.C): can't assume that two separate array declarations are
+   adjacently located in memory - unified in a sigle array */
+char pairs[] = "ABOUSEITILETSTONLONUTHNO"
+               "..LEXEGEZACEBISO"
                "USESARMAINDIREA."
                "ERATENBERALAVETI"
                "EDORQUANTEISRION"; /* Dots should be nullprint characters */
@@ -339,7 +344,7 @@ void spacesplit(char *s,char *t)
 /**-Functions for stock market **/
 
 uint gamebuy(uint i, uint a)
- /* Try to buy ammount a  of good i  Return ammount bought */
+ /* Try to buy amount a of good i  Return amount bought */
  /* Cannot buy more than is availble, can afford, or will fit in hold */
 {   uint t;
     if(cash<0) t=0;
@@ -418,6 +423,7 @@ plansys makesystem(seedtype *s)
 {	plansys thissys;
   uint pair1,pair2,pair3,pair4;
   uint16 longnameflag=((*s).w0)&64;
+  char *pairs1 = &pairs[24];  /* start of pairs used by this routine */
  
   thissys.x=(((*s).w1)>>8);
   thissys.y=(((*s).w0)>>8);
@@ -453,17 +459,17 @@ plansys makesystem(seedtype *s)
   pair4=2*((((*s).w2)>>8)&31);	tweakseed(s);
    /* Always four iterations of random number */
 
-  (thissys.name)[0]=pairs[pair1];
-  (thissys.name)[1]=pairs[pair1+1];
-  (thissys.name)[2]=pairs[pair2];
-  (thissys.name)[3]=pairs[pair2+1];
-  (thissys.name)[4]=pairs[pair3];
-  (thissys.name)[5]=pairs[pair3+1];
+  (thissys.name)[0]=pairs1[pair1];
+  (thissys.name)[1]=pairs1[pair1+1];
+  (thissys.name)[2]=pairs1[pair2];
+  (thissys.name)[3]=pairs1[pair2+1];
+  (thissys.name)[4]=pairs1[pair3];
+  (thissys.name)[5]=pairs1[pair3+1];
 
   if(longnameflag) /* bit 6 of ORIGINAL w0 flags a four-pair name */
   {
-  (thissys.name)[6]=pairs[pair4];
-  (thissys.name)[7]=pairs[pair4+1];
+  (thissys.name)[6]=pairs1[pair4];
+  (thissys.name)[7]=pairs1[pair4+1];
   (thissys.name)[8]=0;
   }
   else (thissys.name)[6]=0;
@@ -559,7 +565,9 @@ void prisys(plansys plsy,boolean compressed)
   	printf("\nTech Level: %2i",(plsy.techlev)+1);
   	printf("\nTurnover: %u",(plsy.productivity));
   	printf("\nRadius: %u",plsy.radius);
-  	printf("\nPopulation: %u Billion",(plsy.population)>>3);
+        /* fixed (R.C.): divide population by 10, not by 8, and format as
+           float with 1 decimal */
+  	printf("\nPopulation: %.1f Billion",(plsy.population) / 10.0);
 	
 		rnd_seed = plsy.goatsoupseed;
 		printf("\n");goat_soup("\x8F is \x97.",&plsy);
@@ -638,7 +646,7 @@ boolean dohold(char *s)
   return true;
 }
 
-boolean dosell(char *s) /* Sell ammount S(2) of good S(1) */
+boolean dosell(char *s) /* Sell amount S(2) of good S(1) */
 {	uint i,a,t;
   char s2[maxlen];
   spacesplit(s,s2);
@@ -663,7 +671,7 @@ boolean dosell(char *s) /* Sell ammount S(2) of good S(1) */
 }
 
    
-boolean dobuy(char *s) /* Buy ammount S(2) of good S(1) */
+boolean dobuy(char *s) /* Buy amount S(2) of good S(1) */
 {	uint i,a,t;
   char s2[maxlen];
   spacesplit(s,s2);
@@ -696,7 +704,7 @@ uint gamefuel(uint f) /* Attempt to buy f tonnes of fuel */
 
 
 boolean dofuel(char *s)
-/* Buy ammount S of fuel */
+/* Buy amount S of fuel */
 {	uint f=gamefuel((uint)floor(10*atof(s)));
   if(f==0) { printf("\nCan't buy any fuel");}
   printf("\nBuying %.1fLY fuel",(float)f/10);
@@ -725,9 +733,7 @@ boolean parser(char *s) /* Obey command s */
    spacesplit(s,c);
    i=stringmatch(c,commands,nocomms);
    if(i)return (*comfuncs[i-1])(s) ;
-   printf("\n Bad command (");
-   printf(c);
-   printf(")");
+   printf("\n Bad command (%s)",c);
    return false;
 }
 
@@ -742,9 +748,9 @@ boolean dohelp(char *s)
 {
    (void)(&s);
    printf("\nCommands are:");
-   printf("\nBuy   tradegood ammount");
-   printf("\nSell  tradegood ammount");
-   printf("\nFuel  ammount    (buy ammount LY of fuel)");
+   printf("\nBuy   tradegood amount");
+   printf("\nSell  tradegood amount");
+   printf("\nFuel  amount     (buy amount LY of fuel)");
    printf("\nJump  planetname (limited by fuel)");
    printf("\nSneak planetname (any distance - no fuel cost)");
    printf("\nGalhyp           (jumps to next galaxy)");
@@ -759,14 +765,10 @@ boolean dohelp(char *s)
    printf("\n\nAbbreviations allowed eg. b fo 5 = Buy Food 5, m= Mkt");
 return true;
 }
-			 
-/**+main **/
-int main()
-{	 uint i;
-   char getcommand[maxlen];
-   nativerand=1;
-   printf("\nWelcome to Text Elite 1.4.\n");
 
+void init()
+{	 uint i;
+   nativerand=1;
    for(i=0;i<=lasttrade;i++) strcpy(tradnames[i],commodities[i].name);
 
    mysrand(12345);/* Ensure repeatability */
@@ -777,11 +779,20 @@ int main()
    localmarket = genmarket(0x00,galaxy[numforLave]);/* Since want seed=0 */
 
    fuel=maxfuel;
+   holdspace = 20;
+   cash = 1000;
+}
+			 
+/**+main **/
+int main()
+{
+   char getcommand[maxlen];
+   printf("\nWelcome to Text Elite 1.4.\n");
    
 #define PARSER(S) { char buf[0x10];strcpy(buf,S);parser(buf);}   
    
-   PARSER("hold 20");         /* Small cargo bay */
-   PARSER("cash +100");       /* 100 CR */
+//   PARSER("hold 20");         /* Small cargo bay */
+//   PARSER("cash +100");       /* 100 CR */
    PARSER("help");
 
 #undef PARSER
@@ -902,8 +913,19 @@ void goat_soup(const char *source,plansys * psy)
 					int len = gen_rnd_number() & 3;
 					for(i=0;i<=len;i++)
 					{	int x = gen_rnd_number() & 0x3e;
-						if(pairs0[x]!='.') printf("%c",pairs0[x]);
-						if(i && (pairs0[x+1]!='.')) printf("%c",pairs0[x+1]);
+						/* fixed (R.C.): transform chars to lowercase unless
+						   first char of first pair, or second char of first
+						   pair when first char was not printed */
+						char p1 = pairs[x];
+						char p2 = pairs[x+1];
+						if(p1!='.')
+						{	if (i) p1 = tolower(p1);
+							printf("%c",p1);
+						}
+						if(p2!='.')
+						  {	if (i || (p1!='.')) p2 = tolower(p2);
+							printf("%c",p2);
+						}
 					}
 				}	break;
 				default: printf("<bad char in data [%X]>",c); return;
