@@ -8,10 +8,14 @@
 
 #ifndef APSTUDIO_READONLY_SYMBOLS
 
-#ifdef UNDER_CE
-#include <../ARMv4/stdio.h>
+#ifdef _WIN32_WCE
+   #if _WIN32_WCE < 0x500
+   #include <../ARMv4/stdio.h>
+   #elif _WIN32_WCE >= 0x500
+   #include <../ARMV4I/stdio.h>
+   #endif
 #else
-#include <stdio.h>
+   #include <stdio.h>
 #endif
 
 #define printf textelite_printf
