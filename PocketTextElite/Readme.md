@@ -12,11 +12,12 @@ Here's a link to Ian Bell's Text Elite page: [http://www.iancgbell.clara.net/eli
 
 You can download PocketTextElite here:
 
-- Windows Mobile 5.x/6.x version: TODO (x kb)
-- Windows Desktop version (WinXP and above, 32-bit): TODO (x kb)  
+- [PocketTextElite-1.0.0.zip](https://github.com/vividos/OldStuff/releases/download/pockettextelite-1.0.0/PocketTextElite-1.0.0.zip): Windows Mobile (5.x/6.x) / Windows Desktop version (WinXP and above, 32-bit) (181 kb)  
 
-If you use the Windows Desktop application, you need to install the Visual C++ 2012 Redistributable:
+If you use the Windows Desktop version, you need to install the Visual C++ 2012 Redistributable:
 [http://www.microsoft.com/en-us/download/details.aspx?id=30679](http://www.microsoft.com/en-us/download/details.aspx?id=30679)
+
+Visit [https://github.com/vividos/OldStuff/releases]() for releases of all OldStuff projects.
 
 ## Screenshots ##
 

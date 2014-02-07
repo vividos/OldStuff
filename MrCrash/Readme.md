@@ -9,11 +9,10 @@ Error reporting information are collected then, and these infos can help develop
 ## Download ##
 
 You can download MrCrash here:
-TODO
 
-Additionally you need to install the Visual C++ 2012 Redistributable:
-[http://www.microsoft.com/en-us/download/details.aspx?id=30679](http://www.microsoft.com/en-us/download/details.aspx?id=30679)
+- [MrCrash-1.0.0.zip](https://github.com/vividos/OldStuff/releases/download/mrcrash-1.0.0/MrCrash-1.0.0.zip): MrCrash 32-bit + CrashTestDummy (613 kb)
 
+Visit [https://github.com/vividos/OldStuff/releases]() for releases of all OldStuff projects.
 
 ## Technical Background ##
 

@@ -9,7 +9,8 @@ This comes in handy if you're editing a photo image and the software discards or
 ## Download ##
 
 You can download ExifShellExt here:
-- 32-bit version: TODO (x kb)
+
+- [ExifShellExt-1.0.0.zip](https://github.com/vividos/OldStuff/releases/download/exifshellext-1.0.0/ExifShellExt-1.0.0.zip): Shell Extension 32-bit (54 kb)
 
 Store the ExifShellExt.dll file somewhere and register the file using the following command:
 
@@ -17,6 +18,8 @@ Store the ExifShellExt.dll file somewhere and register the file using the follow
 
 You need to install the Visual C++ 2012 Redistributable before using the shell extension:
 [http://www.microsoft.com/en-us/download/details.aspx?id=30679](http://www.microsoft.com/en-us/download/details.aspx?id=30679)
+
+Visit [https://github.com/vividos/OldStuff/releases]() for releases of all OldStuff projects.
 
 ## Technical Background ##
 
