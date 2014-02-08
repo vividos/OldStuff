@@ -14,6 +14,16 @@ You can download MrCrash here:
 
 Visit [https://github.com/vividos/OldStuff/releases]() for releases of all OldStuff projects.
 
+## Screenshots ##
+
+When Mr. Crash is started without an applicaton to monitor, the "Select debug target" dialog is shown:
+
+![Select debug target](images/select-debug-target.png)
+
+When the application to monitor has crashed, the following "Save results" dialog is shown:
+
+![Save results](images/save-results.png)
+
 ## Technical Background ##
 
 MrCrash acts as application debugger and records all debug events from the application. In case of second-chance exceptions (first-chance exceptions are normally handled by the application itself), app collected infos so far are written to an xml file. Additionally a minidump crash dump file (extension .mdmp) is created.
