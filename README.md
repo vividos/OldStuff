@@ -8,7 +8,7 @@ MrCrash is a tool to analyse applications that may crash.
 
 ## [Pocket Text Elite](PocketTextElite/Readme.md "Pocket Text Elite") ##
 
-PocketTextElite is a port of Ian Bell's TXTELITE.C sourcecode that simulates the trading part of the original Elite game.
+PocketTextElite is a port of Ian Bell's TXTELITE.C sourcecode to PocketPC and Windows Mobile that simulates the trading part of the original Elite game.
 
 ## [Exif Shell Extension](ExifShellExt/README.md "Exif Shell Extension") ##
 
