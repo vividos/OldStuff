@@ -404,11 +404,9 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
       if (bMCM)
       {
          if (bECM)
-#ifdef _WIN32_WCE
-            ;
-#else
-            _asm nop;
-#endif
+         {
+            __nop();
+         }
          else
          {
             abColors[3] = m_vecColorRam[wColorMem + w] & 0x07;
