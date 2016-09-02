@@ -2,6 +2,10 @@
 
 Old projects and code, released under the [BSD License](LICENSE.md "BSD License").
 
+## [C64 projects](C64/Readme.md "C64 projects") ##
+
+Several projects around emulating a C64 machine and creating a C64-style intro.
+
 ## [Mr. Crash](MrCrash/Readme.md "Mr. Crash") ##
 
 MrCrash is a tool to analyse applications that may crash.
