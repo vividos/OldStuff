@@ -385,7 +385,7 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
    // check if extended color mode, bit 6
    bool bECM = (m_abRegister[vicRegD011] & (1 << 6)) != 0;
 
-   BYTE abColors[4];
+   BYTE abColors[4] = {0};
 
    if (bMCM)
    {
