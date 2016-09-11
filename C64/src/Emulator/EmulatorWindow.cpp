@@ -13,6 +13,7 @@
 #include "PalettedSurface.hpp"
 #include "TapeFile.hpp"
 #include "PC64File.hpp"
+#include "EliteProcessorCallback.hpp"
 
 /// C64 color map
 std::array<Uint8, 16 * 3> colormap =
@@ -85,6 +86,11 @@ void EmulatorWindow::Load(LPCTSTR filename)
             _ftprintf(stderr, _T("invalid .p00 file: %s"), filename);
          }
       }
+
+   if (lowerFilename.Find(_T("elite")) != -1)
+   {
+      m_processorCallback.reset(new EliteProcessorCallback(m_emulator));
+   }
 }
 
 void EmulatorWindow::Run()
@@ -100,7 +106,13 @@ void EmulatorWindow::Run()
 
    m_emulator.GetProcessor().SetProgramCounter(startProgramCounter);
 
+   if (m_processorCallback != nullptr)
+      m_emulator.GetProcessor().AddProcessorCallback(m_processorCallback.get());
+
    MainGameLoop::Run();
+
+   if (m_processorCallback != nullptr)
+      m_emulator.GetProcessor().RemoveProcessorCallback(m_processorCallback.get());
 }
 
 WORD EmulatorWindow::FindBasicSysCommand(WORD startAddress)

@@ -96,6 +96,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EliteProcessorCallback.hpp" />
     <ClInclude Include="EmulatorWindow.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

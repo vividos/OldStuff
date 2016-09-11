@@ -58,6 +58,9 @@ private:
    /// C64 emulator machine
    C64::Machine& m_emulator;
 
+   /// processor callback; may be null
+   std::shared_ptr<C64::IProcessorCallback> m_processorCallback;
+
    /// render window
    std::unique_ptr<RenderWindow2D> m_window;
 
