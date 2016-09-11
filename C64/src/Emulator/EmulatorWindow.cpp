@@ -59,7 +59,7 @@ EmulatorWindow::~EmulatorWindow()
 
 void EmulatorWindow::Load(LPCTSTR filename)
 {
-   _ftprintf(stdout, _T("Loading %s..."), filename);
+   _ftprintf(stdout, _T("Loading %s...\n"), filename);
 
    CString lowerFilename(filename);
    lowerFilename.MakeLower();
@@ -83,7 +83,7 @@ void EmulatorWindow::Load(LPCTSTR filename)
          }
          else
          {
-            _ftprintf(stderr, _T("invalid .p00 file: %s"), filename);
+            _ftprintf(stderr, _T("invalid .p00 file: %s\n"), filename);
          }
       }
 
@@ -95,12 +95,11 @@ void EmulatorWindow::Load(LPCTSTR filename)
 
 void EmulatorWindow::Run()
 {
-   WORD startProgramCounter =
-      FindBasicSysCommand(0x0801);
+   WORD startProgramCounter = FindBasicSysCommand(0x0801);
 
    if (startProgramCounter == 0)
    {
-      _ftprintf(stderr, _T("couldn't find basic SYS command, searching from 0x0801"));
+      _ftprintf(stderr, _T("couldn't find basic SYS command, searching from 0x0801\n"));
       return;
    }
 
@@ -139,7 +138,7 @@ WORD EmulatorWindow::FindBasicSysCommand(WORD startAddress)
          }
 
          WORD sysAddress = static_cast<WORD>(atoi(address.c_str()));
-         _ftprintf(stdout, _T("found command: %u SYS %u"), lineNumber, sysAddress);
+         _ftprintf(stdout, _T("found command: %u SYS %u\n"), lineNumber, sysAddress);
 
          return sysAddress;
       }
