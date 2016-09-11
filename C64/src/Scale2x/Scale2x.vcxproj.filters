@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="scale2x Source Files">
+      <UniqueIdentifier>{cfed9835-2f30-45d4-82bb-52a0694f1f5d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="scale2x-3.2\pixel.h">
+      <Filter>scale2x Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scale2x-3.2\portable.h">
+      <Filter>scale2x Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scale2x-3.2\scale2x.h">
+      <Filter>scale2x Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scale2x-3.2\scale3x.h">
+      <Filter>scale2x Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scale2x-3.2\scalebit.h">
+      <Filter>scale2x Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="scale2x-3.2\pixel.c">
+      <Filter>scale2x Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scale2x-3.2\scale2x.c">
+      <Filter>scale2x Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scale2x-3.2\scale3x.c">
+      <Filter>scale2x Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scale2x-3.2\scalebit.c">
+      <Filter>scale2x Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scale.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
