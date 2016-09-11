@@ -19,8 +19,8 @@ using C64::RegisterID;
 static BYTE g_abOpcodeCycles[256] =
 {
    7, 6, 0, 8, 3, 3, 5, 5, 3, 2, 2, 2, 4, 4, 6, 6,
-   2, 5, 0, 8, 4, 4, 6, 6, 2, 4, 2, 7, 4, 4, 7, 7, 
-   6, 6, 0, 8, 3, 3, 5, 5, 4, 2, 2, 2, 4, 4, 6, 6, 
+   2, 5, 0, 8, 4, 4, 6, 6, 2, 4, 2, 7, 4, 4, 7, 7,
+   6, 6, 0, 8, 3, 3, 5, 5, 4, 2, 2, 2, 4, 4, 6, 6,
    2, 5, 0, 8, 4, 4, 6, 6, 2, 4, 2, 7, 4, 4, 7, 7,
    6, 6, 0, 8, 3, 3, 5, 5, 3, 2, 2, 2, 3, 4, 6, 6,
    2, 5, 0, 8, 4, 4, 6, 6, 2, 4, 2, 7, 4, 4, 7, 7,
@@ -39,15 +39,15 @@ static BYTE g_abOpcodeCycles[256] =
 /// \brief constant with status register bits that are always set
 /// note: bit 5 (unused) and bit 4 (break) of the status register are always set
 const BYTE c_bStatusMaskAlwaysSet =
-   (1 << static_cast<BYTE>(C64::flagUnused)) |
-   (1 << static_cast<BYTE>(C64::flagBreak));
+(1 << static_cast<BYTE>(C64::flagUnused)) |
+(1 << static_cast<BYTE>(C64::flagBreak));
 
 Processor6510::Processor6510(C64::MemoryManager& memoryManager) throw()
-:m_memoryManager(memoryManager),
- m_wProgramCounter(0),
- m_uiProcessedOpcodes(0),
- m_uiElapsedCycles(0),
- m_debugOutput(false)
+   :m_memoryManager(memoryManager),
+   m_wProgramCounter(0),
+   m_uiProcessedOpcodes(0),
+   m_uiElapsedCycles(0),
+   m_debugOutput(false)
 {
    memset(m_abRegister, 0, sizeof(m_abRegister));
 
@@ -117,7 +117,7 @@ void Processor6510::Step()
    {
       std::set<IProcessorCallback*>::const_iterator iter, stop;
       iter = m_setCallbacks.begin(); stop = m_setCallbacks.end();
-      for(;iter != stop; iter++)
+      for (; iter != stop; iter++)
          (*iter)->OnStep();
    }
 
@@ -131,7 +131,7 @@ void Processor6510::Step()
 
    bool bProgramCounterChanged = false;
 
-   switch(bOpcode)
+   switch (bOpcode)
    {
       // load opcodes
    case opLDA_imm: LoadRegister(regA, addrImmediate); break;
@@ -236,7 +236,7 @@ void Processor6510::Step()
    case opORA_aby: LogicalOperation(logicalOperationOra, addrAbsoluteIndexedY); break;
 
    case opAND_imm: LogicalOperation(logicalOperationAnd, addrImmediate); break;
-   case opAND_zp : LogicalOperation(logicalOperationAnd, addrZeropage); break;
+   case opAND_zp: LogicalOperation(logicalOperationAnd, addrZeropage); break;
    case opAND_zpx: LogicalOperation(logicalOperationAnd, addrZeropageIndexedX); break;
    case opAND_izx: LogicalOperation(logicalOperationAnd, addrIndirectZeropageIndexedX); break;
    case opAND_izy: LogicalOperation(logicalOperationAnd, addrIndirectZeropageIndexedY); break;
@@ -245,7 +245,7 @@ void Processor6510::Step()
    case opAND_aby: LogicalOperation(logicalOperationAnd, addrAbsoluteIndexedY); break;
 
    case opEOR_imm: LogicalOperation(logicalOperationEor, addrImmediate); break;
-   case opEOR_zp : LogicalOperation(logicalOperationEor, addrZeropage); break;
+   case opEOR_zp: LogicalOperation(logicalOperationEor, addrZeropage); break;
    case opEOR_zpx: LogicalOperation(logicalOperationEor, addrZeropageIndexedX); break;
    case opEOR_izx: LogicalOperation(logicalOperationEor, addrIndirectZeropageIndexedX); break;
    case opEOR_izy: LogicalOperation(logicalOperationEor, addrIndirectZeropageIndexedY); break;
@@ -254,7 +254,7 @@ void Processor6510::Step()
    case opEOR_aby: LogicalOperation(logicalOperationEor, addrAbsoluteIndexedY); break;
 
    case opADC_imm: ArithmeticOperation(arithmeticOperationAdc, addrImmediate); break;
-   case opADC_zp : ArithmeticOperation(arithmeticOperationAdc, addrZeropage); break;
+   case opADC_zp: ArithmeticOperation(arithmeticOperationAdc, addrZeropage); break;
    case opADC_zpx: ArithmeticOperation(arithmeticOperationAdc, addrZeropageIndexedX); break;
    case opADC_izx: ArithmeticOperation(arithmeticOperationAdc, addrIndirectZeropageIndexedX); break;
    case opADC_izy: ArithmeticOperation(arithmeticOperationAdc, addrIndirectZeropageIndexedY); break;
@@ -263,7 +263,7 @@ void Processor6510::Step()
    case opADC_aby: ArithmeticOperation(arithmeticOperationAdc, addrAbsoluteIndexedY); break;
 
    case opSBC_imm: ArithmeticOperation(arithmeticOperationSbc, addrImmediate); break;
-   case opSBC_zp : ArithmeticOperation(arithmeticOperationSbc, addrZeropage); break;
+   case opSBC_zp: ArithmeticOperation(arithmeticOperationSbc, addrZeropage); break;
    case opSBC_zpx: ArithmeticOperation(arithmeticOperationSbc, addrZeropageIndexedX); break;
    case opSBC_izx: ArithmeticOperation(arithmeticOperationSbc, addrIndirectZeropageIndexedX); break;
    case opSBC_izy: ArithmeticOperation(arithmeticOperationSbc, addrIndirectZeropageIndexedY); break;
@@ -273,25 +273,25 @@ void Processor6510::Step()
 
       // shift / roll opcodes
    case opASL_imp: ShiftOperation(shiftOperationAsl, addrImplicit); break;
-   case opASL_zp : ShiftOperation(shiftOperationAsl, addrZeropage); break;
+   case opASL_zp: ShiftOperation(shiftOperationAsl, addrZeropage); break;
    case opASL_zpx: ShiftOperation(shiftOperationAsl, addrZeropageIndexedX); break;
    case opASL_abs: ShiftOperation(shiftOperationAsl, addrAbsolute); break;
    case opASL_abx: ShiftOperation(shiftOperationAsl, addrAbsoluteIndexedX); break;
 
    case opROL_imp: ShiftOperation(shiftOperationRol, addrImplicit); break;
-   case opROL_zp : ShiftOperation(shiftOperationRol, addrZeropage); break;
+   case opROL_zp: ShiftOperation(shiftOperationRol, addrZeropage); break;
    case opROL_zpx: ShiftOperation(shiftOperationRol, addrZeropageIndexedX); break;
    case opROL_abs: ShiftOperation(shiftOperationRol, addrAbsolute); break;
    case opROL_abx: ShiftOperation(shiftOperationRol, addrAbsoluteIndexedX); break;
 
    case opLSR_imp: ShiftOperation(shiftOperationLsr, addrImplicit); break;
-   case opLSR_zp : ShiftOperation(shiftOperationLsr, addrZeropage); break;
+   case opLSR_zp: ShiftOperation(shiftOperationLsr, addrZeropage); break;
    case opLSR_zpx: ShiftOperation(shiftOperationLsr, addrZeropageIndexedX); break;
    case opLSR_abs: ShiftOperation(shiftOperationLsr, addrAbsolute); break;
    case opLSR_abx: ShiftOperation(shiftOperationLsr, addrAbsoluteIndexedX); break;
 
    case opROR_imp: ShiftOperation(shiftOperationRor, addrImplicit); break;
-   case opROR_zp : ShiftOperation(shiftOperationRor, addrZeropage); break;
+   case opROR_zp: ShiftOperation(shiftOperationRor, addrZeropage); break;
    case opROR_zpx: ShiftOperation(shiftOperationRor, addrZeropageIndexedX); break;
    case opROR_abs: ShiftOperation(shiftOperationRor, addrAbsolute); break;
    case opROR_abx: ShiftOperation(shiftOperationRor, addrAbsoluteIndexedX); break;
@@ -443,7 +443,7 @@ void Processor6510::Step()
    {
       std::set<IProcessorCallback*>::const_iterator iter, stop;
       iter = m_setCallbacks.begin(); stop = m_setCallbacks.end();
-      for(;iter != stop; iter++)
+      for (; iter != stop; iter++)
          (*iter)->OnProgramCounterChange();
    }
 }
@@ -585,7 +585,7 @@ void Processor6510::Push(BYTE bData)
 {
    BYTE bSP = GetRegister(regSP);
    Store(0x0100 + bSP, bData);
-   SetRegister(regSP, (bSP-1) & 0xff);
+   SetRegister(regSP, (bSP - 1) & 0xff);
 }
 
 BYTE Processor6510::Pop()
@@ -636,8 +636,8 @@ void Processor6510::LoadRegister(RegisterID enRegisterID, AddressingMode enAddre
    {
       // add extra cycle when page boundary is crossed
       if ((enAddressingMode == addrIndirectZeropageIndexedY && enRegisterID == regA) ||
-          (enAddressingMode == addrAbsoluteIndexedX && (enRegisterID == regA || enRegisterID == regY)) ||
-          (enAddressingMode == addrAbsoluteIndexedY && (enRegisterID == regA || enRegisterID == regX)))
+         (enAddressingMode == addrAbsoluteIndexedX && (enRegisterID == regA || enRegisterID == regY)) ||
+         (enAddressingMode == addrAbsoluteIndexedY && (enRegisterID == regA || enRegisterID == regX)))
       {
          BYTE bReg = GetRegister(enAddressingMode == addrAbsoluteIndexedX ? regX : regY);
 
@@ -765,10 +765,10 @@ void Processor6510::CompareRegister(RegisterID enRegisterID, AddressingMode enAd
 
    // some addressing modes are not allowed for CPX and CPY
    if (enAddressingMode == addrZeropageIndexedX ||
-       enAddressingMode == addrIndirectZeropageIndexedX ||
-       enAddressingMode == addrIndirectZeropageIndexedY ||
-       enAddressingMode == addrAbsoluteIndexedX ||
-       enAddressingMode == addrAbsoluteIndexedY)
+      enAddressingMode == addrIndirectZeropageIndexedX ||
+      enAddressingMode == addrIndirectZeropageIndexedY ||
+      enAddressingMode == addrAbsoluteIndexedX ||
+      enAddressingMode == addrAbsoluteIndexedY)
       ATLASSERT(enRegisterID == regA); // addressing mode not allowed with x or y register
 
    WORD wAddr = FetchAddress(enAddressingMode);
@@ -784,8 +784,8 @@ void Processor6510::CompareRegister(RegisterID enRegisterID, AddressingMode enAd
    {
       // count cycles; add extra cycle when page boundary is crossed
       if (enAddressingMode == addrIndirectZeropageIndexedY ||
-          enAddressingMode == addrAbsoluteIndexedX ||
-          enAddressingMode == addrAbsoluteIndexedY)
+         enAddressingMode == addrAbsoluteIndexedX ||
+         enAddressingMode == addrAbsoluteIndexedY)
       {
          BYTE bReg = GetRegister(enAddressingMode == addrAbsoluteIndexedX ? regX : regY);
 
@@ -913,8 +913,8 @@ void Processor6510::LogicalOperation(C64::LogicalOperation enLogicalOperation, A
 
    // count cycles; add extra cycle when page boundary is crossed
    if (enAddressingMode == addrIndirectZeropageIndexedY ||
-       enAddressingMode == addrAbsoluteIndexedX ||
-       enAddressingMode == addrAbsoluteIndexedY)
+      enAddressingMode == addrAbsoluteIndexedX ||
+      enAddressingMode == addrAbsoluteIndexedY)
    {
       BYTE bReg = GetRegister(enAddressingMode == addrAbsoluteIndexedX ? regX : regY);
 
@@ -946,111 +946,111 @@ void Processor6510::ArithmeticOperation(C64::ArithmeticOperation enArithmeticOpe
    switch (enArithmeticOperation)
    {
    case arithmeticOperationAdc:
+   {
+      WORD wResult;
+      if (!GetFlag(flagDecimal))
       {
-         WORD wResult;
-         if (!GetFlag(flagDecimal))
-         {
-            wResult = bOperand1 + bOperand2 + (GetFlag(flagCarry) ? 1 : 0);
-            bResult = static_cast<BYTE>(wResult & 0xff);
+         wResult = bOperand1 + bOperand2 + (GetFlag(flagCarry) ? 1 : 0);
+         bResult = static_cast<BYTE>(wResult & 0xff);
 
-            // set flags
-            SetFlag(flagCarry, wResult > 0xff);
+         // set flags
+         SetFlag(flagCarry, wResult > 0xff);
 
-            // change of sign?
-            bool bOverflow = !((bOperand1 ^ (bOperand2)) & 0x80) && ((bOperand1 ^ bResult) & 0x80);
-            SetFlag(flagOverflow, bOverflow);
+         // change of sign?
+         bool bOverflow = !((bOperand1 ^ (bOperand2)) & 0x80) && ((bOperand1 ^ bResult) & 0x80);
+         SetFlag(flagOverflow, bOverflow);
 
-            SetFlag(flagZero, bResult == 0);
-            SetFlag(flagNegative, (bResult & 0x80) != 0);
-         }
-         else
-         {
-            // decimal mode
-
-            // calculate the lower and upper nibbles separately
-            BYTE bLow = (bOperand1 & 0x0f) + (bOperand2 & 0x0f) + (GetFlag(flagCarry) ? 1 : 0);
-
-            BYTE bHigh = (bOperand1 >> 4) + (bOperand2 >> 4) + (bLow > 9 ? 1 : 0);
-
-            // BCD fixup for lower nibble
-            if (bLow > 9)
-               bLow += 6;
-
-            // set flags
-
-            // zero flag is set just like in binary mode
-            WORD wResultBin = bOperand1 + bOperand2 + (GetFlag(flagCarry) ? 1 : 0);
-            SetFlag(flagZero, (wResultBin & 0xff) == 0); 
-
-            // negative and overflow flags are set with the same logic as in
-            // binary mode, but after fixing the lower nibble
-            SetFlag(flagNegative, (bHigh & 8) != 0);
-
-            bool bOverflow = (((bHigh << 4) ^ bOperand1) & 0x80) && !((bOperand1 ^ bOperand2) & 0x80);
-            SetFlag(flagOverflow, bOverflow);
-
-            // BCD fixup for upper nibble
-            if (bHigh > 9)
-               bHigh += 6;
-
-            // carry is the only flag set after fixing the result
-            SetFlag(flagCarry, bHigh > 15);
-
-            wResult = (bLow & 0x0f) | (static_cast<WORD>(bHigh) << 4);
-            bResult = static_cast<BYTE>(wResult & 0xff);
-         }
+         SetFlag(flagZero, bResult == 0);
+         SetFlag(flagNegative, (bResult & 0x80) != 0);
       }
-      break;
+      else
+      {
+         // decimal mode
+
+         // calculate the lower and upper nibbles separately
+         BYTE bLow = (bOperand1 & 0x0f) + (bOperand2 & 0x0f) + (GetFlag(flagCarry) ? 1 : 0);
+
+         BYTE bHigh = (bOperand1 >> 4) + (bOperand2 >> 4) + (bLow > 9 ? 1 : 0);
+
+         // BCD fixup for lower nibble
+         if (bLow > 9)
+            bLow += 6;
+
+         // set flags
+
+         // zero flag is set just like in binary mode
+         WORD wResultBin = bOperand1 + bOperand2 + (GetFlag(flagCarry) ? 1 : 0);
+         SetFlag(flagZero, (wResultBin & 0xff) == 0);
+
+         // negative and overflow flags are set with the same logic as in
+         // binary mode, but after fixing the lower nibble
+         SetFlag(flagNegative, (bHigh & 8) != 0);
+
+         bool bOverflow = (((bHigh << 4) ^ bOperand1) & 0x80) && !((bOperand1 ^ bOperand2) & 0x80);
+         SetFlag(flagOverflow, bOverflow);
+
+         // BCD fixup for upper nibble
+         if (bHigh > 9)
+            bHigh += 6;
+
+         // carry is the only flag set after fixing the result
+         SetFlag(flagCarry, bHigh > 15);
+
+         wResult = (bLow & 0x0f) | (static_cast<WORD>(bHigh) << 4);
+         bResult = static_cast<BYTE>(wResult & 0xff);
+      }
+   }
+   break;
 
    case arithmeticOperationSbc:
+   {
+      if (!GetFlag(flagDecimal))
       {
-         if (!GetFlag(flagDecimal))
-         {
-            WORD wResult = bOperand1 - bOperand2 - (GetFlag(flagCarry) ? 0 : 1);
-            bResult = static_cast<BYTE>(wResult & 0xff);
+         WORD wResult = bOperand1 - bOperand2 - (GetFlag(flagCarry) ? 0 : 1);
+         bResult = static_cast<BYTE>(wResult & 0xff);
 
-            // set flags
-            SetFlag(flagZero, bResult == 0);
-            SetFlag(flagNegative, (bResult & 0x80) != 0);
-            SetFlag(flagCarry, wResult < 0x100); // underflow when result is 0xff??
+         // set flags
+         SetFlag(flagZero, bResult == 0);
+         SetFlag(flagNegative, (bResult & 0x80) != 0);
+         SetFlag(flagCarry, wResult < 0x100); // underflow when result is 0xff??
 
-            bool bOverflow = ((bOperand1 ^ wResult) & 0x80) && ((bOperand1 ^ bOperand2) & 0x80);
-            SetFlag(flagOverflow, bOverflow);
-         }
-         else
-         {
-            // decimal mode
-
-            // calculate lower nibble
-            BYTE bLow = (bOperand1 & 0xf) - (bOperand2 & 0xf) - (GetFlag(flagCarry) ? 0 : 1);
-
-            // calculate upper nibble
-            //BYTE bHigh = (bOperand1 >> 4) - (bOperand2 >> 4) - ((bLow & 16) != 0 ? 1 : 0);
-            BYTE bHigh = (bOperand1 >> 4) - (bOperand2 >> 4) - ((bLow & 16) != 0 ? 1 : 0);
-
-            // BCD fixup for lower nibble
-            if (bLow & 0x10)
-               bLow -= 6;
-
-            // BCD fixup for upper nibble
-            if (bHigh & 0x10)
-               bHigh -= 6;
-
-            // set flags
-            WORD wResultBin = (bOperand1 - bOperand2 - (GetFlag(flagCarry) ? 0 : 1));
-
-            SetFlag(flagZero, (wResultBin & 0xff) == 0);
-            SetFlag(flagNegative, (wResultBin & 0x80) != 0);
-            SetFlag(flagCarry, wResultBin < 0x100);
-
-            bool bOverflow = ((bOperand1 ^ wResultBin) & 0x80) && ((bOperand1 ^ bOperand2) & 0x80);
-            SetFlag(flagOverflow, bOverflow);
-
-            WORD wResult = (bLow & 0x0f) | (static_cast<WORD>(bHigh) << 4);
-            bResult = static_cast<BYTE>(wResult & 0xff);
-         }
+         bool bOverflow = ((bOperand1 ^ wResult) & 0x80) && ((bOperand1 ^ bOperand2) & 0x80);
+         SetFlag(flagOverflow, bOverflow);
       }
-      break;
+      else
+      {
+         // decimal mode
+
+         // calculate lower nibble
+         BYTE bLow = (bOperand1 & 0xf) - (bOperand2 & 0xf) - (GetFlag(flagCarry) ? 0 : 1);
+
+         // calculate upper nibble
+         //BYTE bHigh = (bOperand1 >> 4) - (bOperand2 >> 4) - ((bLow & 16) != 0 ? 1 : 0);
+         BYTE bHigh = (bOperand1 >> 4) - (bOperand2 >> 4) - ((bLow & 16) != 0 ? 1 : 0);
+
+         // BCD fixup for lower nibble
+         if (bLow & 0x10)
+            bLow -= 6;
+
+         // BCD fixup for upper nibble
+         if (bHigh & 0x10)
+            bHigh -= 6;
+
+         // set flags
+         WORD wResultBin = (bOperand1 - bOperand2 - (GetFlag(flagCarry) ? 0 : 1));
+
+         SetFlag(flagZero, (wResultBin & 0xff) == 0);
+         SetFlag(flagNegative, (wResultBin & 0x80) != 0);
+         SetFlag(flagCarry, wResultBin < 0x100);
+
+         bool bOverflow = ((bOperand1 ^ wResultBin) & 0x80) && ((bOperand1 ^ bOperand2) & 0x80);
+         SetFlag(flagOverflow, bOverflow);
+
+         WORD wResult = (bLow & 0x0f) | (static_cast<WORD>(bHigh) << 4);
+         bResult = static_cast<BYTE>(wResult & 0xff);
+      }
+   }
+   break;
 
    default:
       ATLASSERT(false);
@@ -1061,8 +1061,8 @@ void Processor6510::ArithmeticOperation(C64::ArithmeticOperation enArithmeticOpe
 
    // count cycles; add extra cycle when page boundary is crossed
    if (enAddressingMode == addrIndirectZeropageIndexedY ||
-       enAddressingMode == addrAbsoluteIndexedX ||
-       enAddressingMode == addrAbsoluteIndexedY)
+      enAddressingMode == addrAbsoluteIndexedX ||
+      enAddressingMode == addrAbsoluteIndexedY)
    {
       BYTE bReg = GetRegister(enAddressingMode == addrAbsoluteIndexedX ? regX : regY);
 
