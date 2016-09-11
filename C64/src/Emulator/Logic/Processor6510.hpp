@@ -402,6 +402,8 @@ private:
    void ShiftOperation(ShiftOperation enShiftOperation, AddressingMode enAddressingMode);
    /// carries out bit operation
    void BitOperation(AddressingMode enAddressingMode);
+   /// carries out set flag operation
+   void SetFlagOperation(ProcessorFlag enFlag, bool bFlag);
 
 private:
    /// program counter

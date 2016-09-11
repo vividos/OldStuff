@@ -89,6 +89,7 @@ bool Processor6510::GetFlag(C64::ProcessorFlag enFlag)
 
 void Processor6510::Step()
 {
+#if 0
    {
 #pragma warning(disable: 28159) // Consider using GetTickCount64
       static DWORD dwT1 = GetTickCount();
@@ -108,6 +109,7 @@ void Processor6510::Step()
       }
 #pragma warning(default: 28159)
    }
+#endif
 
    m_uiProcessedOpcodes++;
 
@@ -119,7 +121,8 @@ void Processor6510::Step()
          (*iter)->OnStep();
    }
 
-   m_opcodeText.Format(_T("%04x "), m_wProgramCounter);
+   if (m_debugOutput)
+      m_opcodeText.Format(_T("%04x "), m_wProgramCounter);
 
    BYTE bOpcode = m_memoryManager.Peek(m_wProgramCounter++);
 
@@ -295,78 +298,88 @@ void Processor6510::Step()
 
       // push/pop
    case opPHP:
-      m_opcodeText.AppendFormat(_T("PHP"));
-      Push(GetRegister(regSR) | c_bStatusMaskAlwaysSet );
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("PHP"));
+      Push(GetRegister(regSR) | c_bStatusMaskAlwaysSet);
       break;
 
    case opPLP:
-      m_opcodeText.AppendFormat(_T("PLP"));
-      SetRegister(regSR, Pop() | c_bStatusMaskAlwaysSet );
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("PLP"));
+      SetRegister(regSR, Pop() | c_bStatusMaskAlwaysSet);
       break;
 
    case opPHA:
-      m_opcodeText.AppendFormat(_T("PHA"));
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("PHA"));
       Push(GetRegister(regA));
       break;
 
    case opPLA:
-      {
+   {
+      if (m_debugOutput)
          m_opcodeText.AppendFormat(_T("PLA"));
-         BYTE bValue = Pop();
-         SetRegister(regA, bValue);
+      BYTE bValue = Pop();
+      SetRegister(regA, bValue);
 
-         // set flags
-         SetFlag(flagZero, bValue == 0);
-         SetFlag(flagNegative, (bValue & 0x80) != 0);
-      }
-      break;
+      // set flags
+      SetFlag(flagZero, bValue == 0);
+      SetFlag(flagNegative, (bValue & 0x80) != 0);
+   }
+   break;
 
-      // flags
-   case opCLC: m_opcodeText.AppendFormat(_T("CLC")); SetFlag(flagCarry, false); break;
-   case opSEC: m_opcodeText.AppendFormat(_T("SEC")); SetFlag(flagCarry, true); break;
-   case opCLD: m_opcodeText.AppendFormat(_T("CLD")); SetFlag(flagDecimal, false); break;
-   case opSED: m_opcodeText.AppendFormat(_T("SED")); SetFlag(flagDecimal, true); break;
-   case opCLI: m_opcodeText.AppendFormat(_T("CLI")); SetFlag(flagInterrupt, false); break;
-   case opSEI: m_opcodeText.AppendFormat(_T("SEI")); SetFlag(flagInterrupt, true); break;
-   case opCLV: m_opcodeText.AppendFormat(_T("CLV")); SetFlag(flagOverflow, false); break;
+   // flags
+   case opCLC: SetFlagOperation(flagCarry, false); break;
+   case opSEC: SetFlagOperation(flagCarry, true); break;
+   case opCLD: SetFlagOperation(flagDecimal, false); break;
+   case opSED: SetFlagOperation(flagDecimal, true); break;
+   case opCLI: SetFlagOperation(flagInterrupt, false); break;
+   case opSEI: SetFlagOperation(flagInterrupt, true); break;
+   case opCLV: SetFlagOperation(flagOverflow, false); break;
 
       // control flow opcodes
    case opJMP_abs:
-      m_opcodeText.AppendFormat(_T("JMP "));
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("JMP "));
       m_wProgramCounter = FetchAddress(addrAbsolute);
       bProgramCounterChanged = true;
       break;
 
    case opJMP_ind:
-      m_opcodeText.AppendFormat(_T("JMP "));
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("JMP "));
       m_wProgramCounter = FetchAddress(addrIndirect);
-      m_opcodeText.AppendFormat(_T("(to $%04x)"), m_wProgramCounter);
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("(to $%04x)"), m_wProgramCounter);
       bProgramCounterChanged = true;
       break;
 
    case opJSR:
-      {
-         WORD wAddr = Load16(m_wProgramCounter);
+   {
+      WORD wAddr = Load16(m_wProgramCounter);
 
-         m_wProgramCounter++;
-         Push(static_cast<BYTE>(m_wProgramCounter >> 8));
-         Push(static_cast<BYTE>(m_wProgramCounter & 0xff));
-         m_wProgramCounter++;
+      m_wProgramCounter++;
+      Push(static_cast<BYTE>(m_wProgramCounter >> 8));
+      Push(static_cast<BYTE>(m_wProgramCounter & 0xff));
+      m_wProgramCounter++;
 
-         m_wProgramCounter = wAddr;
+      m_wProgramCounter = wAddr;
+      if (m_debugOutput)
          m_opcodeText.AppendFormat(_T("JSR $%04x"), m_wProgramCounter);
-         bProgramCounterChanged = true;
-      }
-      break;
+      bProgramCounterChanged = true;
+   }
+   break;
 
    case opRTS:
-      m_opcodeText.AppendFormat(_T("RTS"));
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("RTS"));
       Return();
       bProgramCounterChanged = true;
       break;
 
    case opBRK:
-      m_opcodeText.AppendFormat(_T("BRK"));
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("BRK"));
       m_wProgramCounter++;
       Push(static_cast<BYTE>(m_wProgramCounter >> 8));
       Push(static_cast<BYTE>(m_wProgramCounter & 0xff));
@@ -381,7 +394,8 @@ void Processor6510::Step()
       break;
 
    case opRTI:
-      m_opcodeText.AppendFormat(_T("RTI"));
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("RTI"));
       SetRegister(regSR, Pop() | c_bStatusMaskAlwaysSet);
       Return();
       m_wProgramCounter--; // undo the increment in Return()
@@ -403,7 +417,8 @@ void Processor6510::Step()
    case 0xda:
    case 0xfa:
    case opNOP: // do nothing
-      m_opcodeText.AppendFormat(_T("NOP"));
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("NOP"));
       break;
 
    default:
@@ -418,7 +433,8 @@ void Processor6510::Step()
    //   GetRegister(regSR),
    //   GetRegister(regSP));
 
-   m_opcodeText.AppendFormat(_T("\n"));
+   if (m_debugOutput)
+      m_opcodeText.AppendFormat(_T("\n"));
 
    if (m_debugOutput)
       ATLTRACE(m_opcodeText);
@@ -475,70 +491,80 @@ WORD Processor6510::FetchAddress(AddressingMode enAddressingMode)
    switch (enAddressingMode)
    {
    case addrImmediate:
-      m_opcodeText.AppendFormat(_T("#$%02x"), bArg1);
       //wAddr = wAddr;
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("#$%02x"), bArg1);
       break;
 
    case addrZeropage:
-      m_opcodeText.AppendFormat(_T("$%02x"), bArg1);
       wAddr = static_cast<WORD>(bArg1);
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("$%02x"), bArg1);
       break;
 
    case addrAbsolute:
       wAddr = LE2WORD(bArg1, Load(m_wProgramCounter++));
-      m_opcodeText.AppendFormat(_T("$%04x"), wAddr);
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("$%04x"), wAddr);
       break;
 
    case addrZeropageIndexedX: // zpx = $00,X
       // note: adding x wraps around on zeropage
       wAddr = (static_cast<WORD>(bArg1) + GetRegister(regX)) & 0xFF;
-      m_opcodeText.AppendFormat(_T("$%02x,x"), bArg1);
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("$%02x,x"), bArg1);
       break;
 
    case addrZeropageIndexedY: // zpy = $00,Y
       // note: adding y wraps around on zeropage
       wAddr = (static_cast<WORD>(bArg1) + GetRegister(regY)) & 0xFF;
-      m_opcodeText.AppendFormat(_T("$%02x,y"), bArg1);
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("$%02x,y"), bArg1);
       break;
 
    case addrIndirectZeropageIndexedX: // izx = ($00,X)
       wAddr = Load16((bArg1 + GetRegister(regX)) & 0xff);
-      m_opcodeText.AppendFormat(_T("($%02x,x)"), bArg1);
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("($%02x,x)"), bArg1);
       break;
 
    case addrIndirectZeropageIndexedY: // izy = ($00),Y
       wAddr = Load16(static_cast<WORD>(bArg1)) + GetRegister(regY);
-      m_opcodeText.AppendFormat(_T("($%02x),y"), bArg1);
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("($%02x),y"), bArg1);
       break;
 
    case addrAbsoluteIndexedX:
       wAddr = LE2WORD(bArg1, Load(m_wProgramCounter++));
-      m_opcodeText.AppendFormat(_T("$%04x,x"), wAddr);
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("$%04x,x"), wAddr);
       wAddr = wAddr + GetRegister(regX);
       break;
 
    case addrAbsoluteIndexedY:
       wAddr = LE2WORD(bArg1, Load(m_wProgramCounter++));
-      m_opcodeText.AppendFormat(_T("$%04x,y"), wAddr);
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("$%04x,y"), wAddr);
       wAddr = wAddr + GetRegister(regY);
       break;
 
    case addrIndirect:
-      {
-         BYTE bArg2 = Load(m_wProgramCounter++);
-         wAddr = LE2WORD(bArg1, bArg2);
+   {
+      BYTE bArg2 = Load(m_wProgramCounter++);
+      wAddr = LE2WORD(bArg1, bArg2);
 
+      if (m_debugOutput)
          m_opcodeText.AppendFormat(_T("($%04x)"), wAddr);
 
-         BYTE bArg3 = Load(wAddr++);
+      BYTE bArg3 = Load(wAddr++);
 
-         if ((wAddr & 0xff) == 0) // on page boundary, fetch byte from previous page
-            wAddr -= 0x0100;
+      if ((wAddr & 0xff) == 0) // on page boundary, fetch byte from previous page
+         wAddr -= 0x0100;
 
-         bArg2 = Load(wAddr);
-         wAddr = LE2WORD(bArg3, bArg2);
-      }
-      break;
+      bArg2 = Load(wAddr);
+      wAddr = LE2WORD(bArg3, bArg2);
+   }
+   break;
 
    case addrRelative:
       if (bArg1 < 0x80)
@@ -574,24 +600,30 @@ BYTE Processor6510::Pop()
 
 void Processor6510::LoadRegister(RegisterID enRegisterID, AddressingMode enAddressingMode)
 {
-   switch(enRegisterID)
+   if (m_debugOutput)
    {
-   case regA: m_opcodeText.AppendFormat(_T("LDA ")); break;
-   case regX: m_opcodeText.AppendFormat(_T("LDX ")); break;
-   case regY: m_opcodeText.AppendFormat(_T("LDY ")); break;
-   default:
-      ATLASSERT(false);
-      break;
-   };
+      switch (enRegisterID)
+      {
+      case regA: m_opcodeText.AppendFormat(_T("LDA ")); break;
+      case regX: m_opcodeText.AppendFormat(_T("LDX ")); break;
+      case regY: m_opcodeText.AppendFormat(_T("LDY ")); break;
+      default:
+         ATLASSERT(false);
+         break;
+      };
+   }
 
    WORD wAddr = FetchAddress(enAddressingMode);
    BYTE bValue = Load(wAddr);
 
    // hide "from" addr in some addressing modes
-   if (enAddressingMode != addrImmediate &&
-       enAddressingMode != addrZeropage &&
-       enAddressingMode != addrAbsolute)
-      m_opcodeText.AppendFormat(_T(" (from $%04x)"), wAddr);
+   if (m_debugOutput)
+   {
+      if (enAddressingMode != addrImmediate &&
+         enAddressingMode != addrZeropage &&
+         enAddressingMode != addrAbsolute)
+         m_opcodeText.AppendFormat(_T(" (from $%04x)"), wAddr);
+   }
 
    SetRegister(enRegisterID, bValue);
 
@@ -620,33 +652,42 @@ void Processor6510::StoreRegister(RegisterID enRegisterID, AddressingMode enAddr
 {
    ATLASSERT(enAddressingMode != addrImmediate);
 
-   switch(enRegisterID)
+   if (m_debugOutput)
    {
-   case regA: m_opcodeText.AppendFormat(_T("STA ")); break;
-   case regX: m_opcodeText.AppendFormat(_T("STX ")); break;
-   case regY: m_opcodeText.AppendFormat(_T("STY ")); break;
-   default:
-      ATLASSERT(false);
-      break;
-   };
+      switch (enRegisterID)
+      {
+      case regA: m_opcodeText.AppendFormat(_T("STA ")); break;
+      case regX: m_opcodeText.AppendFormat(_T("STX ")); break;
+      case regY: m_opcodeText.AppendFormat(_T("STY ")); break;
+      default:
+         ATLASSERT(false);
+         break;
+      };
+   }
 
    BYTE bValue = GetRegister(enRegisterID);
    WORD wAddr = FetchAddress(enAddressingMode);
 
-   // hide "to" addr in some addressing modes
-   if (enAddressingMode != addrZeropage &&
-       enAddressingMode != addrAbsolute)
-      m_opcodeText.AppendFormat(_T(" (to $%04x)"), wAddr);
+   if (m_debugOutput)
+   {
+      // hide "to" addr in some addressing modes
+      if (enAddressingMode != addrZeropage &&
+         enAddressingMode != addrAbsolute)
+         m_opcodeText.AppendFormat(_T(" (to $%04x)"), wAddr);
+   }
 
    Store(wAddr, bValue);
 }
 
 void Processor6510::TransferRegister(RegisterID enRegSource, RegisterID enRegTarget)
 {
-   m_opcodeText.AppendFormat(
-      _T("T%c%c"),
-      enRegSource == regA ? _T('A') : enRegSource == regX ? _T('X') : enRegSource == regY ? _T('X') : _T('S'),
-      enRegTarget == regA ? _T('A') : enRegSource == regX ? _T('X') : enRegSource == regY ? _T('X') : _T('S'));
+   if (m_debugOutput)
+   {
+      m_opcodeText.AppendFormat(
+         _T("T%c%c"),
+         enRegSource == regA ? _T('A') : enRegSource == regX ? _T('X') : enRegSource == regY ? _T('X') : _T('S'),
+         enRegTarget == regA ? _T('A') : enRegSource == regX ? _T('X') : enRegSource == regY ? _T('X') : _T('S'));
+   }
 
    BYTE bValue = GetRegister(enRegSource);
    SetRegister(enRegTarget, bValue);
@@ -664,7 +705,8 @@ void Processor6510::IncDecRegister(RegisterID enRegister, AddressingMode enAddre
    BYTE bValue;
    if (enRegister == regA) // accumulator really means "modify memory"
    {
-      m_opcodeText.AppendFormat(bIncrease ? _T("INC ") : _T("DEC "));
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(bIncrease ? _T("INC ") : _T("DEC "));
 
       // only some addressing modes are allowed
       ATLASSERT(enAddressingMode == addrZeropage ||
@@ -678,23 +720,26 @@ void Processor6510::IncDecRegister(RegisterID enRegister, AddressingMode enAddre
       Store(wAddr, bValue);
    }
    else
-   if (enRegister == regX || enRegister == regY)
-   {
-      ATLASSERT(enAddressingMode == addrImplicit);
-      bValue = GetRegister(enRegister);
-      bValue += bIncrease ? 1 : 0xFF;
-      SetRegister(enRegister, bValue);
+      if (enRegister == regX || enRegister == regY)
+      {
+         ATLASSERT(enAddressingMode == addrImplicit);
+         bValue = GetRegister(enRegister);
+         bValue += bIncrease ? 1 : 0xFF;
+         SetRegister(enRegister, bValue);
 
-      m_opcodeText.AppendFormat(_T("%s%c         (new value #$%02x)"),
-         bIncrease ? _T("IN") : _T("DE"),
-         enRegister == regX ? _T('X') : _T('Y'),
-         bValue);
-   }
-   else
-   {
-      ATLASSERT(false);
-      return;
-   }
+         if (m_debugOutput)
+         {
+            m_opcodeText.AppendFormat(_T("%s%c         (new value #$%02x)"),
+               bIncrease ? _T("IN") : _T("DE"),
+               enRegister == regX ? _T('X') : _T('Y'),
+               bValue);
+         }
+      }
+      else
+      {
+         ATLASSERT(false);
+         return;
+      }
 
    // set status register
    SetFlag(flagZero, bValue == 0);
@@ -705,15 +750,18 @@ void Processor6510::CompareRegister(RegisterID enRegisterID, AddressingMode enAd
 {
    BYTE bValueReg = GetRegister(enRegisterID);
 
-   switch(enRegisterID)
+   if (m_debugOutput)
    {
-   case regA: m_opcodeText.AppendFormat(_T("CMP ")); break;
-   case regX: m_opcodeText.AppendFormat(_T("CPX ")); break;
-   case regY: m_opcodeText.AppendFormat(_T("CPY ")); break;
-   default:
-      ATLASSERT(false);
-      break;
-   };
+      switch (enRegisterID)
+      {
+      case regA: m_opcodeText.AppendFormat(_T("CMP ")); break;
+      case regX: m_opcodeText.AppendFormat(_T("CPX ")); break;
+      case regY: m_opcodeText.AppendFormat(_T("CPY ")); break;
+      default:
+         ATLASSERT(false);
+         break;
+      };
+   }
 
    // some addressing modes are not allowed for CPX and CPY
    if (enAddressingMode == addrZeropageIndexedX ||
@@ -755,20 +803,39 @@ void Processor6510::Branch(BYTE bOpcode)
    bool bNegate = false;
    C64::ProcessorFlag flag;
 
-   switch(bOpcode)
+   if (m_debugOutput)
    {
-      // branch opcodes
-      case opBPL: m_opcodeText.AppendFormat(_T("BPL ")); flag = flagNegative; bNegate = true; break; // branch when negative clear
-      case opBMI: m_opcodeText.AppendFormat(_T("BMI ")); flag = flagNegative;                 break; // branch when negative set
-      case opBVC: m_opcodeText.AppendFormat(_T("BVC ")); flag = flagOverflow; bNegate = true; break;
-      case opBVS: m_opcodeText.AppendFormat(_T("BVS ")); flag = flagOverflow;                 break;
-      case opBCC: m_opcodeText.AppendFormat(_T("BCC ")); flag = flagCarry;    bNegate = true; break;
-      case opBCS: m_opcodeText.AppendFormat(_T("BCS ")); flag = flagCarry;                    break;
-      case opBNE: m_opcodeText.AppendFormat(_T("BNE ")); flag = flagZero;     bNegate = true; break; // branch when zero clear
-      case opBEQ: m_opcodeText.AppendFormat(_T("BEQ ")); flag = flagZero;                     break; // branch when zero set
+      switch (bOpcode)
+      {
+         // branch opcodes
+      case opBPL: m_opcodeText.AppendFormat(_T("BPL ")); break;
+      case opBMI: m_opcodeText.AppendFormat(_T("BMI ")); break;
+      case opBVC: m_opcodeText.AppendFormat(_T("BVC ")); break;
+      case opBVS: m_opcodeText.AppendFormat(_T("BVS ")); break;
+      case opBCC: m_opcodeText.AppendFormat(_T("BCC ")); break;
+      case opBCS: m_opcodeText.AppendFormat(_T("BCS ")); break;
+      case opBNE: m_opcodeText.AppendFormat(_T("BNE ")); break;
+      case opBEQ: m_opcodeText.AppendFormat(_T("BEQ ")); break;
       default:
          ATLASSERT(false);
          return;
+      }
+   }
+
+   switch (bOpcode)
+   {
+      // branch opcodes
+   case opBPL: flag = flagNegative; bNegate = true; break; // branch when negative clear
+   case opBMI: flag = flagNegative;                 break; // branch when negative set
+   case opBVC: flag = flagOverflow; bNegate = true; break;
+   case opBVS: flag = flagOverflow;                 break;
+   case opBCC: flag = flagCarry;    bNegate = true; break;
+   case opBCS: flag = flagCarry;                    break;
+   case opBNE: flag = flagZero;     bNegate = true; break; // branch when zero clear
+   case opBEQ: flag = flagZero;                     break; // branch when zero set
+   default:
+      ATLASSERT(false);
+      return;
    }
 
    bool bBranch = GetFlag(flag);
@@ -778,7 +845,8 @@ void Processor6510::Branch(BYTE bOpcode)
    BYTE bDistance = Load(m_wProgramCounter);
    WORD wAddr = FetchAddress(addrRelative);
 
-   m_opcodeText.AppendFormat(_T("$%04x   ($%02x)"), wAddr, bDistance);
+   if (m_debugOutput)
+      m_opcodeText.AppendFormat(_T("$%04x   ($%02x)"), wAddr, bDistance);
 
    if (bBranch)
    {
@@ -792,18 +860,24 @@ void Processor6510::Branch(BYTE bOpcode)
          m_uiElapsedCycles++;
    }
    else
-      m_opcodeText.AppendFormat(_T(" (not taken)"));
+   {
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T(" (not taken)"));
+   }
 }
 
 void Processor6510::LogicalOperation(C64::LogicalOperation enLogicalOperation, AddressingMode enAddressingMode)
 {
-   switch (enLogicalOperation)
+   if (m_debugOutput)
    {
-   case logicalOperationOra: m_opcodeText.AppendFormat(_T("ORA ")); break;
-   case logicalOperationAnd: m_opcodeText.AppendFormat(_T("AND ")); break;
-   case logicalOperationEor: m_opcodeText.AppendFormat(_T("EOR ")); break;
-   default:
-      ATLASSERT(false);
+      switch (enLogicalOperation)
+      {
+      case logicalOperationOra: m_opcodeText.AppendFormat(_T("ORA ")); break;
+      case logicalOperationAnd: m_opcodeText.AppendFormat(_T("AND ")); break;
+      case logicalOperationEor: m_opcodeText.AppendFormat(_T("EOR ")); break;
+      default:
+         ATLASSERT(false);
+      }
    }
 
    BYTE bOperand1 = GetRegister(regA);
@@ -852,12 +926,15 @@ void Processor6510::LogicalOperation(C64::LogicalOperation enLogicalOperation, A
 
 void Processor6510::ArithmeticOperation(C64::ArithmeticOperation enArithmeticOperation, AddressingMode enAddressingMode)
 {
-   switch (enArithmeticOperation)
+   if (m_debugOutput)
    {
-   case arithmeticOperationAdc: m_opcodeText.AppendFormat(_T("ADC ")); break;
-   case arithmeticOperationSbc: m_opcodeText.AppendFormat(_T("SBC ")); break;
-   default:
-      ATLASSERT(false);
+      switch (enArithmeticOperation)
+      {
+      case arithmeticOperationAdc: m_opcodeText.AppendFormat(_T("ADC ")); break;
+      case arithmeticOperationSbc: m_opcodeText.AppendFormat(_T("SBC ")); break;
+      default:
+         ATLASSERT(false);
+      }
    }
 
    BYTE bOperand1 = GetRegister(regA);
@@ -997,15 +1074,18 @@ void Processor6510::ArithmeticOperation(C64::ArithmeticOperation enArithmeticOpe
 
 void Processor6510::ShiftOperation(C64::ShiftOperation enShiftOperation, AddressingMode enAddressingMode)
 {
-   switch (enShiftOperation)
+   if (m_debugOutput)
    {
-   case shiftOperationAsl: m_opcodeText.AppendFormat(_T("ASL ")); break;
-   case shiftOperationRol: m_opcodeText.AppendFormat(_T("ROL ")); break;
-   case shiftOperationLsr: m_opcodeText.AppendFormat(_T("LSR ")); break;
-   case shiftOperationRor: m_opcodeText.AppendFormat(_T("ROR ")); break;
-   default:
-      ATLASSERT(false);
-      return;
+      switch (enShiftOperation)
+      {
+      case shiftOperationAsl: m_opcodeText.AppendFormat(_T("ASL ")); break;
+      case shiftOperationRol: m_opcodeText.AppendFormat(_T("ROL ")); break;
+      case shiftOperationLsr: m_opcodeText.AppendFormat(_T("LSR ")); break;
+      case shiftOperationRor: m_opcodeText.AppendFormat(_T("ROR ")); break;
+      default:
+         ATLASSERT(false);
+         return;
+      }
    }
 
    WORD wAddr = enAddressingMode == addrImplicit ? 0 : FetchAddress(enAddressingMode);
@@ -1053,7 +1133,8 @@ void Processor6510::ShiftOperation(C64::ShiftOperation enShiftOperation, Address
 
 void Processor6510::BitOperation(AddressingMode enAddressingMode)
 {
-   m_opcodeText.AppendFormat(_T("BIT "));
+   if (m_debugOutput)
+      m_opcodeText.AppendFormat(_T("BIT "));
 
    WORD wAddr = FetchAddress(enAddressingMode);
 
@@ -1064,4 +1145,25 @@ void Processor6510::BitOperation(AddressingMode enAddressingMode)
    SetFlag(flagZero, bResult == 0);
    SetFlag(flagNegative, (bValue & 0x80) != 0);
    SetFlag(flagOverflow, (bValue & 0x40) != 0);
+}
+
+void Processor6510::SetFlagOperation(C64::ProcessorFlag enFlag, bool bFlag)
+{
+   if (m_debugOutput)
+   {
+      m_opcodeText.AppendFormat(bFlag ? _T("SE") : _T("CL"));
+
+      switch (enFlag)
+      {
+      case flagCarry: m_opcodeText.AppendFormat(_T("C")); break;
+      case flagDecimal: m_opcodeText.AppendFormat(_T("D")); break;
+      case flagInterrupt: m_opcodeText.AppendFormat(_T("I")); break;
+      case flagOverflow: m_opcodeText.AppendFormat(_T("O")); break;
+      default:
+         ATLASSERT(false);
+         break;
+      }
+   }
+
+   SetFlag(enFlag, bFlag);
 }
