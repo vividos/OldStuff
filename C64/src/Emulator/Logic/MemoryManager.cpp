@@ -18,6 +18,11 @@ MemoryManager::MemoryManager()
 :m_vecReadWriteMemory(64*1024), // 64k memory
  m_vecMemoryHandler(handlerLast+1)
 {
+   // default: 0x37, or 0011 0111
+   // bit 0: basic ROM/RAM (1/0)
+   // bit 1: kernal ROM/RAM (1/0)
+   // bit 2: IO area/character rom (1/0)
+   m_vecReadWriteMemory[1] = 0x37;
 }
 
 void MemoryManager::SetHandler(MemoryHandler enMemoryHandler, std::shared_ptr<IMemory> spIMemory)

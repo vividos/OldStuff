@@ -48,17 +48,42 @@ VideoInterfaceController::VideoInterfaceController(C64::MemoryManager& memoryMan
  m_wInterruptRasterline(0xffff), // -1 is for "none"
  m_vecColorRam(0x0400),
  m_uiNextRasterlineCycle(0),
- m_wMemoryStart(0),
+ m_wMemoryStart(0), // bank 0, 0x0000-0x3fff
  m_bVerticalBorderFlipFlop(true),
  m_pVideoOutputDevice(NULL)
 {
    memset(m_abRegister, 0, sizeof(m_abRegister));
+
+   // default: 27, or 0001 1011
+   // bits 0..2: soft scrolling
+   // bit 3: 25/24 lines (1/0)
+   // bit 4: VIC on/off (1/0)
+   // bit 5: HiRes/text (1/0)
+   // bit 6: background color/text (1/0)
+   // bit 7: bit 8 of current raster line
    m_abRegister[vicRegD011] = 27;
+
+   // current raster line: 0
+   m_abRegister[vicRegD012] = 0;
+
+   // default: 200, or 1100 1000
+   // bits 0..2: soft scrolling
+   // bit 3: 40/38 columns (1/0)
+   // bit 4: multicolor/normal (1/0)
+   // bit 5: always 0
+   // bits 6+7: always 1
    m_abRegister[vicRegD016] = 200;
+
+   // default: 21, or 0001 0101
+   // bit 0: always 1
+   // bits 1..3: 010 char rom at 0x1000
+   // bits 4..7: 0001: screen ram at 0x0400
    m_abRegister[vicRegD018] = 21;
-   m_abRegister[vicRegD01A] = 0;   // no VIC IRQs
-   m_abRegister[vicRegD020] = 254; // border color
-   m_abRegister[vicRegD021] = 246; // background color
+
+   m_abRegister[vicRegD019] = 0x70 | 0; // currently no IRQs active
+   m_abRegister[vicRegD01A] = 0xF0 | 0; // no VIC IRQs enabled
+   m_abRegister[vicRegD020] = 0xF0 | 14; // border color: light blue
+   m_abRegister[vicRegD021] = 0xF0 | 6; // background color: blue
 
    m_uiNextRasterlineCycle = processor.GetProcessedCycles() + c_uiNumCyclesPerRasterline;
 }
