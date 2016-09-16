@@ -387,7 +387,7 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
    memset(&abScanline[wXStart], m_abRegister[vicRegD021] & 0x0f, 320);
 
    // calculate charset address, bits 1 to 3
-   WORD wCharsetMem = m_wMemoryStart + (static_cast<WORD>(m_abRegister[vicRegD018] & 6) << 10);
+   WORD wCharsetMem = m_wMemoryStart + (static_cast<WORD>(m_abRegister[vicRegD018] & 14) << 10);
    // add in-cell offset position
    wCharsetMem += (wYPos & 7);
 
