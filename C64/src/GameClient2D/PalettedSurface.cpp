@@ -28,14 +28,14 @@ void PalettedSurface::SetPalette(Uint8* rawPalette, size_t lengthInEntries)
 {
    ATLASSERT(lengthInEntries < 256);
 
-   // ABGR
-   unsigned int shiftR = 0;
+   // RGB
+   unsigned int shiftR = 16;
    unsigned int shiftG = 8;
-   unsigned int shiftB = 16;
+   unsigned int shiftB = 0;
 
-   unsigned int maskR = 0x0000ff;
+   unsigned int maskR = 0xff0000;
    unsigned int maskG = 0x00ff00;
-   unsigned int maskB = 0xff0000;
+   unsigned int maskB = 0x0000ff;
 
    if (bitsPerPixel == 16)
    {
