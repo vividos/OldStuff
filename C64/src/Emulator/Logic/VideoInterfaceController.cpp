@@ -243,7 +243,7 @@ void VideoInterfaceController::NextRasterline()
       if (m_wRasterline == wBottomLine)
          m_bVerticalBorderFlipFlop = true;
       else
-      if (m_wRasterline == wTopLine && bDEN)
+      if ((m_wRasterline == wTopLine) && bDEN)
          m_bVerticalBorderFlipFlop = false;
    }
 
@@ -321,7 +321,6 @@ void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BY
    // calculate video memory location for this line
    // video memory location: bits 4..7
    WORD wVideoMem = m_wMemoryStart + (static_cast<WORD>(m_abRegister[vicRegD018] & 0xf0) << 6);
-//   WORD wVideoMem = m_wMemoryStart + ((m_abRegister[vicRegD018] & 0xf0) >> 4) * 0x0400; // TODO remove
    wVideoMem += (wYPos >> 3) * 40;
 
    const BYTE* pVideoMem = &m_memoryManager.GetRAM()[wVideoMem];
