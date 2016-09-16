@@ -100,9 +100,9 @@ void VideoInterfaceController::SetRegister(BYTE bRegister, BYTE bValue)
 
    ATLTRACE(_T("VIC register write at $d0%02x = $%02x, rasterline %u\n"), bRegister, bValue, m_wRasterline);
 
-   switch(bRegister)
+   switch (bRegister)
    {
-   case 0x11:
+   case vicRegD011:
       // note: bit 7 is bit8 of the interrupt raster line
       if (m_wInterruptRasterline == 0xffff)
          m_wInterruptRasterline = 0;
@@ -113,7 +113,7 @@ void VideoInterfaceController::SetRegister(BYTE bRegister, BYTE bValue)
       ATLTRACE(_T("VIC: request for IRQ at line $%04x\n"), m_wInterruptRasterline);
       break;
 
-   case 0x12: // bits 0 to 7 of the interrupt raster line
+   case vicRegD012: // bits 0 to 7 of the interrupt raster line
       if (m_wInterruptRasterline == 0xffff)
          m_wInterruptRasterline = 0;
       m_wInterruptRasterline &= 0x0100;
@@ -138,32 +138,31 @@ BYTE VideoInterfaceController::ReadRegister(BYTE bRegister) const
 
    switch (bRegister)
    {
-   case 0x11:
-
+   case vicRegD011:
       // read bit 7 to bit 8 of the current raster line
       bValue &= 0x7f;
       if ((m_wRasterline & 0x0100) != 0)
          bValue |= 0x80;
       break;
 
-   case 0x12: // read bits 0 to 7 of the interrupt raster line
+   case vicRegD012: // read bits 0 to 7 of the interrupt raster line
       bValue = static_cast<BYTE>(m_wRasterline & 0xff);
       break;
 
-   case 0x16:
+   case vicRegD016:
       bValue |= 0xc0; // bits 6 and 7 always set
       break;
 
-   case 0x18:
+   case vicRegD018:
       // bit 0 is always set
       bValue |= 1;
       break;
 
-   case 0x19:
+   case vicRegD019:
       bValue |= 0x70; // bits 4..6 always set
       break;
 
-   case 0x1a:
+   case vicRegD01A:
       bValue |= 0xf0; // bits 4..7 always set
       break;
 
