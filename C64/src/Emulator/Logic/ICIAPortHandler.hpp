@@ -21,13 +21,13 @@ public:
    }
 
    /// called when data port register is set
-   virtual void SetDataPort(BYTE bValue) throw() = 0;
+   virtual void SetDataPort(BYTE portNumber, BYTE value) throw() = 0;
 
    /// called when data direction register is set
-   virtual void SetDataDirection(BYTE bValue) throw() { (bValue); }
+   virtual void SetDataDirection(BYTE portNumber, BYTE value) throw() { portNumber;  value; }
 
-   /// called when data port register is being read; returns true when port byte was returned
-   virtual bool ReadDataPort(BYTE&) const throw() { return false; }
+   /// called when data port register is being read
+   virtual void ReadDataPort(BYTE portNumber, BYTE& value) const throw() { portNumber; value; }
 };
 
 } // namespace C64

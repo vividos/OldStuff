@@ -28,9 +28,9 @@ public:
 
 private:
    // virtual methods from ICIAPortHandler
-   void SetDataPort(BYTE bValue) throw() override;
-   void SetDataDirection(BYTE bValue) throw() override;
-   bool ReadDataPort(BYTE& bValue) const throw() override;
+   void SetDataPort(BYTE portNumber, BYTE value) throw() override;
+   void SetDataDirection(BYTE portNumber, BYTE value) throw() override;
+   void ReadDataPort(BYTE portNumber, BYTE& value) const throw() override;
 };
 
 } // namespace C64

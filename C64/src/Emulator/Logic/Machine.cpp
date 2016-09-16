@@ -21,12 +21,12 @@ Machine::Machine()
    m_memoryManager.SetHandler(handlerCIA1, std::shared_ptr<IMemory>(new CIAMemoryAdapter(m_cia1, 0xdc00)));
    m_memoryManager.SetHandler(handlerCIA2, std::shared_ptr<IMemory>(new CIAMemoryAdapter(m_cia2, 0xdd00)));
 
-   m_cia2.AddPortListener(&m_vic);
+   m_cia1.SetPortListener(&m_keyboard);
+   m_cia2.SetPortListener(&m_vic);
 }
 
 Machine::~Machine()
 {
-   m_cia2.RemovePortListener(&m_vic);
 }
 
 void Machine::Run()

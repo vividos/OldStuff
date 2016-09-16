@@ -7,7 +7,6 @@
 #pragma once
 
 // includes
-#include <set>
 
 namespace C64
 {
@@ -32,24 +31,18 @@ public:
    /// reads register value
    BYTE ReadRegister(BYTE bRegister);
 
-   /// adds a port listener for this CIA
-   void AddPortListener(ICIAPortHandler* pPortHandler)
+   /// sets a port listener for this CIA
+   void SetPortListener(ICIAPortHandler* portHandler)
    {
-      m_setAllHandler.insert(pPortHandler);
-   }
-
-   /// removes a port listener
-   void RemovePortListener(ICIAPortHandler* pPortHandler)
-   {
-      m_setAllHandler.erase(pPortHandler);
+      m_portHandler = portHandler;
    }
 
 private:
    /// all CIA registers
    BYTE m_abRegister[16];
 
-   /// all CIA port handlers
-   std::set<ICIAPortHandler*> m_setAllHandler;
+   /// port handler for the registers 0 and 1; may be nullptr
+   ICIAPortHandler* m_portHandler;
 };
 
 } // namespace C64

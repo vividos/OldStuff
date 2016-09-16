@@ -493,10 +493,13 @@ void VideoInterfaceController::RenderSprites(BYTE abScanline[0x0200])
    // TODO steal 2 cycles from the processor for every sprite shown in this line
 }
 
-void VideoInterfaceController::SetDataPort(BYTE bValue)
+void VideoInterfaceController::SetDataPort(BYTE portNumber, BYTE bValue)
 {
-   // first two bits serve as memory bank to use
-   // note: bits are inverted from their meaning
-   // e.g. 11 means $0000 - $3fff
-   SetMemoryBank((bValue & 3) ^ 3);
+   if (portNumber == 0)
+   {
+      // first two bits serve as memory bank to use
+      // note: bits are inverted from their meaning
+      // e.g. 11 means $0000 - $3fff
+      SetMemoryBank((bValue & 3) ^ 3);
+   }
 }

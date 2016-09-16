@@ -23,22 +23,37 @@ ComplexInterfaceAdapter::ComplexInterfaceAdapter()
 void ComplexInterfaceAdapter::SetRegister(BYTE bRegister, BYTE bValue)
 {
    ATLASSERT(bRegister < sizeof(m_abRegister)/sizeof(*m_abRegister));
-   m_abRegister[bRegister & 15] = bValue;
 
-   if (bRegister == 0 || bRegister == 1)
+   if (m_portHandler &&
+      bRegister >= 0 &&
+      bRegister <= 3)
    {
-      std::set<ICIAPortHandler*>::iterator iter, stop;
-      iter = m_setAllHandler.begin();
-      stop = m_setAllHandler.end();
+      if (bRegister == 0 || bRegister == 1)
+      {
+         m_portHandler->SetDataPort(bRegister, bValue);
+      }
 
-      for(;iter != stop; iter++)
-         (*iter)->SetDataPort(bValue);
+      if (bRegister == 2 || bRegister == 3)
+      {
+         m_portHandler->SetDataDirection(bRegister & 2, bValue);
+      }
    }
+
+   m_abRegister[bRegister & 15] = bValue;
 }
 
 BYTE ComplexInterfaceAdapter::ReadRegister(BYTE bRegister)
 {
    ATLASSERT(bRegister < sizeof(m_abRegister)/sizeof(*m_abRegister));
+
+   if (m_portHandler &&
+      (bRegister == 0 || bRegister == 1))
+   {
+      BYTE bValue = 0;
+      m_portHandler->ReadDataPort(bRegister, bValue);
+
+      m_abRegister[bRegister & 15] = bValue;
+   }
 
    return m_abRegister[bRegister & 15];
 }

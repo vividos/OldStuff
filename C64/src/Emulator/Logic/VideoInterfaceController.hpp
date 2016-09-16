@@ -102,7 +102,7 @@ private:
    void RenderSprites(BYTE abScanline[0x0200]);
 
    // virtual methods from ICIAPortHandler
-   virtual void SetDataPort(BYTE bValue);
+   virtual void SetDataPort(BYTE portNumber, BYTE value);
 
 private:
    /// reference to memory manager to use

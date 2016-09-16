@@ -15,17 +15,17 @@ Keyboard::Keyboard()
 {
 }
 
-void Keyboard::SetDataPort(BYTE bValue) throw()
+void Keyboard::SetDataPort(BYTE portNumber, BYTE bValue) throw()
 {
    bValue;
 }
 
-void Keyboard::SetDataDirection(BYTE bValue) throw()
+void Keyboard::SetDataDirection(BYTE portNumber, BYTE bValue) throw()
 {
    bValue;
 }
 
-bool Keyboard::ReadDataPort(BYTE& bValue) const throw()
+void Keyboard::ReadDataPort(BYTE portNumber, BYTE& bValue) const throw()
 {
    bValue;
    return true;
