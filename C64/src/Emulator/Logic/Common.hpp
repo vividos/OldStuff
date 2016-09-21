@@ -10,3 +10,9 @@
 
 /// creates a 16-bit word from two bytes, in little endian order
 WORD LE2WORD(BYTE bLow, BYTE bHigh);
+
+/// returns bit from value
+inline bool GetBit(BYTE value, BYTE numBit)
+{
+   return (value & (1 << numBit)) != 0;
+}
