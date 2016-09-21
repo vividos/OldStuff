@@ -844,7 +844,6 @@ void Processor6510::Branch(BYTE bOpcode)
    if (bNegate)
       bBranch = !bBranch;
 
-   BYTE bDistance = Load(m_wProgramCounter);
    WORD wAddr = FetchAddress(addrRelative);
 
    if (m_debugOutput)
