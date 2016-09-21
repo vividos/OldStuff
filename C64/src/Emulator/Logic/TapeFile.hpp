@@ -29,6 +29,9 @@ public:
    /// dtor
    ~TapeFile() throw() {}
 
+   /// returns number of tape files available
+   size_t NumTapeFiles() const throw() { return m_vecTapeEntries.size();  }
+
    /// loads a tape file entry to RAM, using stored load memory address
    bool Load(unsigned int uiIndex, std::vector<BYTE>& vecMemory);
 
