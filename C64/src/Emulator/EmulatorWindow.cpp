@@ -14,6 +14,7 @@
 #include "TapeFile.hpp"
 #include "PC64File.hpp"
 #include "EliteProcessorCallback.hpp"
+#include <SDL_syswm.h>
 
 /// C64 color map
 std::array<Uint8, 16 * 3> colormap =
@@ -159,6 +160,8 @@ void EmulatorWindow::InitSDL()
       return;
    }
 
+   SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
+
    int width = 0x0200, height = 312;
 
    m_window.reset(new RenderWindow2D(width, height, false, _T("Scale2x"), 2));
@@ -207,6 +210,17 @@ void EmulatorWindow::OnEvent(SDL_Event& evt)
 {
    switch (evt.type)
    {
+   case SDL_SYSWMEVENT:
+   {
+      SDL_SysWMmsg& msg = *evt.syswm.msg;
+      if (msg.msg.win.msg == WM_KEYDOWN ||
+         msg.msg.win.msg == WM_KEYUP)
+      {
+         OnKeyMessage(msg);
+      }
+   }
+   break;
+
    case SDL_KEYDOWN:
       // handle key presses
       if (evt.key.keysym.sym == SDLK_x &&
@@ -222,6 +236,31 @@ void EmulatorWindow::OnEvent(SDL_Event& evt)
    default:
       break;
    }
+}
+
+void EmulatorWindow::OnKeyMessage(const SDL_SysWMmsg& msg)
+{
+   // only handle virtual keycodes with 8 bit
+   BYTE keyCode = static_cast<BYTE>(msg.msg.win.wParam & 0xFF);
+
+   bool shiftState = ::GetKeyState(VK_SHIFT) != 0;
+
+   if (keyCode == VK_SHIFT)
+   {
+      if (::GetKeyState(VK_LSHIFT) != 0)
+      {
+         keyCode = VK_LSHIFT;
+      }
+      if (::GetKeyState(VK_RSHIFT) != 0)
+      {
+         keyCode = VK_RSHIFT;
+      }
+   }
+
+   m_emulator.GetKeyboard().SetKeyState(
+      keyCode,
+      msg.msg.win.msg == WM_KEYDOWN,
+      shiftState);
 }
 
 void EmulatorWindow::OutputLine(WORD wRasterline, BYTE abLine[0x0200])

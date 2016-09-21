@@ -14,6 +14,7 @@
 // forward references
 class RenderWindow2D;
 class PalettedSurface;
+struct SDL_SysWMmsg;
 
 /// main emulator window
 class EmulatorWindow:
@@ -53,6 +54,9 @@ private:
 
    /// called on new event
    virtual void OnEvent(SDL_Event& evt) override;
+
+   /// called when a system key message has been received
+   void OnKeyMessage(const SDL_SysWMmsg& msg);
 
 private:
    /// C64 emulator machine
