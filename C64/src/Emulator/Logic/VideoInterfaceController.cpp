@@ -194,7 +194,7 @@ void VideoInterfaceController::Step()
       // next rasterline
       m_wRasterline++;
 
-      if (m_wRasterline == c_wMaxRasterline)
+      if (m_wRasterline >= c_wMaxRasterline)
       {
          m_wRasterline = 0;
 
@@ -250,6 +250,10 @@ void VideoInterfaceController::NextRasterline()
 
    // calculate next cycle value
    m_uiNextRasterlineCycle += c_uiNumCyclesPerRasterline;
+
+   // steal 40 cycles for character data reads when a bad line condition is true
+   if (m_bBadLine)
+      m_uiNextRasterlineCycle -= 40;
 
    // check for rasterline interrupt
    if ((m_abRegister[vicRegD01A] & vicInterruptRaster) != 0 && // raster IRQ bit must be set
@@ -308,9 +312,6 @@ void VideoInterfaceController::RenderLine()
    RenderSprites(abScanline);
 
    m_pVideoOutputDevice->OutputLine(m_wRasterline, abScanline);
-
-   // TODO steal some cycles from the processor if needed
-   // steal 40 cycles for character data reads, e.g. when a bad line condition is true
 }
 
 void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BYTE abScanline[0x0200])
