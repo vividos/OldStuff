@@ -194,20 +194,11 @@ void EmulatorWindow::OnRender()
 {
    m_screenUpdated = false;
 
-#ifdef _DEBUG
-   unsigned int t1 = SDL_GetTicks();
-#endif
-
    while (!m_screenUpdated)
    {
       m_emulator.GetVideoInterfaceController().Step();
       m_emulator.GetProcessor().Step();
    }
-
-#ifdef _DEBUG
-   unsigned int t2 = SDL_GetTicks();
-   ATLTRACE(_T("line %u took %u ms to render\n"), m_lineCount, t2 - t1);
-#endif
 
    m_lineUpdated = false;
 
