@@ -623,6 +623,8 @@ void Processor6510::LoadRegister(RegisterID enRegisterID, AddressingMode enAddre
          enAddressingMode != addrZeropage &&
          enAddressingMode != addrAbsolute)
          m_opcodeText.AppendFormat(_T(" (from $%04x)"), wAddr);
+
+      m_opcodeText.AppendFormat(_T(" (new value #$%02x)"), bValue);
    }
 
    SetRegister(enRegisterID, bValue);
@@ -846,7 +848,7 @@ void Processor6510::Branch(BYTE bOpcode)
    WORD wAddr = FetchAddress(addrRelative);
 
    if (m_debugOutput)
-      m_opcodeText.AppendFormat(_T("$%04x   ($%02x)"), wAddr, bDistance);
+      m_opcodeText.AppendFormat(_T("$%04x"), wAddr);
 
    if (bBranch)
    {
@@ -862,7 +864,7 @@ void Processor6510::Branch(BYTE bOpcode)
    else
    {
       if (m_debugOutput)
-         m_opcodeText.AppendFormat(_T(" (not taken)"));
+         m_opcodeText.AppendFormat(_T("   (not taken)"));
    }
 }
 
@@ -910,6 +912,9 @@ void Processor6510::LogicalOperation(C64::LogicalOperation enLogicalOperation, A
    // set flags
    SetFlag(flagZero, bResult == 0);
    SetFlag(flagNegative, (bResult & 0x80) != 0);
+
+   if (m_debugOutput)
+      m_opcodeText.AppendFormat(_T("        (new value #$%02x)"), bResult);
 
    // count cycles; add extra cycle when page boundary is crossed
    if (enAddressingMode == addrIndirectZeropageIndexedY ||
@@ -1059,6 +1064,9 @@ void Processor6510::ArithmeticOperation(C64::ArithmeticOperation enArithmeticOpe
 
    SetRegister(regA, bResult);
 
+   if (m_debugOutput)
+      m_opcodeText.AppendFormat(_T("        (new value #$%02x)"), bResult);
+
    // count cycles; add extra cycle when page boundary is crossed
    if (enAddressingMode == addrIndirectZeropageIndexedY ||
       enAddressingMode == addrAbsoluteIndexedX ||
@@ -1124,6 +1132,9 @@ void Processor6510::ShiftOperation(C64::ShiftOperation enShiftOperation, Address
       SetRegister(regA, bResult);
    else
       Store(wAddr, bResult);
+
+   if (m_debugOutput)
+      m_opcodeText.AppendFormat(_T("        (new value #$%02x)"), bResult);
 
    // set flags
    SetFlag(flagZero, bResult == 0);
