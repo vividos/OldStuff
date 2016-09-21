@@ -11,6 +11,7 @@
 #include "Processor6510.hpp"
 #include "VideoInterfaceController.hpp"
 #include "ComplexInterfaceAdapter.hpp"
+#include "Keyboard.hpp"
 
 namespace C64
 {
@@ -36,6 +37,9 @@ public:
    /// returns VIC
    VideoInterfaceController& GetVideoInterfaceController() throw() { return m_vic; }
 
+   /// returns keyboard
+   Keyboard& GetKeyboard() throw() { return m_keyboard; }
+
    /// runs emulator indefinitely
    void Run();
 
@@ -45,6 +49,7 @@ private:
    VideoInterfaceController m_vic;  ///< VIC chip
    ComplexInterfaceAdapter m_cia1;  ///< CIA chip 1
    ComplexInterfaceAdapter m_cia2;  ///< CIA chip 2
+   Keyboard m_keyboard;             ///< keyboard
 };
 
 } // namespace C64

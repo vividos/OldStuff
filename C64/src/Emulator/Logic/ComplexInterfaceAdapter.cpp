@@ -16,8 +16,11 @@ ComplexInterfaceAdapter::ComplexInterfaceAdapter()
 {
    memset(m_abRegister, 0, sizeof(m_abRegister));
 
-   m_abRegister[0] = 0xff;
-   m_abRegister[1] = 0xff;
+   m_abRegister[0] = 0xff; // port A
+   m_abRegister[1] = 0xff; // port B
+
+   m_abRegister[2] = 0xff; // direction port A
+   m_abRegister[3] = 0x00; // direction port B
 }
 
 void ComplexInterfaceAdapter::SetRegister(BYTE bRegister, BYTE bValue)
