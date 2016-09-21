@@ -71,6 +71,12 @@ private:
    /// surface
    std::unique_ptr<PalettedSurface> m_surface;
 
+   /// width of window
+   unsigned int m_windowWidth;
+
+   /// height of window
+   unsigned int m_windowHeight;
+
    /// set to true when a new line was output
    bool m_lineUpdated;
 

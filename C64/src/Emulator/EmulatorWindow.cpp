@@ -15,6 +15,7 @@
 #include "PC64File.hpp"
 #include "EliteProcessorCallback.hpp"
 #include <SDL_syswm.h>
+#include <algorithm>
 
 /// C64 color map
 std::array<Uint8, 16 * 3> colormap =
@@ -40,13 +41,13 @@ std::array<Uint8, 16 * 3> colormap =
 EmulatorWindow::EmulatorWindow(C64::Machine& emulator)
    :MainGameLoop(true, _T("C64 Emulator")),
    m_emulator(emulator),
+   m_windowWidth(403), // PAL VIC
+   m_windowHeight(312), // PAL VIC
    m_lineUpdated(false),
    m_screenUpdated(false),
    m_lineCount(0)
 {
    _ftprintf(stdout, _T("C64 Emulator\n"));
-
-   InitSDL();
 
    m_emulator.GetVideoInterfaceController().SetVideoOutputDevice(this);
 }
@@ -96,6 +97,13 @@ void EmulatorWindow::Load(LPCTSTR filename)
 
 void EmulatorWindow::Run()
 {
+   if (m_emulator.GetVideoInterfaceController().GetShowDebugInfo())
+   {
+      m_windowWidth = 480; // show extended VIC infos
+   }
+
+   InitSDL();
+
    WORD startProgramCounter = FindBasicSysCommand(0x0801);
 
    if (startProgramCounter == 0)
@@ -162,7 +170,8 @@ void EmulatorWindow::InitSDL()
 
    SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
 
-   int width = 0x0200, height = 312;
+   int width = m_windowWidth + (m_windowWidth & 1);
+   int height = m_windowHeight + (m_windowHeight & 1);
 
    m_window.reset(new RenderWindow2D(width, height, false, _T("Scale2x"), 2));
    if (m_window == nullptr)
@@ -268,9 +277,9 @@ void EmulatorWindow::OutputLine(WORD wRasterline, BYTE abLine[0x0200])
    Uint8* pixels = (Uint8*)m_surface->Data();
    pixels += wRasterline * m_surface->Width();
 
-   memcpy(pixels, abLine, 0x0200);
+   size_t lineWidth = std::min<size_t>(0x0200, m_surface->Width());
 
-//   m_window->Blit(0, 0, *m_surface);
+   memcpy(pixels, abLine, lineWidth);
 
    m_lineUpdated = true;
    m_lineCount++;
