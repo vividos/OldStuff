@@ -50,6 +50,7 @@ VideoInterfaceController::VideoInterfaceController(C64::MemoryManager& memoryMan
  m_uiNextRasterlineCycle(0),
  m_wMemoryStart(0), // bank 0, 0x0000-0x3fff
  m_bVerticalBorderFlipFlop(true),
+ m_showDebugInfo(false),
  m_pVideoOutputDevice(NULL)
 {
    memset(m_abRegister, 0, sizeof(m_abRegister));
@@ -275,17 +276,27 @@ void VideoInterfaceController::RenderLine()
    // 1. check if vertical border flipflop is set
    if (m_bVerticalBorderFlipFlop)
    {
+      if (m_showDebugInfo)
+      {
+         // columns 420-430: vertical border: red
+         for (unsigned int i = 420; i < 430; i++)
+            abScanline[i] = 2;
+      }
+
       m_pVideoOutputDevice->OutputLine(m_wRasterline, abScanline);
       return; // when yes, leave now, since the line consists of the border color only
+   }
+
+   if (m_showDebugInfo)
+   {
+      // columns 420-430: bad line condition black/lightblue
+      for (unsigned int i = 420; i < 430; i++)
+         abScanline[i] = m_bBadLine ? 0 : 14;
    }
 
    // 2. check if character or graphics mode, bit 5
    bool bBMM = (m_abRegister[vicRegD011] & (1 << 5)) != 0;
 
-/*
-   for(unsigned int i=0; i<0x0200; i++)
-      abScanline[i] = m_bBadLine ? 0 : (i+m_wRasterline) & 15;
-*/
    WORD wXStart = 40;
    WORD wYPos = m_wRasterline-0x30-4;
 
@@ -375,6 +386,13 @@ void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BY
             bBitLine <<= 1;
          }
       }
+   }
+
+   if (m_showDebugInfo)
+   {
+      // columns 430-440: bitmap mode, monochrome: cyan, multicolor: pink
+      for (unsigned int i = 430; i < 440; i++)
+         abScanline[i] = bMCM ? 3 : 4;
    }
 }
 
@@ -482,6 +500,14 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
             bBitLine <<= 1;
          }
       }
+   }
+
+   if (m_showDebugInfo)
+   {
+      // columns 430-440: character mode;
+      // multicolor: blue, extended multicolor: green, monochrome: yellow
+      for (unsigned int i = 430; i < 440; i++)
+         abScanline[i] = bMCM ? (bECM ? 5 : 6) : 7;
    }
 }
 

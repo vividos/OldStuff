@@ -50,6 +50,18 @@ public:
    {
    }
 
+   /// sets flag "show debug info" to show more infos in columns 440-480
+   void SetShowDebugInfo(bool showDebugInfo) throw()
+   {
+      m_showDebugInfo = showDebugInfo;
+   }
+
+   /// returns flag "show debug info"
+   bool GetShowDebugInfo() const throw()
+   {
+      return m_showDebugInfo;
+   }
+
    /// sets video output device for VIC render output
    void SetVideoOutputDevice(IVideoOutputDevice* pVideoOutputDevice)
    {
@@ -137,6 +149,9 @@ private:
 
    /// set when DEN bit was set in raster line $30
    bool m_bDENSetInRaster30;
+
+   /// indicates if VIC should draw debug infos in columns 440-480
+   bool m_showDebugInfo;
 
    /// pointer to a video output device
    IVideoOutputDevice* m_pVideoOutputDevice;
