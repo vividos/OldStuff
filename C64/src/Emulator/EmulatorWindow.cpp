@@ -148,6 +148,10 @@ WORD EmulatorWindow::FindBasicSysCommand(WORD startAddress)
          WORD numberAddress = currentAddress + 5;
          while (numberAddress < currentAddress + 5 + 5)
          {
+            // eat leading spaces
+            while (memoryManager.Peek(numberAddress) == 0x20)
+               numberAddress++;
+
             BYTE numberChar = memoryManager.Peek(numberAddress++);
             if (numberChar >= 0x30 && numberChar <= 0x39)
                address += static_cast<char>(numberChar);
