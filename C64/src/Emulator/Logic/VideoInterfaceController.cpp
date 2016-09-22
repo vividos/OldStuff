@@ -531,9 +531,129 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
 
 void VideoInterfaceController::RenderSprites(BYTE abScanline[0x0200])
 {
-   abScanline;
-   // TODO
-   // TODO steal 2 cycles from the processor for every sprite shown in this line
+   WORD wVideoMem = m_wMemoryStart + (static_cast<WORD>(m_abRegister[vicRegD018] & 0xf0) << 6);
+
+   // array indicating if a sprite pixel was already set
+   // used to implement sprite priority
+   bool pixelAlreadySet[0x0200];
+   std::uninitialized_fill(std::begin(pixelAlreadySet), std::end(pixelAlreadySet), false);
+
+   for (BYTE spriteNr = 0; spriteNr < 8; spriteNr++)
+   {
+      bool enabled = (m_abRegister[vicRegD015] & (1 << spriteNr)) != 0;
+
+      if (!enabled)
+         continue;
+
+      // X/Y interleaved
+      unsigned int posX = m_abRegister[vicRegD000 + spriteNr * 2];
+      unsigned int posY = m_abRegister[vicRegD001 + spriteNr * 2];
+
+      if (GetBit(m_abRegister[vicRegD010], spriteNr))
+         posX += 0x100;
+
+      BYTE spriteHeight = 21;
+      BYTE spriteWidth = 24;
+
+      bool bitMxXE = GetBit(m_abRegister[vicRegD01D], spriteNr); // X expansion
+      if (bitMxXE)
+         spriteWidth *= 2;
+
+      bool bitMxYE = GetBit(m_abRegister[vicRegD017], spriteNr); // Y expansion
+      if (bitMxYE)
+         spriteHeight *= 2;
+
+      bool shownInThisLine =
+         m_wRasterline >= posY && m_wRasterline < posY + spriteHeight;
+
+      if (m_showDebugInfo)
+      {
+         // columns 460-476, 2 colums per sprite
+         // sprite: on: white, off: black
+         abScanline[460 + spriteNr * 2 + 0] = shownInThisLine ? 1 : 0;
+         abScanline[460 + spriteNr * 2 + 1] = shownInThisLine ? 1 : 0;
+      }
+
+      if (!shownInThisLine)
+         continue;
+
+      bool bitMxMC = GetBit(m_abRegister[vicRegD01C], spriteNr);
+
+      BYTE spriteColor = m_abRegister[vicRegD027 + spriteNr] & 0xF;
+
+      BYTE spriteMultiColor0 = m_abRegister[vicRegD025] & 0xF;
+      BYTE spriteMultiColor1 = m_abRegister[vicRegD026] & 0xF;
+
+      WORD spriteIndexAddr = wVideoMem + 0x03F8 + spriteNr;
+
+      BYTE spriteIndex = m_memoryManager.GetRAM()[spriteIndexAddr];
+
+      WORD spriteDataBaseAddr = m_wMemoryStart + (spriteIndex << 6);
+
+      BYTE spriteLine = static_cast<BYTE>((m_wRasterline - posY) & 0xFF);
+      if (bitMxYE)
+         spriteLine /= 2;
+      ATLASSERT(spriteLine < 21);
+
+      WORD spriteDataAddr = spriteDataBaseAddr + spriteLine * 3;
+
+      const BYTE* spriteDataPtr = &m_memoryManager.GetRAM()[spriteDataAddr];
+      DWORD spriteData =
+         (DWORD(spriteDataPtr[0]) << 16) |
+         (DWORD(spriteDataPtr[1]) << 8) |
+         DWORD(spriteDataPtr[2]);
+
+      if (spriteData == 0)
+         continue; // shortcut: nothing to render
+
+      // render sprite
+      for (BYTE spritePosX = 0; spritePosX < spriteWidth; spritePosX++)
+      {
+         // calculate logical column in sprite
+         BYTE spriteColumn = spritePosX;
+         if (bitMxXE)
+            spriteColumn /= 2;
+
+         unsigned int currentPosX = posX + spritePosX;
+         if (currentPosX > 403)
+            break; // beyond VIC width; skip rest of line
+
+         if (bitMxMC)
+         {
+            // multicolor
+            BYTE spriteMultiColumn = spriteColumn - (spriteColumn & 1);
+            BYTE colorIndex = (spriteData >> (24 - spriteMultiColumn - 2)) & 3;
+
+            if (colorIndex > 0)
+            {
+               if (!pixelAlreadySet[currentPosX])
+               {
+                  BYTE color =
+                     colorIndex == 1 ? spriteMultiColor0 :
+                     colorIndex == 2 ? spriteColor : spriteMultiColor1;
+
+                  abScanline[currentPosX] = color;
+                  pixelAlreadySet[currentPosX] = true;
+               }
+            }
+         }
+         else
+         {
+            // monochrome
+            bool colorBit = ((spriteData >> (24 - spriteColumn - 1)) & 1) != 0;
+
+            if (colorBit &&
+               !pixelAlreadySet[currentPosX])
+            {
+               abScanline[currentPosX] = spriteColor;
+               pixelAlreadySet[currentPosX] = true;
+            }
+         }
+      }
+
+      // steal 2 cycles from the processor for every sprite shown in this line
+      m_uiNextRasterlineCycle -= 2;
+   }
 }
 
 void VideoInterfaceController::SetDataPort(BYTE portNumber, BYTE bValue)

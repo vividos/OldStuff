@@ -16,18 +16,31 @@ class MemoryManager;
 class Processor6510;
 class IVideoOutputDevice;
 
+/// VIC register names
+/// \see http://www.cebix.net/VIC-Article.txt
 enum VICRegisterNames
 {
+   vicRegD000 = 0x00,   ///< MxX: Sprite X position register start
+   vicRegD001 = 0x01,   ///< MxY: Sprite Y position register start
+   vicRegD010 = 0x10,   ///< MxX8: Sprite X position bit 8 for all sprites
    vicRegD011 = 0x11,   ///< Control register 1
-   vicRegD012 = 0x12,   ///< Raster counter
+   vicRegD012 = 0x12,   ///< RASTER: Raster counter
+   vicRegD015 = 0x15,   ///< MxE: Sprite enable register
    vicRegD016 = 0x16,   ///< Control register 2
-   vicRegD018 = 0x18,   ///< 
+   vicRegD017 = 0x17,   ///< MxYE: Sprite Y expansion flags
+   vicRegD018 = 0x18,   ///< VIC memory layout
    vicRegD019 = 0x19,   ///< Interrupt register
    vicRegD01A = 0x1a,   ///< Interrupt enabled
-   vicRegD020 = 0x20,   ///< Border color
-   vicRegD021 = 0x21,   ///< Background color 0
-   vicRegD022 = 0x22,   ///< Background color 1
-   vicRegD023 = 0x23,   ///< Background color 2
+   vicRegD01B = 0x1b,   ///< MxDP: Sprite background priority
+   vicRegD01C = 0x1c,   ///< MxMC: Sprite Multicolor flags
+   vicRegD01D = 0x1d,   ///< MxXE: Sprite X expansion flags
+   vicRegD020 = 0x20,   ///< EC: Border color
+   vicRegD021 = 0x21,   ///< B0C: Background color 0
+   vicRegD022 = 0x22,   ///< B1C: Background color 1
+   vicRegD023 = 0x23,   ///< B2C: Background color 2
+   vicRegD025 = 0x25,   ///< MM0: Sprite multicolor 0
+   vicRegD026 = 0x26,   ///< MM1: Sprite multicolor 1
+   vicRegD027 = 0x27,   ///< MxC: Sprite color start
 };
 
 enum VICInterruptType
@@ -38,8 +51,10 @@ enum VICInterruptType
    vicInterruptLightpen = 8,                    ///< interrupt triggered by lightpen (unused)
 };
 
-/// Video interface controller (VIC) chip implementation
-/// a.k.a VIC-II
+/// \brief Video interface controller (VIC) chip implementation
+/// \details a.k.a VIC-II
+/// \see http://www.cebix.net/VIC-Article.txt
+/// \see https://sh.scs-trc.net/vic/
 class VideoInterfaceController: public ICIAPortHandler
 {
 public:
