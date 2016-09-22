@@ -28,7 +28,7 @@ public:
    ~EmulatorWindow();
 
    /// loads .t64 or .p00 file into memory
-   void Load(LPCTSTR filename);
+   void Load(LPCTSTR filename, unsigned int entryIndex);
 
    /// runs loaded C64 program
    void Run();

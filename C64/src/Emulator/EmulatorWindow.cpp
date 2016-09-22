@@ -47,8 +47,6 @@ EmulatorWindow::EmulatorWindow(C64::Machine& emulator)
    m_screenUpdated(false),
    m_lineCount(0)
 {
-   _ftprintf(stdout, _T("C64 Emulator\n"));
-
    m_emulator.GetVideoInterfaceController().SetVideoOutputDevice(this);
 }
 
@@ -59,7 +57,7 @@ EmulatorWindow::~EmulatorWindow()
    SDL_Quit();
 }
 
-void EmulatorWindow::Load(LPCTSTR filename)
+void EmulatorWindow::Load(LPCTSTR filename, unsigned int entryIndex)
 {
    _ftprintf(stdout, _T("Loading %s...\n"), filename);
 
@@ -71,7 +69,15 @@ void EmulatorWindow::Load(LPCTSTR filename)
    {
       C64::TapeFile tf(lowerFilename);
 
-      tf.Load(0, m_emulator.GetMemoryManager().GetRAM());
+      if (entryIndex == -1)
+      {
+         for (size_t tapeIndex = 0; tapeIndex < tf.NumTapeFiles(); tapeIndex++)
+            tf.Load(tapeIndex, m_emulator.GetMemoryManager().GetRAM());
+      }
+      else
+      {
+         tf.Load(entryIndex, m_emulator.GetMemoryManager().GetRAM());
+      }
    }
    else
       if (lowerFilename.Right(4) == ".p00" ||

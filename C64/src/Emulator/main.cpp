@@ -7,21 +7,29 @@
 
 // includes
 #include "stdafx.h"
+#include "EmulatorOptions.hpp"
 #include "EmulatorWindow.hpp"
 
 /// main function
 int _tmain(int argc, _TCHAR* argv[])
 {
+   _ftprintf(stdout, _T("C64 Emulator\n\n"));
+
+   EmulatorOptions options;
+   options.Parse(argc, argv);
+
+   if (options.IsSelectedHelpOption())
+      return 0;
+
    C64::Machine machine;
    EmulatorWindow window(machine);
 
-   if (argc != 2)
+   if (options.DebugMode())
    {
-      _ftprintf(stderr, _T("Syntax:\n   Emulator.exe {.t64-or-.prg-or-.p00-file}"));
-      return 1;
+      machine.GetVideoInterfaceController().SetShowDebugInfo(true);
    }
 
-   window.Load(argv[1]);
+   window.Load(options.Filename(), options.EntryIndex());
 
    window.Run();
 

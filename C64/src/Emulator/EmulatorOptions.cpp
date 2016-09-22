@@ -1,0 +1,33 @@
+//
+// c64emu - C64 Emulator using SDL
+// Copyright (C) 2006-2016 Michael Fink
+//
+/// \file EmulatorOptions.cpp Emulator command line options
+//
+
+// includes
+#include "stdafx.h"
+#include "EmulatorOptions.hpp"
+
+EmulatorOptions::EmulatorOptions()
+   :m_entryIndex(0),
+   m_debugMode(false)
+{
+   RegisterOutputHandler(&ProgramOptions::OutputConsole);
+   RegisterHelpOption();
+
+   RegisterOption(_T("l"), _T("load"), _T("loads specified tape (.t64) or program file (.p00)"), m_filename);
+
+   RegisterOption(_T("e"), _T("entry"), _T("specifies an entry number when loading a tape (.t64) file; specify * to load all entries from a tape image"),
+      [&](const CString& arg) -> bool
+   {
+      if (arg == "*")
+         m_entryIndex = -1; // load all entries
+      else
+         m_entryIndex = _ttoi(arg);
+
+      return true;
+   });
+
+   RegisterOption(_T("d"), _T("debug"), _T("runs emulator in debug mode, showing VIC status infos"), m_debugMode);
+}

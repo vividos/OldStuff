@@ -88,16 +88,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CommandLineParser.cpp" />
+    <ClCompile Include="EmulatorOptions.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="EmulatorWindow.cpp" />
+    <ClCompile Include="ProgramOptions.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommandLineParser.hpp" />
     <ClInclude Include="EliteProcessorCallback.hpp" />
+    <ClInclude Include="EmulatorOptions.hpp" />
     <ClInclude Include="EmulatorWindow.hpp" />
+    <ClInclude Include="ProgramOptions.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
