@@ -61,7 +61,9 @@ public:
    /// called when processor made a step
    virtual void OnStep() override
    {
-      if (m_emulator.GetProcessor().GetProgramCounter() == 0x0844)
+      WORD wPC = m_emulator.GetProcessor().GetProgramCounter();
+
+      if (wPC == 0x0844)
       {
          m_emulator.GetMemoryManager().Poke(0x00c6, 1);
       }
