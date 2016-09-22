@@ -11,7 +11,8 @@
 
 EmulatorOptions::EmulatorOptions()
    :m_entryIndex(0),
-   m_debugMode(false)
+   m_debugMode(false),
+   m_startProgramCounter(0x0000)
 {
    RegisterOutputHandler(&ProgramOptions::OutputConsole);
    RegisterHelpOption();
@@ -25,6 +26,20 @@ EmulatorOptions::EmulatorOptions()
          m_entryIndex = -1; // load all entries
       else
          m_entryIndex = _ttoi(arg);
+
+      return true;
+   });
+
+   RegisterOption(_T("s"), _T("sys"), _T("sets start program counter, in decimal (e.g. 2064) or hex ($0820, 0x0820)"),
+      [&](const CString& arg) -> bool
+   {
+      if (arg.Find(_T("$")) != -1)
+         m_startProgramCounter = _tcstoul(arg.Mid(1), nullptr, 16);
+      else
+         if (arg.Find(_T("0x")) != -1)
+            m_startProgramCounter = _tcstoul(arg.Mid(2), nullptr, 16);
+         else
+            m_startProgramCounter = _ttoi(arg);
 
       return true;
    });

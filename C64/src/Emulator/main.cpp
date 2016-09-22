@@ -29,6 +29,11 @@ int _tmain(int argc, _TCHAR* argv[])
       machine.GetVideoInterfaceController().SetShowDebugInfo(true);
    }
 
+   if (options.StartProgramCounter() != 0)
+   {
+      window.SetStartProgramCounter(options.StartProgramCounter());
+   }
+
    window.Load(options.Filename(), options.EntryIndex());
 
    window.Run();

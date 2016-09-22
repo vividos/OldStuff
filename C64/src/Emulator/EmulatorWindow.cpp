@@ -110,15 +110,18 @@ void EmulatorWindow::Run()
 
    InitSDL();
 
-   WORD startProgramCounter = FindBasicSysCommand(0x0801);
-
-   if (startProgramCounter == 0)
+   if (m_startProgramCounter == 0x0000)
    {
-      _ftprintf(stderr, _T("couldn't find basic SYS command, searching from 0x0801\n"));
-      return;
+      m_startProgramCounter = FindBasicSysCommand(0x0801);
+
+      if (m_startProgramCounter == 0)
+      {
+         _ftprintf(stderr, _T("couldn't find basic SYS command, searching from 0x0801\n"));
+         return;
+      }
    }
 
-   m_emulator.GetProcessor().SetProgramCounter(startProgramCounter);
+   m_emulator.GetProcessor().SetProgramCounter(m_startProgramCounter);
 
    if (m_processorCallback != nullptr)
       m_emulator.GetProcessor().AddProcessorCallback(m_processorCallback.get());

@@ -30,6 +30,12 @@ public:
    /// loads .t64 or .p00 file into memory
    void Load(LPCTSTR filename, unsigned int entryIndex);
 
+   /// sets start program counter
+   void SetStartProgramCounter(WORD startProgramCounter)
+   {
+      m_startProgramCounter = startProgramCounter;
+   }
+
    /// runs loaded C64 program
    void Run();
 
@@ -49,6 +55,9 @@ private:
    /// called to update caption
    virtual void UpdateCaption(const CString& caption) override;
 
+   /// processes one scren frame
+   virtual void OnTick() override;
+
    /// renders screen
    virtual void OnRender() override;
 
@@ -61,6 +70,9 @@ private:
 private:
    /// C64 emulator machine
    C64::Machine& m_emulator;
+
+   /// start program counter, or 0 when a SYS command should be searched
+   WORD m_startProgramCounter;
 
    /// processor callback; may be null
    std::shared_ptr<C64::IProcessorCallback> m_processorCallback;

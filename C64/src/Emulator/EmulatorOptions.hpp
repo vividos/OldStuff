@@ -25,6 +25,9 @@ public:
    /// returns if debug mode is on
    bool DebugMode() const throw() { return m_debugMode; }
 
+   /// returns start program counter, or 0 when none was set
+   WORD StartProgramCounter() const throw() { return m_startProgramCounter; }
+
 private:
    /// filename of file to load
    CString m_filename;
@@ -34,4 +37,7 @@ private:
 
    /// indicates if debug mode is on
    bool m_debugMode;
+
+   /// start program counter
+   WORD m_startProgramCounter;
 };
