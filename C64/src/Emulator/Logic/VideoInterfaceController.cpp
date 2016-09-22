@@ -45,16 +45,16 @@ const WORD c_wHorizontalBorderRightCSEL1 = 0x157;
 
 
 VideoInterfaceController::VideoInterfaceController(C64::MemoryManager& memoryManager, C64::Processor6510& processor)
-:m_memoryManager(memoryManager),
- m_processor(processor),
- m_wRasterline(0),
- m_wInterruptRasterline(0xffff), // -1 is for "none"
- m_vecColorRam(0x0400),
- m_uiNextRasterlineCycle(0),
- m_wMemoryStart(0), // bank 0, 0x0000-0x3fff
- m_bVerticalBorderFlipFlop(true),
- m_showDebugInfo(false),
- m_pVideoOutputDevice(NULL)
+   :m_memoryManager(memoryManager),
+   m_processor(processor),
+   m_wRasterline(0),
+   m_wInterruptRasterline(0xffff), // -1 is for "none"
+   m_vecColorRam(0x0400),
+   m_uiNextRasterlineCycle(0),
+   m_wMemoryStart(0), // bank 0, 0x0000-0x3fff
+   m_bVerticalBorderFlipFlop(true),
+   m_showDebugInfo(false),
+   m_pVideoOutputDevice(NULL)
 {
    memset(m_abRegister, 0, sizeof(m_abRegister));
 
@@ -211,17 +211,6 @@ void VideoInterfaceController::Step()
 
 void VideoInterfaceController::NextRasterline()
 {
-/*
-   static bool s_bTrace = false;
-
-   if (m_wRasterline == 0)
-      ATLTRACE(_T("VIC: reached next screen\n"));
-   else
-//      if (s_bTrace)
-         ATLTRACE(_T("VIC: reached next raster line at %u\n"), m_wRasterline);
-*/
-
-
    // DEN is bit 4
    bool bDEN = (m_abRegister[vicRegD011] & (1 << 4)) != 0;
 
@@ -247,8 +236,8 @@ void VideoInterfaceController::NextRasterline()
       if (m_wRasterline == wBottomLine)
          m_bVerticalBorderFlipFlop = true;
       else
-      if ((m_wRasterline == wTopLine) && bDEN)
-         m_bVerticalBorderFlipFlop = false;
+         if ((m_wRasterline == wTopLine) && bDEN)
+            m_bVerticalBorderFlipFlop = false;
    }
 
    // calculate next cycle value
@@ -319,7 +308,7 @@ void VideoInterfaceController::RenderLine()
    bool bBMM = (m_abRegister[vicRegD011] & (1 << 5)) != 0;
 
    WORD wXStart = 40;
-   WORD wYPos = m_wRasterline-0x30-4;
+   WORD wYPos = m_wRasterline - 0x30 - 4;
 
    if (bBMM)
       RenderLineBitmapMode(wXStart, wYPos, abScanline);
@@ -365,7 +354,7 @@ void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BY
       abColors[0] = m_abRegister[vicRegD021] & 0x0f;
 
    // render 40 columns, 8 pixels per column (40*8 = 320)
-   for(WORD w = 0; w < 40; w++)
+   for (WORD w = 0; w < 40; w++)
    {
       if (bMCM)
       {
@@ -381,25 +370,25 @@ void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BY
          abColors[1] = pVideoMem[w] >> 4; // foreground: high nibble
       }
 
-      BYTE bBitLine = pLine[w*8];
+      BYTE bBitLine = pLine[w * 8];
 
       if (bMCM)
       {
-         for (unsigned int uiBit=0; uiBit<8; uiBit+=2)
+         for (unsigned int uiBit = 0; uiBit < 8; uiBit += 2)
          {
             // set pixels at position
-            abScanline[w*8 + uiBit + wXStart + 0] =
-            abScanline[w*8 + uiBit + wXStart + 1] = abColors[(bBitLine >> 6) & 3];
+            abScanline[w * 8 + uiBit + wXStart + 0] =
+               abScanline[w * 8 + uiBit + wXStart + 1] = abColors[(bBitLine >> 6) & 3];
 
             bBitLine <<= 2;
          }
       }
       else
       {
-         for (unsigned int uiBit=0; uiBit<8; uiBit++)
+         for (unsigned int uiBit = 0; uiBit < 8; uiBit++)
          {
             // set pixel at position
-            abScanline[w*8 + uiBit + wXStart] = abColors[(bBitLine >> 7) & 1];
+            abScanline[w * 8 + uiBit + wXStart] = abColors[(bBitLine >> 7) & 1];
 
             bBitLine <<= 1;
          }
@@ -444,7 +433,7 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
    // check if extended color mode, bit 6
    bool bECM = (m_abRegister[vicRegD011] & (1 << 6)) != 0;
 
-   BYTE abColors[4] = {0};
+   BYTE abColors[4] = { 0 };
 
    if (bMCM)
    {
@@ -490,34 +479,34 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
       // in MCM mode, bit 3 decides if character should be rendered in 
       if (bMCM && !bECM && bMCM_ColorBit3)
       {
-         for (unsigned int uiBit=0; uiBit<8; uiBit+=2)
+         for (unsigned int uiBit = 0; uiBit < 8; uiBit += 2)
          {
             // set pixels at position
-            abScanline[w*8 + uiBit + wXStart + 0] =
-            abScanline[w*8 + uiBit + wXStart + 1] = abColors[(bBitLine >> 6) & 3];
+            abScanline[w * 8 + uiBit + wXStart + 0] =
+               abScanline[w * 8 + uiBit + wXStart + 1] = abColors[(bBitLine >> 6) & 3];
 
             bBitLine <<= 2;
          }
       }
       else
-      if (bMCM && bECM)
-      {
-         __nop();
-         // TODO ecm mode
-      }
-      else
-      {
-         // standard mode, or MCM with bit 3 of the color value being unset
-
-         for (unsigned int uiBit=0; uiBit<8; uiBit++)
+         if (bMCM && bECM)
          {
-            // set pixel at position
-            if ((bBitLine & 0x80) != 0)
-               abScanline[w*8 + uiBit + wXStart] = abColors[0];
-
-            bBitLine <<= 1;
+            __nop();
+            // TODO ecm mode
          }
-      }
+         else
+         {
+            // standard mode, or MCM with bit 3 of the color value being unset
+
+            for (unsigned int uiBit = 0; uiBit < 8; uiBit++)
+            {
+               // set pixel at position
+               if ((bBitLine & 0x80) != 0)
+                  abScanline[w * 8 + uiBit + wXStart] = abColors[0];
+
+               bBitLine <<= 1;
+            }
+         }
    }
 
    if (m_showDebugInfo)
