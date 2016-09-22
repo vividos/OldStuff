@@ -17,6 +17,9 @@ using C64::VideoInterfaceController;
 /// maximum rasterline, excluding; note that on NTSC there are fewer rasterlines
 const WORD c_wMaxRasterline = 312;
 
+/// maximum raster column
+const WORD c_maxRasterColumn = 403;
+
 /// number of cycles per rasterline
 const unsigned int c_uiNumCyclesPerRasterline = 63;
 
@@ -274,8 +277,22 @@ void VideoInterfaceController::RenderLine()
       return; // no output device? no work to do
 
    BYTE abScanline[0x0200];
-   // fill with background color for now
-   memset(abScanline, m_abRegister[vicRegD020] & 0xf, sizeof(abScanline)/sizeof(*abScanline));
+   // fill with background color
+   memset(abScanline, m_abRegister[vicRegD020] & 0xf, c_maxRasterColumn + 1);
+
+   if (m_showDebugInfo)
+   {
+      // rest: fill with black
+      memset(abScanline + c_maxRasterColumn + 1, 0, 0x0200 - c_maxRasterColumn - 1);
+   }
+
+   if (m_showDebugInfo &&
+      m_wRasterline == m_wInterruptRasterline)
+   {
+      // columns 410-420: interrupt rasterline: white
+      for (unsigned int i = 410; i < 420; i++)
+         abScanline[i] = 1;
+   }
 
    // 1. check if vertical border flipflop is set
    if (m_bVerticalBorderFlipFlop)
