@@ -203,7 +203,7 @@ void EmulatorWindow::UpdateCaption(const CString& caption)
    m_window->SetCaption(caption);
 }
 
-void EmulatorWindow::OnRender()
+void EmulatorWindow::OnTick()
 {
    m_screenUpdated = false;
 
@@ -214,7 +214,10 @@ void EmulatorWindow::OnRender()
    }
 
    m_lineUpdated = false;
+}
 
+void EmulatorWindow::OnRender()
+{
    m_window->Blit(0, 0, *m_surface);
    m_window->Update();
 }
