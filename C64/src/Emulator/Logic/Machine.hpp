@@ -10,13 +10,12 @@
 #include "MemoryManager.hpp"
 #include "Processor6510.hpp"
 #include "VideoInterfaceController.hpp"
+#include "SoundInterfaceDevice.hpp"
 #include "ComplexInterfaceAdapter.hpp"
 #include "Keyboard.hpp"
 
 namespace C64
 {
-// forward references
-class VideoInterfaceController;
 
 /// C64 machine
 class Machine
@@ -37,6 +36,9 @@ public:
    /// returns VIC
    VideoInterfaceController& GetVideoInterfaceController() throw() { return m_vic; }
 
+   /// returns SID
+   SoundInterfaceDevice& GetSoundInterfaceDevice() throw() { return m_sid; }
+
    /// returns keyboard
    Keyboard& GetKeyboard() throw() { return m_keyboard; }
 
@@ -47,6 +49,7 @@ private:
    MemoryManager m_memoryManager;   ///< memory manager
    Processor6510 m_processor;       ///< processor
    VideoInterfaceController m_vic;  ///< VIC chip
+   SoundInterfaceDevice m_sid;      ///< SID chip
    ComplexInterfaceAdapter m_cia1;  ///< CIA chip 1
    ComplexInterfaceAdapter m_cia2;  ///< CIA chip 2
    Keyboard m_keyboard;             ///< keyboard

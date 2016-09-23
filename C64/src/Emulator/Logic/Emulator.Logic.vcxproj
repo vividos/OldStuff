@@ -90,6 +90,8 @@
     <ClInclude Include="PC64File.hpp" />
     <ClInclude Include="PETASCIIString.hpp" />
     <ClInclude Include="Processor6510.hpp" />
+    <ClInclude Include="SIDMemoryAdapter.hpp" />
+    <ClInclude Include="SoundInterfaceDevice.hpp" />
     <ClInclude Include="TapeFile.hpp" />
     <ClInclude Include="VICMemoryAdapter.hpp" />
     <ClInclude Include="VideoInterfaceController.hpp" />
@@ -105,6 +107,8 @@
     <ClCompile Include="PC64File.cpp" />
     <ClCompile Include="PETASCIIString.cpp" />
     <ClCompile Include="Processor6510.cpp" />
+    <ClCompile Include="SIDMemoryAdapter.cpp" />
+    <ClCompile Include="SoundInterfaceDevice.cpp" />
     <ClCompile Include="TapeFile.cpp" />
     <ClCompile Include="VICMemoryAdapter.cpp" />
     <ClCompile Include="VideoInterfaceController.cpp" />
