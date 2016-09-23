@@ -49,6 +49,8 @@ EmulatorWindow::EmulatorWindow(C64::Machine& emulator)
    m_screenUpdated(false),
    m_lineCount(0)
 {
+   InitSDL();
+
    m_emulator.GetVideoInterfaceController().SetVideoOutputDevice(this);
 }
 
@@ -115,7 +117,7 @@ void EmulatorWindow::Run()
       m_windowWidth = 480; // show extended VIC infos
    }
 
-   InitSDL();
+   CreateWindow();
 
    if (m_startProgramCounter == 0x0000)
    {
@@ -187,7 +189,10 @@ void EmulatorWindow::InitSDL()
       ATLTRACE(_T("couldn't init SDL\n"));
       return;
    }
+}
 
+void EmulatorWindow::CreateWindow()
+{
    SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
 
    int width = m_windowWidth + (m_windowWidth & 1);

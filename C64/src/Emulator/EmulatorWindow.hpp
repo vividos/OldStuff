@@ -52,6 +52,9 @@ private:
    /// initializes SDL
    void InitSDL();
 
+   /// creates the emulator window
+   void CreateWindow();
+
    // virtual methods from IVideoOutputDevice
    virtual void OutputLine(WORD wRasterline, BYTE abLine[0x0200]);
    virtual void ScreenCompleted();
