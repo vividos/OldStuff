@@ -43,7 +43,7 @@ EmulatorWindow::EmulatorWindow(C64::Machine& emulator)
    :MainGameLoop(true, _T("C64 Emulator")),
    m_emulator(emulator),
    m_windowWidth(403), // PAL VIC
-   m_windowHeight(312), // PAL VIC
+   m_windowHeight(284), // PAL VIC
    m_lineUpdated(false),
    m_screenUpdated(false),
    m_lineCount(0)
@@ -299,6 +299,8 @@ void EmulatorWindow::OnKeyMessage(const SDL_SysWMmsg& msg)
 
 void EmulatorWindow::OutputLine(WORD wRasterline, BYTE abLine[0x0200])
 {
+   ATLASSERT(wRasterline < m_windowHeight);
+
    Uint8* pixels = (Uint8*)m_surface->Data();
    pixels += wRasterline * m_surface->Width();
 

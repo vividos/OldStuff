@@ -17,6 +17,12 @@ using C64::VideoInterfaceController;
 /// maximum rasterline, excluding; note that on NTSC there are fewer rasterlines
 const WORD c_wMaxRasterline = 312;
 
+/// first rasterline (at the bottom) where vertical blank occurs
+const WORD c_firstVblankLine = 300;
+
+/// last rasterline (from top) where vertical blank occurs
+const WORD c_lastVblankLine = 15;
+
 /// maximum raster column
 const WORD c_maxRasterColumn = 403;
 
@@ -205,7 +211,11 @@ void VideoInterfaceController::Step()
             m_pVideoOutputDevice->ScreenCompleted();
       }
 
-      NextRasterline();
+      if (m_wRasterline > c_lastVblankLine &&
+          m_wRasterline < c_firstVblankLine)
+      {
+         NextRasterline();
+      }
    }
 }
 
@@ -291,7 +301,7 @@ void VideoInterfaceController::RenderLine()
          memset(abScanline + 420, 2, 10);
       }
 
-      m_pVideoOutputDevice->OutputLine(m_wRasterline, abScanline);
+      m_pVideoOutputDevice->OutputLine(m_wRasterline - c_lastVblankLine - 1, abScanline);
       return; // when yes, leave now, since the line consists of the border color only
    }
 
@@ -313,7 +323,7 @@ void VideoInterfaceController::RenderLine()
 
    RenderSprites(abScanline);
 
-   m_pVideoOutputDevice->OutputLine(m_wRasterline, abScanline);
+   m_pVideoOutputDevice->OutputLine(m_wRasterline - c_lastVblankLine - 1, abScanline);
 }
 
 void VideoInterfaceController::RenderLineBitmapMode(WORD wYPos, BYTE abScanline[0x0200])
