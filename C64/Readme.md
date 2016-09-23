@@ -52,7 +52,7 @@ Emulator running Giana Sisters:
 
 During gameplay:
 
-![Giana Sisters Gameplay](c64_giana_sisters_gameplay.png)
+![Giana Sisters Gameplay](images/c64_giana_sisters_gameplay.png)
 
 ### Emulator.Logic ###
 
