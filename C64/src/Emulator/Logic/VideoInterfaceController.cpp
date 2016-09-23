@@ -545,6 +545,9 @@ void VideoInterfaceController::RenderCharacterMode(WORD wYPos, BYTE abScanline[0
 
 void VideoInterfaceController::RenderSprites(BYTE abScanline[0x0200])
 {
+   WORD numColumns, minColumn, maxColumn, startX;
+   CalcScreenColumns(numColumns, minColumn, maxColumn, startX);
+
    WORD wVideoMem = m_wMemoryStart + (static_cast<WORD>(m_abRegister[vicRegD018] & 0xf0) << 6);
 
    // array indicating if a sprite pixel was already set
@@ -646,8 +649,11 @@ void VideoInterfaceController::RenderSprites(BYTE abScanline[0x0200])
                      colorIndex == 1 ? spriteMultiColor0 :
                      colorIndex == 2 ? spriteColor : spriteMultiColor1;
 
-                  abScanline[currentPosX] = color;
-                  pixelAlreadySet[currentPosX] = true;
+                  if (currentPosX >= minColumn && currentPosX < maxColumn)
+                  {
+                     abScanline[currentPosX] = color;
+                     pixelAlreadySet[currentPosX] = true;
+                  }
                }
             }
          }
@@ -657,6 +663,7 @@ void VideoInterfaceController::RenderSprites(BYTE abScanline[0x0200])
             bool colorBit = ((spriteData >> (24 - spriteColumn - 1)) & 1) != 0;
 
             if (colorBit &&
+               currentPosX >= minColumn && currentPosX < maxColumn &&
                !pixelAlreadySet[currentPosX])
             {
                abScanline[currentPosX] = spriteColor;
