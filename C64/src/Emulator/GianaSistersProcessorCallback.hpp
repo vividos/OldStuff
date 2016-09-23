@@ -20,6 +20,8 @@ public:
 #ifdef _DEBUG
       m_emulator.GetVideoInterfaceController().SetShowDebugInfo(true);
 #endif
+
+      m_emulator.GetKeyboard().SetJoystickNumPadEmulation(true);
    }
 
    /// called when program counter has changed

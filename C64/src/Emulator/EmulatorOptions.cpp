@@ -12,6 +12,7 @@
 EmulatorOptions::EmulatorOptions()
    :m_entryIndex(0),
    m_debugMode(false),
+   m_joystickNumPadEmulation(false),
    m_startProgramCounter(0x0000)
 {
    RegisterOutputHandler(&ProgramOptions::OutputConsole);
@@ -29,6 +30,10 @@ EmulatorOptions::EmulatorOptions()
 
       return true;
    });
+
+   RegisterOption(_T("j"), _T("joystick"),
+      _T("enables port 2 joystick emulation via NumPad and Right-Ctrl keys"),
+      m_joystickNumPadEmulation);
 
    RegisterOption(_T("s"), _T("sys"), _T("sets start program counter, in decimal (e.g. 2064) or hex ($0820, 0x0820)"),
       [&](const CString& arg) -> bool

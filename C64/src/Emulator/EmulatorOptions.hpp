@@ -25,6 +25,9 @@ public:
    /// returns if debug mode is on
    bool DebugMode() const throw() { return m_debugMode; }
 
+   /// returns if joystick NumPad emulation is enabled
+   bool JoystickNumPadEmulation() const throw() { return m_joystickNumPadEmulation; }
+
    /// returns start program counter, or 0 when none was set
    WORD StartProgramCounter() const throw() { return m_startProgramCounter; }
 
@@ -37,6 +40,9 @@ private:
 
    /// indicates if debug mode is on
    bool m_debugMode;
+
+   /// indicates if joystick NumPad emulation is enabled
+   bool m_joystickNumPadEmulation;
 
    /// start program counter
    WORD m_startProgramCounter;

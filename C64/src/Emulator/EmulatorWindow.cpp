@@ -279,6 +279,18 @@ void EmulatorWindow::OnKeyMessage(const SDL_SysWMmsg& msg)
       }
    }
 
+   if (keyCode == VK_CONTROL)
+   {
+      if (::GetKeyState(VK_LCONTROL) != 0)
+      {
+         keyCode = VK_LCONTROL;
+      }
+      if (::GetKeyState(VK_RCONTROL) != 0)
+      {
+         keyCode = VK_RCONTROL;
+      }
+   }
+
    m_emulator.GetKeyboard().SetKeyState(
       keyCode,
       msg.msg.win.msg == WM_KEYDOWN,
