@@ -53,7 +53,7 @@ private:
    void InitSDL();
 
    /// creates the emulator window
-   void CreateWindow();
+   void CreateEmulatorWindow();
 
    // virtual methods from IVideoOutputDevice
    virtual void OutputLine(WORD wRasterline, BYTE abLine[0x0200]);

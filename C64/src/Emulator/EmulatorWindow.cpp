@@ -117,7 +117,7 @@ void EmulatorWindow::Run()
       m_windowWidth = 480; // show extended VIC infos
    }
 
-   CreateWindow();
+   CreateEmulatorWindow();
 
    if (m_startProgramCounter == 0x0000)
    {
@@ -191,7 +191,7 @@ void EmulatorWindow::InitSDL()
    }
 }
 
-void EmulatorWindow::CreateWindow()
+void EmulatorWindow::CreateEmulatorWindow()
 {
    SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
 
