@@ -22,6 +22,9 @@ public:
    /// returns index of entry to load in file; when negative, all entries are loaded
    int EntryIndex() const throw() { return m_entryIndex; }
 
+   /// returns if window is initially shown fullscreen
+   bool Fullscreen() const throw() { return m_fullscreen; }
+
    /// returns if debug mode is on
    bool DebugMode() const throw() { return m_debugMode; }
 
@@ -37,6 +40,9 @@ private:
 
    /// entry index in file to load; may also be negative
    int m_entryIndex;
+
+   /// indicates if window is initially shown fullscreen
+   bool m_fullscreen;
 
    /// indicates if debug mode is on
    bool m_debugMode;

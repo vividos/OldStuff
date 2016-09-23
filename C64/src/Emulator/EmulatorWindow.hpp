@@ -36,6 +36,12 @@ public:
       m_startProgramCounter = startProgramCounter;
    }
 
+   /// sets fullscreen on/of; must be called before calling Run()
+   void SetFullscreen(bool fullscreen) throw()
+   {
+      m_fullscreen = fullscreen;
+   }
+
    /// runs loaded C64 program
    void Run();
 
@@ -88,6 +94,9 @@ private:
 
    /// height of window
    unsigned int m_windowHeight;
+
+   /// indicates if the window is currently fullscreen
+   bool m_fullscreen;
 
    /// set to true when a new line was output
    bool m_lineUpdated;

@@ -44,6 +44,7 @@ EmulatorWindow::EmulatorWindow(C64::Machine& emulator)
    m_emulator(emulator),
    m_windowWidth(403), // PAL VIC
    m_windowHeight(284), // PAL VIC
+   m_fullscreen(false),
    m_lineUpdated(false),
    m_screenUpdated(false),
    m_lineCount(0)
@@ -192,7 +193,7 @@ void EmulatorWindow::InitSDL()
    int width = m_windowWidth + (m_windowWidth & 1);
    int height = m_windowHeight + (m_windowHeight & 1);
 
-   m_window.reset(new RenderWindow2D(width, height, false, _T("Scale2x"), 2));
+   m_window.reset(new RenderWindow2D(width, height, m_fullscreen, _T("Scale2x"), 2));
    if (m_window == nullptr)
    {
       ATLTRACE(_T("couldn't set video mode\n"));
@@ -247,7 +248,16 @@ void EmulatorWindow::OnEvent(SDL_Event& evt)
       // handle key presses
       if (evt.key.keysym.sym == SDLK_x &&
          (evt.key.keysym.mod & KMOD_ALT) != 0)
+      {
          MainGameLoop::QuitLoop();
+      }
+
+      if (evt.key.keysym.sym == SDLK_RETURN &&
+         (evt.key.keysym.mod & KMOD_ALT) != 0)
+      {
+         m_fullscreen = !m_fullscreen;
+         m_window->SetFullscreen(m_fullscreen);
+      }
       break;
 
    case SDL_QUIT:

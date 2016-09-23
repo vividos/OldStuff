@@ -39,6 +39,8 @@ int _tmain(int argc, _TCHAR* argv[])
       window.SetStartProgramCounter(options.StartProgramCounter());
    }
 
+   window.SetFullscreen(options.Fullscreen());
+
    window.Load(options.Filename(), options.EntryIndex());
 
    window.Run();

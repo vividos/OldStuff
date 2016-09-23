@@ -11,6 +11,7 @@
 
 EmulatorOptions::EmulatorOptions()
    :m_entryIndex(0),
+   m_fullscreen(false),
    m_debugMode(false),
    m_joystickNumPadEmulation(false),
    m_startProgramCounter(0x0000)
@@ -30,6 +31,10 @@ EmulatorOptions::EmulatorOptions()
 
       return true;
    });
+
+   RegisterOption(_T("f"), _T("fullscreen"),
+      _T("shows the emulator in fullscreen on start (toggle with Alt+Enter)"),
+      m_fullscreen);
 
    RegisterOption(_T("j"), _T("joystick"),
       _T("enables port 2 joystick emulation via NumPad and Right-Ctrl keys"),
