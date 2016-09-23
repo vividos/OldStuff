@@ -24,7 +24,35 @@ C64 intro/demo style is used.
 ### Emulator ###
 
 This is the start up project for a basic C64 emulator. The project opens a
-window and tries to start the first SYS command.
+window and tries to start the first SYS command. See
+
+   Emulator.exe --help
+
+for command line options. During running emulator you have the following keyboard
+commands:
+
+- Alt+Enter:  Toggle Fullscreen
+- Alt+X:      Quit emulator
+- Right-Ctrl: Joystick Port 2 Fire
+- Num-Pad:    Joystick Port 2 directions
+
+All other keys as mapped to a C64 keyboard.
+
+#### Screenshots ####
+
+Here are some screenshots of games that already function
+
+Emulator running Elite:
+
+![Elite](images/c64_elite.png)
+
+Emulator running Giana Sisters:
+
+![Giana Sisters Intro](images/c64_giana_sisters_intro.png)
+
+During gameplay:
+
+![Giana Sisters Gameplay](c64_giana_sisters_gameplay.png)
 
 ### Emulator.Logic ###
 
