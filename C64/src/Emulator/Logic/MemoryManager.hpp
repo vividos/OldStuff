@@ -19,9 +19,9 @@ class IMemory;
 /// Memory handler type
 enum MemoryHandler
 {
-   handlerBasicROM = 0,
-   handlerKernalROM,
-   handlerVIC,
+   handlerBasicROM = 0, ///< Basic ROM area $a000-$bfff
+   handlerKernalROM, ///< Kernal ROM area $e000-$ffff
+   handlerVIC,       ///< VIC area $d000-$d3ff
    handlerSID,       ///< SID area $d400-$d7ff
    handlerCIA1,      ///< CIA 1 handler $dc00-$dc0f
    handlerCIA2,      ///< CIA 2 handler $dd00-$dd0f
