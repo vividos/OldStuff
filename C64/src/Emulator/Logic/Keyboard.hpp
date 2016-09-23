@@ -25,12 +25,24 @@ public:
    {
    }
 
+   /// enables or disables port 2 joystick numpad/right-ctrl emulation
+   void SetJoystickNumPadEmulation(bool enable) throw()
+   {
+      m_joystickNumPadEmulation = enable;
+   }
+
    /// sets state for a key
    void SetKeyState(BYTE keyCode, bool keyState, bool shiftState);
 
 private:
+   /// sets joystick state
+   void SetJoystickState(BYTE keyCode, bool keyState);
+
+   /// calculates joystick port 2 mask for num pad emulation
+   BYTE CalcJoystickPort2NumPadMask() const;
+
    /// calculates port A and port B bit indices from virtual key code and shift state
-   bool CalcPortBitIndices(BYTE keyCode, bool shiftState, BYTE& pa, BYTE& pb);
+   static bool CalcPortBitIndices(BYTE keyCode, bool shiftState, BYTE& pa, BYTE& pb);
 
    // virtual methods from ICIAPortHandler
    void SetDataPort(BYTE portNumber, BYTE value) throw() override;
@@ -45,6 +57,12 @@ private:
 
    /// value that was written to port B (0 bits are the "interested bits")
    BYTE m_currentPortB;
+
+   /// indicates if port 2 joystick numpad/right-ctrl emulation is active
+   bool m_joystickNumPadEmulation;
+
+   /// joystick state for numpad emulation, with right-ctrl and numpad1..9 key states
+   bool m_numPadJoystickState[10 + 1];
 };
 
 } // namespace C64

@@ -8,19 +8,31 @@
 // includes
 #include "StdAfx.h"
 #include "Keyboard.hpp"
+#include <algorithm>
 
 using C64::Keyboard;
 
 Keyboard::Keyboard()
    :m_currentPortA(0xFF),
-   m_currentPortB(0xFF)
+   m_currentPortB(0xFF),
+   m_joystickNumPadEmulation(false)
 {
    memset(m_keyMatrix, 0, sizeof(m_keyMatrix));
+   std::uninitialized_fill(std::begin(m_numPadJoystickState), std::end(m_numPadJoystickState), false);
 }
 
 void Keyboard::SetKeyState(BYTE keyCode, bool keyState, bool shiftState)
 {
    ATLTRACE(_T("SetKeyState: keyCode=%02x keyState=%i shiftState=%i\n"), keyCode, keyState ? 1 : 0, shiftState ? 1 : 0);
+
+   if (m_joystickNumPadEmulation &&
+      (keyCode == VK_RCONTROL ||
+      (keyCode >= VK_NUMPAD1 && keyCode <= VK_NUMPAD9))
+      )
+   {
+      SetJoystickState(keyCode, keyState);
+      return;
+   }
 
    if (keyCode == VK_UP)
    {
@@ -49,6 +61,39 @@ void Keyboard::SetKeyState(BYTE keyCode, bool keyState, bool shiftState)
       value &= ~(1 << pb);
 
    m_keyMatrix[pa] = value;
+}
+
+void Keyboard::SetJoystickState(BYTE keyCode, bool keyState)
+{
+   if (keyCode == VK_RCONTROL)
+      m_numPadJoystickState[0] = keyState;
+   else
+      if (keyCode >= VK_NUMPAD1 && keyCode <= VK_NUMPAD9)
+      {
+         m_numPadJoystickState[keyCode - VK_NUMPAD1 + 1] = keyState;
+      }
+}
+
+BYTE Keyboard::CalcJoystickPort2NumPadMask() const
+{
+   BYTE mask = 0x00;
+
+   if (m_numPadJoystickState[0])
+      mask |= 0x10;
+
+   if (m_numPadJoystickState[7] || m_numPadJoystickState[8] || m_numPadJoystickState[9])
+      mask |= 0x01; // up
+
+   if (m_numPadJoystickState[1] || m_numPadJoystickState[2] || m_numPadJoystickState[3])
+      mask |= 0x02; // down
+
+   if (m_numPadJoystickState[1] || m_numPadJoystickState[4] || m_numPadJoystickState[7])
+      mask |= 0x04; // left
+
+   if (m_numPadJoystickState[3] || m_numPadJoystickState[6] || m_numPadJoystickState[9])
+      mask |= 0x08; // right
+
+   return mask;
 }
 
 bool Keyboard::CalcPortBitIndices(BYTE keyCode, bool shiftState, BYTE& pa, BYTE& pb)
@@ -173,6 +218,16 @@ void Keyboard::ReadDataPort(BYTE portNumber, BYTE& bValue) const throw()
          if (row > 0)
          {
             bValue |= (1 << pa);
+         }
+      }
+
+      if (m_joystickNumPadEmulation)
+      {
+         // joystick in port 2 is read from port A
+         BYTE joystickMask = CalcJoystickPort2NumPadMask();
+         if (joystickMask != 0x00)
+         {
+            bValue |= (joystickMask & (mask ^ 0xFF));
          }
       }
    }
