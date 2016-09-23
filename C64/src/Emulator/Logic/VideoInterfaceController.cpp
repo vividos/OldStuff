@@ -279,8 +279,7 @@ void VideoInterfaceController::RenderLine()
       m_wRasterline == m_wInterruptRasterline)
    {
       // columns 410-420: interrupt rasterline: white
-      for (unsigned int i = 410; i < 420; i++)
-         abScanline[i] = 1;
+      memset(abScanline + 410, 1, 10);
    }
 
    // 1. check if vertical border flipflop is set
@@ -289,8 +288,7 @@ void VideoInterfaceController::RenderLine()
       if (m_showDebugInfo)
       {
          // columns 420-430: vertical border: red
-         for (unsigned int i = 420; i < 430; i++)
-            abScanline[i] = 2;
+         memset(abScanline + 420, 2, 10);
       }
 
       m_pVideoOutputDevice->OutputLine(m_wRasterline, abScanline);
@@ -300,8 +298,7 @@ void VideoInterfaceController::RenderLine()
    if (m_showDebugInfo)
    {
       // columns 420-430: bad line condition black/lightblue
-      for (unsigned int i = 420; i < 430; i++)
-         abScanline[i] = m_bBadLine ? 0 : 14;
+      memset(abScanline + 420, m_bBadLine ? 0 : 14, 10);
    }
 
    // 2. check if character or graphics mode, bit 5
@@ -398,8 +395,7 @@ void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BY
    if (m_showDebugInfo)
    {
       // columns 430-440: bitmap mode, monochrome: cyan, multicolor: pink
-      for (unsigned int i = 430; i < 440; i++)
-         abScanline[i] = bMCM ? 3 : 4;
+      memset(abScanline + 430, bMCM ? 3 : 4, 10);
    }
 }
 
@@ -513,8 +509,7 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
    {
       // columns 430-440: character mode;
       // multicolor: blue, extended multicolor: green, monochrome: yellow
-      for (unsigned int i = 430; i < 440; i++)
-         abScanline[i] = bMCM ? (bECM ? 5 : 6) : 7;
+      memset(abScanline + 430, bMCM ? (bECM ? 5 : 6) : 7, 10);
    }
 }
 
