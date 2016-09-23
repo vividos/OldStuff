@@ -300,6 +300,7 @@ public:
 };
 
 /// MOS 6510 processor implementation
+/// PAL clock 985.248 kHz
 /// \see http://www.cloud9.co.uk/james/BBCMicro/Documentation/64doc.txt
 /// \see https://blog.fynydd.com/crash-course-on-emulating-the-mos-6510-cpu/
 class Processor6510

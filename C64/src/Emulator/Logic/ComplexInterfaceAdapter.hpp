@@ -14,7 +14,7 @@ namespace C64
 class ICIAPortHandler;
 
 /// \brief CIA implementation
-/// \details Implementation of the CIA chip
+/// \details Implementation of the CIA chip, MOS 6526
 class ComplexInterfaceAdapter
 {
 public:

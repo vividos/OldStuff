@@ -51,8 +51,8 @@ enum VICInterruptType
    vicInterruptLightpen = 8,                    ///< interrupt triggered by lightpen (unused)
 };
 
-/// \brief Video interface controller (VIC) chip implementation
-/// \details a.k.a VIC-II
+/// \brief Video interface controller
+/// \details Implementation of the VIC-II chip, PAL version (MOS 6569).
 /// \see http://www.cebix.net/VIC-Article.txt
 /// \see https://sh.scs-trc.net/vic/
 class VideoInterfaceController: public ICIAPortHandler

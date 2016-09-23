@@ -14,6 +14,7 @@ namespace C64
 class MemoryManager;
 
 /// \brief SID implementation
+/// MOS 6581 or MOS 8580 chip
 class SoundInterfaceDevice
 {
 public:
