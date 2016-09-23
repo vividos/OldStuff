@@ -40,6 +40,9 @@
     <ClInclude Include="EliteProcessorCallback.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GianaSistersProcessorCallback.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="CommandLineParser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

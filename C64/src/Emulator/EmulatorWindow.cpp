@@ -14,6 +14,7 @@
 #include "TapeFile.hpp"
 #include "PC64File.hpp"
 #include "EliteProcessorCallback.hpp"
+#include "GianaSistersProcessorCallback.hpp"
 #include <SDL_syswm.h>
 #include <algorithm>
 
@@ -98,6 +99,11 @@ void EmulatorWindow::Load(LPCTSTR filename, unsigned int entryIndex)
    if (lowerFilename.Find(_T("elite")) != -1)
    {
       m_processorCallback.reset(new EliteProcessorCallback(m_emulator));
+   }
+
+   if (lowerFilename.Find(_T("giana")) != -1)
+   {
+      m_processorCallback.reset(new GianaSistersProcessorCallback(m_emulator));
    }
 }
 

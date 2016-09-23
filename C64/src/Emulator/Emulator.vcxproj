@@ -103,6 +103,7 @@
     <ClInclude Include="EliteProcessorCallback.hpp" />
     <ClInclude Include="EmulatorOptions.hpp" />
     <ClInclude Include="EmulatorWindow.hpp" />
+    <ClInclude Include="GianaSistersProcessorCallback.hpp" />
     <ClInclude Include="ProgramOptions.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
