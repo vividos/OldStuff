@@ -51,6 +51,8 @@ EmulatorWindow::EmulatorWindow(C64::Machine& emulator)
 {
    InitSDL();
 
+   SetFramesPerSecond(50); // try to run at 50 Hz, the speed of the PAL C64
+
    m_emulator.GetVideoInterfaceController().SetVideoOutputDevice(this);
 }
 

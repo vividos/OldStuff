@@ -20,6 +20,12 @@ public:
    MainGameLoop(bool bUpdateFrameCount = false,
       const CString& cszClientName = _T(""));
 
+   /// sets number of frames per second the screen should be rendered
+   void SetFramesPerSecond(unsigned int framesPerSecond = 50)
+   {
+      m_framesPerSecond = framesPerSecond;
+   }
+
    /// runs main game loop
    void Run();
 
@@ -48,6 +54,9 @@ private:
    void ProcessEvents();
 
 private:
+   /// number of frames per second the screen should be rendered
+   unsigned int m_framesPerSecond;
+
    /// indicates that loop should exit
    std::atomic<bool> m_bExitLoop;
 

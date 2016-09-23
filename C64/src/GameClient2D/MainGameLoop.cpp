@@ -10,13 +10,12 @@
 #include "MainGameLoop.hpp"
 #include "FrameCounter.hpp"
 
-const int framesPerSecond = 25;
-
 /// user code for event dispatch; see MainGameLoop::DispatchInEventLoop()
 const int c_iUserEventDispatch = 0;
 
 MainGameLoop::MainGameLoop(bool bUpdateFrameCount, const CString& cszClientName)
-:m_bUpdateFrameCount(bUpdateFrameCount),
+:m_framesPerSecond(25),
+ m_bUpdateFrameCount(bUpdateFrameCount),
  m_cszClientName(cszClientName),
  m_bExitLoop(false),
  m_bAppActive(true),
@@ -55,7 +54,7 @@ void MainGameLoop::Run()
          if (time < 0)
             continue; // if time is negative, the time probably overflew, so continue asap
 
-         const int millisecondsForFrame = int(1000.0 / framesPerSecond);
+         const int millisecondsForFrame = int(1000.0 / m_framesPerSecond);
 
          int sleepTime = millisecondsForFrame - time;
          if (sleepTime > 0)
