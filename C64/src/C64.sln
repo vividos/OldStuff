@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Intro", "Intro\Intro.vcxproj", "{AD90517E-B68D-4B1F-8F39-99A14B5D58F8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Emulator", "Emulator\Emulator.vcxproj", "{17973C14-4D9A-4908-97CF-02D66A1F0B29}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Emulator.UnitTest", "Emulator\UnitTest\UnitTest.vcxproj", "{AFC1CFF4-8F5E-453F-9D90-372D8A40531F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameClient2D", "GameClient2D\GameClient2D.vcxproj", "{C6712AAA-B1F2-46C6-97C7-60BF43FDAF7F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Emulator.Logic", "Emulator\Logic\Emulator.Logic.vcxproj", "{B6E88330-23A9-4159-B402-FB4FB8858724}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD90517E-B68D-4B1F-8F39-99A14B5D58F8}.Debug|x86.ActiveCfg = Debug|Win32
+		{AD90517E-B68D-4B1F-8F39-99A14B5D58F8}.Debug|x86.Build.0 = Debug|Win32
+		{AD90517E-B68D-4B1F-8F39-99A14B5D58F8}.Release|x86.ActiveCfg = Release|Win32
+		{AD90517E-B68D-4B1F-8F39-99A14B5D58F8}.Release|x86.Build.0 = Release|Win32
+		{17973C14-4D9A-4908-97CF-02D66A1F0B29}.Debug|x86.ActiveCfg = Debug|Win32
+		{17973C14-4D9A-4908-97CF-02D66A1F0B29}.Debug|x86.Build.0 = Debug|Win32
+		{17973C14-4D9A-4908-97CF-02D66A1F0B29}.Release|x86.ActiveCfg = Release|Win32
+		{17973C14-4D9A-4908-97CF-02D66A1F0B29}.Release|x86.Build.0 = Release|Win32
+		{AFC1CFF4-8F5E-453F-9D90-372D8A40531F}.Debug|x86.ActiveCfg = Debug|Win32
+		{AFC1CFF4-8F5E-453F-9D90-372D8A40531F}.Debug|x86.Build.0 = Debug|Win32
+		{AFC1CFF4-8F5E-453F-9D90-372D8A40531F}.Release|x86.ActiveCfg = Release|Win32
+		{AFC1CFF4-8F5E-453F-9D90-372D8A40531F}.Release|x86.Build.0 = Release|Win32
+		{C6712AAA-B1F2-46C6-97C7-60BF43FDAF7F}.Debug|x86.ActiveCfg = Debug|Win32
+		{C6712AAA-B1F2-46C6-97C7-60BF43FDAF7F}.Debug|x86.Build.0 = Debug|Win32
+		{C6712AAA-B1F2-46C6-97C7-60BF43FDAF7F}.Release|x86.ActiveCfg = Release|Win32
+		{C6712AAA-B1F2-46C6-97C7-60BF43FDAF7F}.Release|x86.Build.0 = Release|Win32
+		{B6E88330-23A9-4159-B402-FB4FB8858724}.Debug|x86.ActiveCfg = Debug|Win32
+		{B6E88330-23A9-4159-B402-FB4FB8858724}.Debug|x86.Build.0 = Debug|Win32
+		{B6E88330-23A9-4159-B402-FB4FB8858724}.Release|x86.ActiveCfg = Release|Win32
+		{B6E88330-23A9-4159-B402-FB4FB8858724}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
