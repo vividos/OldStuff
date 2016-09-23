@@ -71,7 +71,7 @@ VideoInterfaceController::VideoInterfaceController(C64::MemoryManager& memoryMan
    m_abRegister[vicRegD012] = 0;
 
    // default: 200, or 1100 1000
-   // bits 0..2: soft scrolling
+   // bits 0..2: X soft scrolling
    // bit 3: 40/38 columns (1/0)
    // bit 4: multicolor/normal (1/0)
    // bit 5: always 0
@@ -304,20 +304,19 @@ void VideoInterfaceController::RenderLine()
    // 2. check if character or graphics mode, bit 5
    bool bBMM = GetBit(m_abRegister[vicRegD011], 5);
 
-   WORD wXStart = 40;
    WORD wYPos = m_wRasterline - 0x30 - 4;
 
    if (bBMM)
-      RenderLineBitmapMode(wXStart, wYPos, abScanline);
+      RenderLineBitmapMode(wYPos, abScanline);
    else
-      RenderCharacterMode(wXStart, wYPos, abScanline);
+      RenderCharacterMode(wYPos, abScanline);
 
    RenderSprites(abScanline);
 
    m_pVideoOutputDevice->OutputLine(m_wRasterline, abScanline);
 }
 
-void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BYTE abScanline[0x0200])
+void VideoInterfaceController::RenderLineBitmapMode(WORD wYPos, BYTE abScanline[0x0200])
 {
    // calculate start of bitmap memory
 
@@ -350,8 +349,10 @@ void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BY
    if (bMCM)
       abColors[0] = m_abRegister[vicRegD021] & 0x0f;
 
-   // render 40 columns, 8 pixels per column (40*8 = 320)
-   for (WORD w = 0; w < 40; w++)
+   WORD numColumns, minColumn, maxColumn, startX;
+   CalcScreenColumns(numColumns, minColumn, maxColumn, startX);
+
+   for (WORD w = 0; w < numColumns; w++)
    {
       if (bMCM)
       {
@@ -371,21 +372,35 @@ void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BY
 
       if (bMCM)
       {
-         for (unsigned int uiBit = 0; uiBit < 8; uiBit += 2)
+         for (BYTE uiBit = 0; uiBit < 8; uiBit += 2)
          {
+            WORD linePos = w * 8 + uiBit + startX;
+
             // set pixels at position
-            abScanline[w * 8 + uiBit + wXStart + 0] =
-               abScanline[w * 8 + uiBit + wXStart + 1] = abColors[(bBitLine >> 6) & 3];
+            BYTE color = abColors[(bBitLine >> 6) & 3];
+            if (linePos >= minColumn && linePos < maxColumn)
+            {
+               abScanline[linePos + 0] = color;
+            }
+
+            if (linePos + 1 >= minColumn && linePos + 1 < maxColumn)
+            {
+               abScanline[linePos + 1] = color;
+            }
 
             bBitLine <<= 2;
          }
       }
       else
       {
-         for (unsigned int uiBit = 0; uiBit < 8; uiBit++)
+         for (BYTE uiBit = 0; uiBit < 8; uiBit++)
          {
             // set pixel at position
-            abScanline[w * 8 + uiBit + wXStart] = abColors[(bBitLine >> 7) & 1];
+            WORD linePos = w * 8 + uiBit + startX;
+            if (linePos >= minColumn && linePos < maxColumn)
+            {
+               abScanline[linePos] = abColors[(bBitLine >> 7) & 1];
+            }
 
             bBitLine <<= 1;
          }
@@ -399,12 +414,13 @@ void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BY
    }
 }
 
-void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYTE abScanline[0x0200])
+void VideoInterfaceController::RenderCharacterMode(WORD wYPos, BYTE abScanline[0x0200])
 {
-   ATLASSERT(wXStart + 320 < 0x0200);
+   WORD numColumns, minColumn, maxColumn, startX;
+   CalcScreenColumns(numColumns, minColumn, maxColumn, startX);
 
    // set background color, just in case
-   memset(&abScanline[wXStart], m_abRegister[vicRegD021] & 0x0f, 320);
+   memset(&abScanline[minColumn], m_abRegister[vicRegD021] & 0x0f, numColumns * 8);
 
    // calculate charset address, bits 1 to 3
    WORD wCharsetMem = m_wMemoryStart + (static_cast<WORD>(m_abRegister[vicRegD018] & 14) << 10);
@@ -475,11 +491,21 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
       // in MCM mode, bit 3 decides if character should be rendered in 
       if (bMCM && !bECM && bMCM_ColorBit3)
       {
-         for (unsigned int uiBit = 0; uiBit < 8; uiBit += 2)
+         for (BYTE uiBit = 0; uiBit < 8; uiBit += 2)
          {
+            WORD linePos = w * 8 + uiBit + startX;
+            BYTE color = abColors[(bBitLine >> 6) & 3];
+
             // set pixels at position
-            abScanline[w * 8 + uiBit + wXStart + 0] =
-               abScanline[w * 8 + uiBit + wXStart + 1] = abColors[(bBitLine >> 6) & 3];
+            if (linePos >= minColumn && linePos < maxColumn)
+            {
+               abScanline[linePos + 0] = color;
+            }
+
+            if (linePos + 1 >= minColumn && linePos + 1 < maxColumn)
+            {
+               abScanline[linePos + 1] = color;
+            }
 
             bBitLine <<= 2;
          }
@@ -493,12 +519,16 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
          else
          {
             // standard mode, or MCM with bit 3 of the color value being unset
-
-            for (unsigned int uiBit = 0; uiBit < 8; uiBit++)
+            for (BYTE uiBit = 0; uiBit < 8; uiBit++)
             {
+               WORD linePos = w * 8 + uiBit + startX;
+
                // set pixel at position
-               if ((bBitLine & 0x80) != 0)
-                  abScanline[w * 8 + uiBit + wXStart] = abColors[0];
+               if ((bBitLine & 0x80) != 0 &&
+                   linePos >= minColumn && linePos < maxColumn)
+               {
+                  abScanline[linePos] = abColors[0];
+               }
 
                bBitLine <<= 1;
             }
@@ -638,6 +668,21 @@ void VideoInterfaceController::RenderSprites(BYTE abScanline[0x0200])
       // steal 2 cycles from the processor for every sprite shown in this line
       m_uiNextRasterlineCycle -= 2;
    }
+}
+
+void VideoInterfaceController::CalcScreenColumns(WORD& numColumns, WORD& minColumn, WORD& maxColumn, WORD& startX)
+{
+   // CSEL is bit 3 of $D016
+   bool bCSEL = GetBit(m_abRegister[vicRegD016], 3);
+
+   numColumns = bCSEL ? 40 : 38;
+   minColumn = bCSEL ? 24 : 31;
+   maxColumn = minColumn + 8 * numColumns;
+
+   // xscroll: bits 0..2 of $D016
+   BYTE xscroll = m_abRegister[vicRegD016] & 7;
+
+   startX = minColumn - (bCSEL ? 0 : 7) + xscroll;
 }
 
 void VideoInterfaceController::SetDataPort(BYTE portNumber, BYTE bValue)

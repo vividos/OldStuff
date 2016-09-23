@@ -120,13 +120,16 @@ private:
    void RenderLine();
 
    /// renders a line in bitmap mode
-   void RenderLineBitmapMode(WORD wXStart, WORD wYPos, BYTE abScanline[0x0200]);
+   void RenderLineBitmapMode(WORD wYPos, BYTE abScanline[0x0200]);
 
    /// renders a line in character mode
-   void RenderCharacterMode(WORD wXStart, WORD wYPos, BYTE abScanline[0x0200]);
+   void RenderCharacterMode(WORD wYPos, BYTE abScanline[0x0200]);
 
    /// renders sprites for line
    void RenderSprites(BYTE abScanline[0x0200]);
+
+   /// calculates screen columns for character or bitmap mode
+   void CalcScreenColumns(WORD& numColumns, WORD& minColumn, WORD& maxColumn, WORD& startX);
 
    // virtual methods from ICIAPortHandler
    virtual void SetDataPort(BYTE portNumber, BYTE value);
