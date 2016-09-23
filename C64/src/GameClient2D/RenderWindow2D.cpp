@@ -64,14 +64,7 @@ void RenderWindow2D::SetFullscreen(bool fullscreen)
    if (window == nullptr)
       return;
 
-   Uint32 windowFlags = SDL_GetWindowFlags(window.get());
-
-   if (fullscreen)
-      windowFlags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-   else
-      windowFlags &= SDL_WINDOW_FULLSCREEN_DESKTOP;
-
-   if (SDL_SetWindowFullscreen(window.get(), windowFlags) < 0)
+   if (SDL_SetWindowFullscreen(window.get(), fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) < 0)
    {
       ATLTRACE(_T("error setting fullscreen mode %hs\n"), SDL_GetError());
    }
