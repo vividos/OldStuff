@@ -212,7 +212,7 @@ void VideoInterfaceController::Step()
 void VideoInterfaceController::NextRasterline()
 {
    // DEN is bit 4
-   bool bDEN = (m_abRegister[vicRegD011] & (1 << 4)) != 0;
+   bool bDEN = GetBit(m_abRegister[vicRegD011], 4);
 
    if (m_wRasterline == 0x30)
    {
@@ -229,7 +229,7 @@ void VideoInterfaceController::NextRasterline()
    // check if vertical border flipflop has to be set/reset
    {
       // RSEL is bit 3 of $D011
-      bool bRSEL = (m_abRegister[vicRegD011] & (1 << 3)) != 0;
+      bool bRSEL = GetBit(m_abRegister[vicRegD011], 3);
       WORD wTopLine = bRSEL ? c_wVerticalBorderTopRSEL1 : c_wVerticalBorderTopRSEL0;
       WORD wBottomLine = bRSEL ? c_wVerticalBorderBottomRSEL1 : c_wVerticalBorderBottomRSEL0;
 
@@ -305,7 +305,7 @@ void VideoInterfaceController::RenderLine()
    }
 
    // 2. check if character or graphics mode, bit 5
-   bool bBMM = (m_abRegister[vicRegD011] & (1 << 5)) != 0;
+   bool bBMM = GetBit(m_abRegister[vicRegD011], 5);
 
    WORD wXStart = 40;
    WORD wYPos = m_wRasterline - 0x30 - 4;
@@ -325,7 +325,7 @@ void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BY
    // calculate start of bitmap memory
 
    // bit CB13 decides if lower lor upper half of memory is used for bitmap
-   bool bCB13 = (m_abRegister[vicRegD018] & (1 << 3)) != 0;
+   bool bCB13 = GetBit(m_abRegister[vicRegD018], 3);
 
    // calculate bitmap memory pos for this line
    WORD wBitmapMem = m_wMemoryStart + (bCB13 ? 0x2000 : 0);
@@ -347,7 +347,7 @@ void VideoInterfaceController::RenderLineBitmapMode(WORD wXStart, WORD wYPos, BY
    WORD wColorMem = (wYPos >> 3) * 40;
 
    // decide if monochrome or multicolor mode, bit 4
-   bool bMCM = (m_abRegister[vicRegD016] & (1 << 4)) != 0;
+   bool bMCM = GetBit(m_abRegister[vicRegD016], 4);
 
    BYTE abColors[4];
    if (bMCM)
@@ -428,10 +428,10 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
    WORD wColorMem = (wYPos >> 3) * 40;
 
    // decide if monochrome or multicolor mode, bit 4
-   bool bMCM = (m_abRegister[vicRegD016] & (1 << 4)) != 0;
+   bool bMCM = GetBit(m_abRegister[vicRegD016], 4);
 
    // check if extended color mode, bit 6
-   bool bECM = (m_abRegister[vicRegD011] & (1 << 6)) != 0;
+   bool bECM = GetBit(m_abRegister[vicRegD011], 6);
 
    BYTE abColors[4] = { 0 };
 
@@ -464,7 +464,7 @@ void VideoInterfaceController::RenderCharacterMode(WORD wXStart, WORD wYPos, BYT
          abColors[0] = m_vecColorRam[wColorMem + w] & 0x0f;
 
       // indicates in MCM mode if bit 3 of color ram is set
-      bool bMCM_ColorBit3 = bMCM && (m_vecColorRam[wColorMem + w] & (1 << 3)) != 0;
+      bool bMCM_ColorBit3 = bMCM && GetBit(m_vecColorRam[wColorMem + w], 3);
 
       if (bMCM && !bMCM_ColorBit3)
          abColors[0] = abColors[3];
@@ -529,7 +529,7 @@ void VideoInterfaceController::RenderSprites(BYTE abScanline[0x0200])
 
    for (BYTE spriteNr = 0; spriteNr < 8; spriteNr++)
    {
-      bool enabled = (m_abRegister[vicRegD015] & (1 << spriteNr)) != 0;
+      bool enabled = GetBit(m_abRegister[vicRegD015], spriteNr);
 
       if (!enabled)
          continue;
