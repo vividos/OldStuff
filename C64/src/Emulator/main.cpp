@@ -24,22 +24,7 @@ int _tmain(int argc, _TCHAR* argv[])
    C64::Machine machine;
    EmulatorWindow window(machine);
 
-   if (options.DebugMode())
-   {
-      machine.GetVideoInterfaceController().SetShowDebugInfo(true);
-   }
-
-   if (options.JoystickNumPadEmulation())
-   {
-      machine.GetKeyboard().SetJoystickNumPadEmulation(true);
-   }
-
-   if (options.StartProgramCounter() != 0)
-   {
-      window.SetStartProgramCounter(options.StartProgramCounter());
-   }
-
-   window.SetFullscreen(options.Fullscreen());
+   window.Configure(options);
 
    window.Load(options.Filename(), options.EntryIndex());
 

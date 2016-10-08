@@ -8,6 +8,7 @@
 // includes
 #include "StdAfx.h"
 #include "EmulatorWindow.hpp"
+#include "EmulatorOptions.hpp"
 #include "Machine.hpp"
 #include "RenderWindow2D.hpp"
 #include "PalettedSurface.hpp"
@@ -61,6 +62,26 @@ EmulatorWindow::~EmulatorWindow()
    m_window.reset();
 
    SDL_Quit();
+}
+
+void EmulatorWindow::Configure(EmulatorOptions& options)
+{
+   if (options.DebugMode())
+   {
+      m_machine.GetVideoInterfaceController().SetShowDebugInfo(true);
+   }
+
+   if (options.JoystickNumPadEmulation())
+   {
+      m_machine.GetKeyboard().SetJoystickNumPadEmulation(true);
+   }
+
+   if (options.StartProgramCounter() != 0)
+   {
+      SetStartProgramCounter(options.StartProgramCounter());
+   }
+
+   SetFullscreen(options.Fullscreen());
 }
 
 void EmulatorWindow::Load(LPCTSTR filename, unsigned int entryIndex)

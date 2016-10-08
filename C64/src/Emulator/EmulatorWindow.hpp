@@ -12,6 +12,7 @@
 #include "MainGameLoop.hpp"
 
 // forward references
+class EmulatorOptions;
 class RenderWindow2D;
 class PalettedSurface;
 struct SDL_SysWMmsg;
@@ -26,6 +27,9 @@ public:
    EmulatorWindow(C64::Machine& emulator);
    /// dtor
    ~EmulatorWindow();
+
+   /// sets configuration options
+   void Configure(EmulatorOptions& options);
 
    /// loads .t64 or .p00 file into memory
    void Load(LPCTSTR filename, unsigned int entryIndex);
