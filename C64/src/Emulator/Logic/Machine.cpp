@@ -28,7 +28,7 @@ Machine::Machine()
    m_cia2.SetPortListener(&m_vic);
 }
 
-Machine::~Machine()
+Machine::~Machine() throw()
 {
 }
 

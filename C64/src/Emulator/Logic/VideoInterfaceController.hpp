@@ -132,7 +132,7 @@ private:
    void CalcScreenColumns(WORD& numColumns, WORD& minColumn, WORD& maxColumn, WORD& startX);
 
    // virtual methods from ICIAPortHandler
-   virtual void SetDataPort(BYTE portNumber, BYTE value);
+   virtual void SetDataPort(BYTE portNumber, BYTE value) throw();
 
 private:
    /// reference to memory manager to use
