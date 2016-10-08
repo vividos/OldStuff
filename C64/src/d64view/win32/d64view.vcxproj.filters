@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source files">
+      <UniqueIdentifier>{d7803440-4238-4938-b918-6031a4d91140}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="header files">
+      <UniqueIdentifier>{398dd93b-3827-493a-ab80-e3f0eb445e72}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="resource files">
+      <UniqueIdentifier>{b156a3cc-3685-4541-9e5e-0d722aee5dd4}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\app.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\bamview.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\canvas.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\chargen.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\charset.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\childframe.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\d64image.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\ddeserv.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\dirview.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\doctempl.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\document.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\imagebase.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\mainframe.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\pch.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\source\about.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\app.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\bamview.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\canvas.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\charset.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\childframe.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\common.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\d64image.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\dirview.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\doctempl.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\document.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\imagebase.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\mainframe.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\version.hpp">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>resource files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="d64.ico">
+      <Filter>resource files</Filter>
+    </Image>
+    <Image Include="d64view.ico">
+      <Filter>resource files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="d64view_res.rc">
+      <Filter>resource files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

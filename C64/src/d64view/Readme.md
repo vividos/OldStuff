@@ -5,9 +5,12 @@ d64view shows d64 disk image contents, such as file directory, block
 availability map and error codes. It handles several widely used disk
 image formats, such as d64, d81, etc.
 
-d64view (C) 2002,2003 Michael Fink
+d64view (C) 2002,2003,2016 Michael Fink
 
-d64view is licensed under the GNU General Public License
+d64view is licensed under the BSD 2-Clause License
 
 http://www.vividos.de/
 mailto:vividos at users.sourceforge.net
+
+
+docs/d64view.png

@@ -1,3 +1,8 @@
+2016-09-28 07:08  vividos
+
+	Updated to use Microsoft Visual Studio 2015
+	Re-licensed under the BSD 2-clause license
+
 2003-09-08 21:19  vividos
 
 	* Makefile.am (1.4):
