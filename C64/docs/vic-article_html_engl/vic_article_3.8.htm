@@ -1,0 +1,493 @@
+<html>
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>vic article 3.8. - 3.8.2.</title>
+ <style type="text/css">
+  <!--
+   a:link {text-decoration: none }
+   a:active {text-decoration: none }
+   a:visited {text-decoration: none }
+   a:hover {color:#d66418;}
+  -->
+ </style>
+</head>
+
+<body bgcolor="#000000" text="#D69418" link="#D64818" vlink="#D64818" alink="#D66418">
+
+<div align="center"><center>
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td width="100%"><hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.8."><font size="4"><strong>3.8.
+                SPRITES</strong></font></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>Apart from the text/bitmap graphics,
+        the VIC can display eight independent 24×21 pixels
+        large, freely movable objects, the &quot;sprites&quot;
+        (called &quot;MOBs&quot; (Movable Object Blocks) in <a
+        href="vic_article_appendix.htm#a">[2]</a>).</p>
+        <p>The sprites can have an arbitrary position on the
+        screen, you can switch them on and off one at a time with
+        the bits of register $d015 (MxE), expand them by the
+        factor 2 in X and/or Y direction with registers
+        $d017/$d01d (with the resolution still being 24×21
+        pixels), choose between standard and multicolor mode with
+        register $d01c (MxMC), set the display priority with
+        respect to the text/bitmap graphics with register $d01b
+        (MxDP) and assign a different color to each sprite
+        (registers $d027-$d02e). Besides, the VIC has the ability
+        to detect collisions between sprites among themselves or
+        between sprites and text/bitmap graphics and to trigger
+        an interrupt on such collisions (see <a
+        href="vic_article_3.9.htm#3.11.">3.11.</a>).</p>
+        <p>The position of the top left corner of a sprite is
+        specified with the coordinate registers (MxX, MxY)
+        belonging to it. There are 8 bits for the Y coordinate
+        and 9 bits for the X coordinate (the most significant
+        bits of all sprites are collected in register $d010).</p>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.8.1."><font size="3"><strong>3.8.1.
+                MEMORY ACCESS AND DISPLAY</strong></font></a></td>
+                <td align="right" valign="top"><a href="#3.8."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The 63 bytes of sprite data necessary
+        for displaying 24×21 pixels are stored in memory in a
+        linear fashion: 3 adjacent bytes form one line of the
+        sprite.</p>
+        <p>These 63 bytes can be moved in steps of 64 bytes
+        within the 16KB address space of the VIC. For this, the
+        VIC reads a sprite data pointer for each sprite in every
+        raster line from the very last 8 bytes of the video
+        matrix (p-access) that is used as the upper 8 bits of the
+        address for sprite data accesses (s-accesses). The lower
+        6 bits come from a sprite data counter (MC0-MC7, one for
+        each sprite) that plays a similar role for the sprites as
+        VC does for the video matrix. As the p-accesses are done
+        in every raster line and not only when the belonging
+        sprite is just displayed, you can change the appearance
+        of a sprite in the middle of its display by changing the
+        sprite data pointer.</p>
+        <p>When s-accesses are necessary for a sprite, they are
+        done in the three half-cycles directly after the p-access
+        belonging to the sprite within the raster line. The VIC
+        also uses the BA and AEC signals (as in the Bad Lines) to
+        access the bus in the second clock phase. BA will also go
+        low three cycles before the proper access in this case.
+        The s-accesses are done in every raster line in which the
+        sprite is visible (for the sprites 0-2, it is always in
+        the line before, see the timing diagrams in section <a
+        href="vic_article_3.6.htm#3.6.3.">3.6.3.</a>), for every
+        sprite in statically assigned cycles within the line.</p>
+        <p>Like the text and bitmap graphics, the sprites also
+        have a standard mode and a multicolor mode. In standard
+        mode, every bit directly corresponds to one pixel on the
+        screen. A &quot;0&quot; pixel is transparent and the
+        underlying graphics are visible below it, a &quot;1&quot;
+        pixel is displayed in the sprite color from registers
+        $d027-$d02e belonging to the sprite in question. In
+        multicolor mode, two adjacent bits form one pixel, thus
+        reducing the resolution of the sprite to 12×21 (the
+        pixels are twice as wide). </p>
+        <p>Moreover, the sprites can be doubled in their size on
+        the screen in X and/or Y direction (X/Y expansion). For
+        that, every sprite pixel simply becomes twice as
+        wide/tall, the resolution doesn't change. So a pixel of
+        an x-expanded multicolor sprite is four times as wide as
+        a pixel of an unexpanded standard sprite. Although both
+        expansions look similar, they are implemented completely
+        differently in the VIC. The X expansion simply instructs
+        the sprite data sequencer to output pixels with half
+        frequency. But the Y expansion makes the sprite address
+        generator read from the same addresses in each two lines
+        in sequence so that every sprite line is output twice.</p>
+        <p>Every sprite has its own sprite data sequencer whose
+        core is a 24 bit shift register. Apart from that, there
+        are two internal registers for every sprite:</p>
+        <ul>
+            <li>&quot;MC&quot; (MOB Data Counter) is a 6 bit
+                counter that can be loaded from MCBASE.</li>
+            <li>&quot;MCBASE&quot; (MOB Data Counter Base) is a 6
+                bit counter with reset input.</li>
+        </ul>
+        <p>Besides, there is one expansion flip flop per sprite
+        that controls the Y expansion.</p>
+        <p>The display of a sprite is done after the following
+        rules (the cycle numbers are only valid for the 6569):</p>
+        <ol>
+            <li>The expansion flip flip is set as long as the bit
+                in MxYE in register $d017 corresponding to the
+                sprite is cleared.</li>
+            <li>If the MxYE bit is set in the first phase of
+                cycle 55, the expansion flip flop is inverted.</li>
+            <li>In the first phases of cycle 55 and 56, the VIC
+                checks for every sprite if the corresponding MxE
+                bit in register $d015 is set and the Y coordinate
+                of the sprite (odd registers $d001-$d00f) match
+                the lower 8 bits of RASTER. If this is the case
+                and the DMA for the sprite is still off, the DMA
+                is switched on, MCBASE is cleared, and if the
+                MxYE bit is set the expansion flip flip is reset.</li>
+            <li>In the first phase of cycle 58, the MC of every
+                sprite is loaded from its belonging MCBASE
+                (MCBASE-&gt;MC) and it is checked if the DMA for
+                the sprite is turned on and the Y coordinate of
+                the sprite matches the lower 8 bits of RASTER. If
+                this is the case, the display of the sprite is
+                turned on.</li>
+            <li>If the DMA for a sprite is turned on, three
+                s-accesses are done in sequence in the
+                corresponding cycles assigned to the sprite (see
+                the diagrams in section <a
+                href="vic_article_3.6.htm#3.6.3.">3.6.3.</a>).
+                The p-accesses are always done, even if the
+                sprite is turned off. The read data of the first
+                access is stored in the upper 8 bits of the shift
+                register, that of the second one in the middle 8
+                bits and that of the third one in the lower 8
+                bits. MC is incremented by one after each
+                s-access. </li>
+            <li>If the sprite display for a sprite is turned on,
+                the shift register is shifted left by one bit
+                with every pixel as soon as the current X
+                coordinate of the raster beam matches the X
+                coordinate of the sprite (even registers
+                $d000-$d00e), and the bits that &quot;fall
+                off&quot; are displayed. If the MxXE bit
+                belonging to the sprite in register $d01d is set,
+                the shift is done only every second pixel and the
+                sprite appears twice as wide. If the sprite is in
+                multicolor mode, every two adjacent bits form one
+                pixel.</li>
+            <li>In the first phase of cycle 15, it is checked if
+                the expansion flip flop is set. If so, MCBASE is
+                incremented by 2.</li>
+            <li>In the first phase of cycle 16, it is checked if
+                the expansion flip flop is set. If so, MCBASE is
+                incremented by 1. After that, the VIC checks if
+                MCBASE is equal to 63 and turns of the DMA and
+                the display of the sprite if it is.</li>
+        </ol>
+        <p>As the test in rule 3 is done at the end of a raster
+        line, the sprite Y coordinates stored in the registers
+        must be 1 less than the desired Y position of the first
+        sprite line, as the sprite display will not start until
+        the following line, after the first sprite data has been
+        read (as long as the sprite is not positioned to the
+        right of sprite X coordinate $164 (cycle 58, see rule
+        4)).</p>
+        <p>Sprites can be &quot;reused&quot; vertically: If you
+        change the Y coordinate of a sprite to a later raster
+        line during or after its display has completed, so that
+        the comparisons mentioned in rules 1 and 2 will match
+        again, the sprite is displayed again at that Y coordinate
+        (you may then of course freely set a new X coordinate and
+        sprite data pointer). It is therefore possible to display
+        more than 8 sprites on the screen.</p>
+        <p>This is not possible in the horizontal direction.
+        After 24 displayed pixels, the shift register has run
+        empty and even if you change the X coordinate within a
+        line so that the comparison in rule 4 will match again,
+        no sprite data is displayed any more. So you can only
+        display up to 8 sprites within one raster line at a time.</p>
+        <p>Once again an overview of the scheme of p- and
+        s-accesses: </p>
+        <p>p-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">VM13</td>
+                    <td align="center" valign="top" width="7%">VM12</td>
+                    <td align="center" valign="top" width="7%">VM11</td>
+                    <td align="center" valign="top" width="7%">VM10</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" colspan="3"
+                    width="23%">Sprite number</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="12%">7</td>
+                    <td align="center" valign="top" width="12%">6</td>
+                    <td align="center" valign="top" width="12%">5</td>
+                    <td align="center" valign="top" width="12%">4</td>
+                    <td align="center" valign="top" width="13%">3</td>
+                    <td align="center" valign="top" width="13%">2</td>
+                    <td align="center" valign="top" width="13%">1</td>
+                    <td align="center" valign="top" width="13%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="16%">MP7</td>
+                    <td align="center" valign="top" width="12%">MP6</td>
+                    <td align="center" valign="top" width="12%">MP5</td>
+                    <td align="center" valign="top" width="12%">MP4</td>
+                    <td align="center" valign="top" width="12%">MP3</td>
+                    <td align="center" valign="top" width="12%">MP2</td>
+                    <td align="center" valign="top" width="12%">MP1</td>
+                    <td align="center" valign="top" width="12%">MP0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>s-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="center"><center><table border="1"
+            cellpadding="0" cellspacing="0" width="90%"
+            bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">MP7</td>
+                    <td align="center" valign="top" width="7%">MP6</td>
+                    <td align="center" valign="top" width="7%">MP5</td>
+                    <td align="center" valign="top" width="7%">MP4</td>
+                    <td align="center" valign="top" width="7%">MP3</td>
+                    <td align="center" valign="top" width="7%">MP2</td>
+                    <td align="center" valign="top" width="7%">MP1</td>
+                    <td align="center" valign="top" width="7%">MP0</td>
+                    <td align="center" valign="top" width="7%">MC5</td>
+                    <td align="center" valign="top" width="7%">MC4</td>
+                    <td align="center" valign="top" width="7%">MC3</td>
+                    <td align="center" valign="top" width="7%">MC2</td>
+                    <td align="center" valign="top" width="8%">MC1</td>
+                    <td align="center" valign="top" width="8%">MC0</td>
+                </tr>
+            </table>
+            </center></div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top">7</td>
+                    <td align="center" valign="top">6</td>
+                    <td align="center" valign="top">5</td>
+                    <td align="center" valign="top">4</td>
+                    <td align="center" valign="top">3</td>
+                    <td align="center" valign="top">2</td>
+                    <td align="center" valign="top">1</td>
+                    <td align="center" valign="top">0</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td valign="top" colspan="8">8 pixels (1 bit/pixel):<p>&quot;0&quot;:
+                    Transparent<br>
+                    &quot;1&quot;: Sprite color ($d027 - $d02e)</p>
+                    </td>
+                    <td>MxMC = 0</td>
+                </tr>
+                <tr>
+                    <td colspan="8">4 pixels (2 bit/pixel):<p>&quot;00&quot;:
+                    Transparent<br>
+                    &quot;01&quot;: Sprite multicolor 0 ($d025)<br>
+                    &quot;10&quot;: Sprite color ($d027 - $d02e)<br>
+                    &quot;11&quot;: Sprite multicolor 1 ($d026)</p>
+                    </td>
+                    <td>MxMC = 1</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.8.2."><font size="3"><strong>3.8.2.
+                PRIORITY AND COLLISION DETECTION</strong></font></a></td>
+                <td align="right" valign="top"><a href="#3.8."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>As soon as several graphics elements
+        (sprites and text/bitmap graphics) overlap on the screen,
+        it has to be decided which element is displayed in the
+        foreground. To do this, every element has a priority
+        assigned and only the element with highest priority is
+        displayed.</p>
+        <p>The sprites have a rigid hierarchy among themselves:
+        Sprite 0 has the highest and sprite 7 the lowest
+        priority. If two sprites overlap, the sprite with the
+        higher number is displayed only where the other sprite
+        has a transparent pixel.</p>
+        <p>The priority of the sprites to the text/bitmap
+        graphics can be controlled within some limits. First of
+        all, you have to distinguish the text/bitmap graphics
+        between foreground and background pixels. Which bit
+        combinations belong to the foreground or background is
+        decided by the MCM bit in register $d016 independently of
+        the state of the graphics data sequencer and of the BMM
+        and ECM bits in register $d011:</p>
+        <blockquote>
+            <div align="left"><table border="1" cellpadding="0"
+            cellspacing="0" width="60%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="33%">&nbsp;</td>
+                    <td align="center" valign="top" width="33%">MCM=0</td>
+                    <td align="center" valign="top" width="34%">MCM=1</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="33%">Bits/pixel</td>
+                    <td align="center" valign="top" width="33%">1</td>
+                    <td align="center" valign="top" width="34%">2</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="33%">Pixels/byte</td>
+                    <td align="center" valign="top" width="33%">8</td>
+                    <td align="center" valign="top" width="34%">4</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="33%">Background</td>
+                    <td align="center" valign="top" width="33%">&quot;0&quot;</td>
+                    <td align="center" valign="top" width="34%">&quot;00&quot;,
+                    &quot;01&quot;</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="33%">Foreground</td>
+                    <td align="center" valign="top" width="33%">&quot;1&quot;</td>
+                    <td align="center" valign="top" width="34%">&quot;10&quot;,
+                    &quot;11&quot;</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>In multicolor mode (MCM=1), the bit combinations
+        &quot;00&quot; and &quot;01&quot; belong to the
+        background and &quot;10&quot; and &quot;11&quot; to the
+        foreground whereas in standard mode (MCM=0), cleared
+        pixels belong to the background and set pixels to the
+        foreground. It should be noted that this is also valid
+        for the graphics generated in idle state.</p>
+        <p>With the MxDP bits from register $d01b, you can
+        separately specify for each sprite if it should be
+        displayed in front of or behind the foreground pixels
+        (the table in <a href="vic_article_appendix.htm#a">[2]</a>
+        is wrong):</p>
+        <p>MxDP = 0:</p>
+        <blockquote>
+            <p><img src="spr_prio_1_e.gif"
+            alt="[sprite-background-priority]" width="396"
+            height="146"></p>
+        </blockquote>
+        <p>MxDP = 1:</p>
+        <blockquote>
+            <p><img src="spr_prio_2_e.gif"
+            alt="[sprite-background-priority]" width="396"
+            height="146"></p>
+        </blockquote>
+        <p>Of course, the graphics elements with lower priority
+        than an overlayed sprite are visible where the sprite has
+        a transparent pixel.</p>
+        <p>If you choose one of the invalid video modes only the
+        sprites will be visible (fore- and background graphics
+        will all become black, see sections <a
+        href="vic_article_3.7.3.htm#3.7.3.6.">3.7.3.6.-3.7.3.8.</a>),
+        but by setting the sprites to appear behind the
+        foreground graphics, the foreground graphics will
+        actually become visible as black pixels overlaying the
+        sprite pixels.</p>
+        <p>Together with the priority management, the VIC has the
+        ability to detect collisions of sprites among themselves
+        and of sprites and foreground pixels of the text/bitmap
+        graphics.</p>
+        <p>A collision of sprites among themselves is detected as
+        soon as two or more sprite data sequencers output a
+        non-transparent pixel in the course of display generation
+        (this can also happen somewhere outside of the visible
+        screen area). In this case, the MxM bits of all affected
+        sprites are set in register $d01e and (if allowed, see
+        section <a href="vic_article_3.9.htm#3.12.">3.12.</a>),
+        an interrupt is generated. The bits remain set until the
+        register is read by the processor and are cleared
+        automatically by the read access.</p>
+        <p>A collision of sprites and other graphics data is
+        detected as soon as one or more sprite data sequencers
+        output a non-transparent pixel and the graphics data
+        sequencer outputs a foreground pixel in the course of
+        display generation. In this case, the MxD bits of the
+        affected sprites are set in register $d01f and (if
+        allowed, see section <a href="vic_article_3.9.htm#3.12.">3.12.</a>),
+        an interrupt is generated. As with the sprite-sprite
+        collision, the bits remain set until the register is read
+        by the processor.</p>
+        <p>If the vertical border flip flop is set (normally
+        within the upper/lower border, see next section), the
+        output of the graphics data sequencer is turned off and
+        there are no collisions.</p>
+        <hr color="#D69418">
+        </td>
+    </tr>
+</table>
+</center></div><div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td valign="top" width="50%"><a
+        href="vic_article_3.7.3.htm"><img
+        src="linkarrow_left.gif" alt="[previous]" border="0"
+        width="15" height="15"></a></td>
+        <td align="right" valign="top" width="50%"><a
+        href="vic_article_3.9.htm"><img src="linkarrow_right.gif"
+        alt="[next]" border="0" width="15" height="15"></a></td>
+    </tr>
+</table>
+</center></div>
+</body>
+</html>

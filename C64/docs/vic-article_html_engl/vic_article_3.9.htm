@@ -1,0 +1,378 @@
+<html>
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>vic article 3.9. - 3.13.</title>
+ <style type="text/css">
+  <!--
+   a:link {text-decoration: none }
+   a:active {text-decoration: none }
+   a:visited {text-decoration: none }
+   a:hover {color:#d66418;}
+  -->
+ </style>
+</head>
+
+<body bgcolor="#000000" text="#D69418" link="#D64818" vlink="#D64818" alink="#D66418">
+
+<div align="center"><center>
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td width="100%"><hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.9."><font size="4"><strong>3.9.
+                THE BORDER UNIT</strong></font></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The VIC uses two flip flops to generate
+        the border around the display window: A main border flip
+        flop and a vertical border flip flop.</p>
+        <p>The main border flip flop controls the border display.
+        If it is set, the VIC displays the color stored in
+        register $d020, otherwise it displays the color that the
+        priority multiplexer switches through from the graphics
+        or sprite data sequencer. So the border overlays the
+        text/bitmap graphics as well as the sprites. It has the
+        highest display priority.</p>
+        <p>The vertical border flip flop is for auxiliary control
+        of the upper/lower border. If it is set, the main border
+        flip flop cannot be reset. Apart from that, the vertical
+        border flip flop controls the output of the graphics data
+        sequencer. The sequencer only outputs data if the flip
+        flop is not set, otherwise it displays the background
+        color. This was probably done to prevent sprite-graphics
+        collisions in the border area.</p>
+        <p>There are 2×2 comparators belonging to each of the
+        two flip flops. There comparators compare the X/Y
+        position of the raster beam with one of two hardwired
+        values (depending on the state of the CSEL/RSEL bits) to
+        control the flip flops. The comparisons only match if the
+        values are reached precisely. There is no comparison with
+        an interval.</p>
+        <p>The horizontal comparison values:</p>
+        <blockquote>
+            <div align="left"><table border="1" cellpadding="0"
+            cellspacing="0" width="60%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="33%">&nbsp;</td>
+                    <td align="center" valign="top" width="33%">CSEL=0</td>
+                    <td align="center" valign="top" width="34%">CSEL=1</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="33%">Left</td>
+                    <td align="center" valign="top" width="33%">31
+                    ($1f)</td>
+                    <td align="center" valign="top" width="34%">24
+                    ($18)</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="33%">Right</td>
+                    <td align="center" valign="top" width="33%">335
+                    ($14f)</td>
+                    <td align="center" valign="top" width="34%">344
+                    ($158)</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>And the vertical ones:</p>
+        <blockquote>
+            <div align="left"><table border="1" cellpadding="0"
+            cellspacing="0" width="60%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="33%">&nbsp;</td>
+                    <td align="center" valign="top" width="33%">RSEL=0</td>
+                    <td align="center" valign="top" width="34%">RSEL=1</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="33%">Top</td>
+                    <td align="center" valign="top" width="33%">55
+                    ($37)</td>
+                    <td align="center" valign="top" width="34%">51
+                    ($33)</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="33%">Bottom</td>
+                    <td align="center" valign="top" width="33%">247
+                    ($f7)</td>
+                    <td align="center" valign="top" width="34%">251
+                    ($fb)</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>The flip flops are switched according to the following
+        rules:</p>
+        <ol>
+            <li>If the X coordinate reaches the right comparison
+                value, the main border flip flop is set.</li>
+            <li>If the Y coordinate reaches the bottom comparison
+                value in cycle 63, the vertical border flip flop
+                is set.</li>
+            <li>If the Y coordinate reaches the top comparison
+                value in cycle 63 and the DEN bit in register
+                $d011 is set, the vertical border flip flop is
+                reset.</li>
+            <li>If the X coordinate reaches the left comparison
+                value and the Y coordinate reaches the bottom
+                one, the vertical border flip flop is set.</li>
+            <li>If the X coordinate reaches the left comparison
+                value and the Y coordinate reaches the top one
+                and the DEN bit in register $d011 is set, the
+                vertical border flip flop is reset.</li>
+            <li>If the X coordinate reaches the left comparison
+                value and the vertical border flip flop is not
+                set, the main flip flop is reset.</li>
+        </ol>
+        <p>So the Y coordinate is checked once or twice within
+        each raster line: In cycle 63 and if the X coordinate
+        reaches the left comparison value.</p>
+        <p>By appropriate switching of the CSEL/RSEL bits you can
+        prevent the comparison values from being reached and thus
+        turn off the border partly or completely (see <a
+        href="vic_article_3.14.htm#3.14.1.">3.14.1.</a>).</p>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.10."><font size="4"><strong>3.10.
+                DISPLAY ENABLE</strong></font></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The DEN bit (Display Enable, register
+        $d011, bit 4) serves for switching on and off the
+        text/bitmap graphics. It is normally set. The bit affects
+        two functions of the VIC: The Bad Lines and the vertical
+        border unit.</p>
+        <ul>
+            <li>A Bad Line Condition can only occur if the DEN
+                bit has been set for at least one cycle somewhere
+                in raster line $30 (see section <a
+                href="vic_article_3.4.htm#3.5.">3.5.</a>).</li>
+            <li>If the DEN bit is cleared, the reset input of the
+                vertical border flip flop is deactivated (see
+                section <a href="vic_article_3.9.htm">3.9.</a>).
+                Then the upper/lower border is not turned off.</li>
+        </ul>
+        <p>So clearing the DEN bit will normally prevent Bad
+        Lines (and thus c- and g-accesses) from occuring and make
+        the whole screen display the border color.</p>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.11."><font size="4"><strong>3.11.
+                LIGHTPEN</strong></font></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>On a negative edge on the LP input, the
+        current position of the raster beam is latched in the
+        registers LPX ($d013) and LPY ($d014). LPX contains the
+        upper 8 bits (of 9) of the X position and LPY the lower 8
+        bits (likewise of 9) of the Y position. So the horizontal
+        resolution of the light pen is limited to 2 pixels.</p>
+        <p>Only one negative edge on LP is recognized per frame.
+        If multiple edges occur on LP, all following ones are
+        ignored. The trigger is not released until the next
+        vertical blanking interval.</p>
+        <p>As the LP input of the VIC is connected to the
+        keyboard matrix as are all lines of the joystick ports,
+        it can also be controlled by software. This is done with
+        bit 4 of port B of CIA A ($dc01/$dc03). This allows to
+        determine the current X position of the raster beam by
+        triggering an LP edge and reading from LPX afterwards
+        (the VIC has no register that would allow reading the X
+        position directly). This can e.g. be used to synchronize
+        raster interrupt routines on exact cycles.</p>
+        <p>The values you get from the LPX register can be
+        calculated from the sprite coordinates of the timing
+        diagrams in section <a href="vic_article_3.6.htm#3.6.3.">3.6.3.</a>
+        The reference point is the end of the cycle in which the
+        LP line is triggered. E.g. if you trigger LP in cycle 20,
+        you get the value $1e in LPX, corresponding to the sprite
+        coordinate $03c (LPX contains the upper 8 bits of the 9
+        bit X coordinate).</p>
+        <p>The VIC can also additionally trigger an interrupt on
+        a negative edge on the LP pin (see <a
+        href="vic_article_3.9.htm#3.12.">next section</a>),
+        likewise only once per frame.</p>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.12."><font size="4"><strong>3.12.
+                VIC INTERRUPTS</strong></font></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The VIC has the possibility to generate
+        interrupts for the processor when certain events occur.
+        This is done with the IRQ output that is directly
+        connected to the IRQ input of the 6510. The VIC
+        interrupts are therefore maskable with the I flag in the
+        processor status register.</p>
+        <p>There are four interrupt sources in the VIC. Every
+        source has a corresponding bit in the interrupt latch
+        (register $d019) and a bit in the interrupt enable
+        register ($d01a). When an interrupts occurs, the
+        corresponding bit in the latch is set. To clear it, the
+        processor has to write a &quot;1&quot; there &quot;by
+        hand&quot;. The VIC doesn't clear the latch on its own.</p>
+        <p>If at least one latch bit and the belonging bit in the
+        enable register is set, the IRQ line is held low and so
+        the interrupt is triggered in the processor. So the four
+        interrupt sources can be independently enabled and
+        disabled with the enable bits. As the VIC - as described
+        - doesn't clear the interrupt latch by itself, the
+        processor has to do it before the I flag is cleared resp.
+        before the processor returns from the interrupt routine.
+        Otherwise the interrupt will be triggered again
+        immediately (the IRQ input of the 6510 is
+        state-sensitive).</p>
+        <p>The following table describes the four interrupt
+        sources and their bits in the latch and enable registers:</p>
+        <div align="center"><center><table border="1"
+        cellpadding="3" cellspacing="0" width="100%"
+        bordercolor="#D69418">
+            <tr>
+                <td valign="top">Bit</td>
+                <td valign="top">Name</td>
+                <td valign="top">Trigger condition</td>
+            </tr>
+            <tr>
+                <td valign="top">0</td>
+                <td valign="top">RST</td>
+                <td valign="top">Reaching a certain raster line.
+                The line is specified by writing to register
+                $d012 and bit 7 of $d011 and internally stored by
+                the VIC for the raster compare. The test for
+                reaching the interrupt raster line is done in
+                cycle 0 of every line (for line 0, in cycle 1).</td>
+            </tr>
+            <tr>
+                <td valign="top">1</td>
+                <td valign="top">MBC</td>
+                <td valign="top">Collision of at least one sprite
+                with the text/bitmap graphics (one sprite data
+                sequencer outputs non-transparent pixel at the
+                same time at which the graphics data sequencer
+                outputs a foreground pixel)</td>
+            </tr>
+            <tr>
+                <td valign="top">2</td>
+                <td valign="top">MMC</td>
+                <td valign="top">Collision of two or more sprites
+                (two sprite data sequencers output a
+                non-transparent pixel at the same time)</td>
+            </tr>
+            <tr>
+                <td valign="top">3</td>
+                <td valign="top">LP</td>
+                <td valign="top">Negative edge on the LP input
+                (lightpen) </td>
+            </tr>
+        </table>
+        </center></div><p>For the MBC and MMC interrupts, only
+        the first collision will trigger an interrupt (i.e. if
+        the collision registers $d01e resp. $d01f contained the
+        value zero before the collision). To trigger further
+        interrupts after a collision, the concerning register has
+        to be cleared first by reading from it.</p>
+        <p>The bit 7 in the latch $d019 reflects the inverted
+        state of the IRQ output of the VIC.</p>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.13."><font size="4"><strong>3.13.
+                DRAM REFRESH</strong></font></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The VIC does five read accesses in
+        every raster line for the refresh of the dynamic RAM. An
+        8 bit refresh counter (REF) is used to generate 256 DRAM
+        row addresses. The counter is reset to $ff in raster line
+        0 and decremented by 1 after each refresh access.</p>
+        <p>So the VIC will access addresses $3fff, $3ffe, $3ffd,
+        $3ffc and $3ffb in line 0, addresses $3ffa, $3ff9, $3ff8,
+        $3ff7 and $3ff6 in line 1 etc.</p>
+        <blockquote>
+            <p>Refresh addresses:</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">REF7</td>
+                    <td align="center" valign="top" width="7%">REF6</td>
+                    <td align="center" valign="top" width="7%">REF5</td>
+                    <td align="center" valign="top" width="7%">REF4</td>
+                    <td align="center" valign="top" width="7%">REF3</td>
+                    <td align="center" valign="top" width="9%">REF2</td>
+                    <td align="center" valign="top" width="7%">REF1</td>
+                    <td align="center" valign="top" width="7%">REF0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <hr color="#D69418">
+        </td>
+    </tr>
+</table>
+</center></div><div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td valign="top" width="50%"><a
+        href="vic_article_3.8.htm"><img src="linkarrow_left.gif"
+        alt="[previous]" border="0" width="15" height="15"></a></td>
+        <td align="right" valign="top" width="50%"><a
+        href="vic_article_3.14.htm"><img
+        src="linkarrow_right.gif" alt="[next]" border="0"
+        width="15" height="15"></a></td>
+    </tr>
+</table>
+</center></div>
+</body>
+</html>

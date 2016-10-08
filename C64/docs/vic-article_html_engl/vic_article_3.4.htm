@@ -1,0 +1,311 @@
+<html>
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>vic artikel 3.4. - 3.5.</title>
+ <style type="text/css">
+  <!--
+   a:link {text-decoration: none }
+   a:active {text-decoration: none }
+   a:visited {text-decoration: none }
+   a:hover {color:#d66418;}
+  -->
+ </style>
+</head>
+
+<body bgcolor="#000000" text="#D69418" link="#D64818" vlink="#D64818" alink="#D66418">
+
+<div align="center"><center>
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td width="100%"><hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.4."><font size="4"><strong>3.4.
+                DISPLAY GENERATION AND WINDOW DIMENSIONS</strong></font></a></td>
+                <td align="right" valign="top"><a
+                href="vic_artikel_3.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>As usual for controlling CRTs, the VIC
+        builds the video frame line by line. The line number and
+        the number of clock cycles per line are constant for
+        every VIC type. The VIC works character-based, every
+        character consists of a matrix of 8×8 pixels, so a text
+        line is made up of 8 pixel lines. 40×25 text characters
+        are displayed in the text based modes, 320×200 or
+        160×200 pixels in the bitmap modes.</p>
+        <p>In this article, the specification of a position on
+        the screen is done with the raster line number as the Y
+        coordinate (RASTER, register $d011/$d012) and a X
+        coordinate that corresponds to the sprite coordinate
+        system. When specifying the time of a VIC memory access
+        or an internal operation in the VIC, the raster line
+        number is used as Y coordinate and the number of the
+        clock cycle within the line as X coordinate. As
+        previously mentioned, 8 pixels make a clock cycle, so the
+        specification of a sprite X coordinate is eight times
+        more precise than that of a cycle number.</p>
+        <p>The graphics are displayed in an unmovable window in
+        the middle of the visible screen area, the &quot;display
+        window&quot;. The area outside the display window is
+        covered by the screen border and is displayed in the
+        border color (EC, register $d020). You can also turn off
+        the border partially or completely with some little
+        tweaking; then you see that the display window is part of
+        a &quot;display column&quot; that is made up by the
+        linear extension of the display window to the top and
+        bottom. With that you can divide the border in an
+        upper/lower border and a left/right border. The visible
+        screen area is surrounded by blanking intervals in which
+        the video signal is turned off and in which the raster
+        beam returns to the start of the next line or the start
+        of the frame, respectively.</p>
+        <p>The following figure (not in scale) illustrates the
+        last paragraph: </p>
+        <p><img src="screen_e.gif" width="600" height="500" alt="[Display window]"></p>
+        <p>The height and width of the display window can each be
+        set to two different values with the bits RSEL and CSEL
+        in the registers $d011 and $d016: </p>
+        <div align="center"><center><table border="1"
+        cellspacing="0" width="100%" bordercolor="#D69418">
+            <tr>
+                <td width="50">RSEL</td>
+                <td width="250">Display window height</td>
+                <td width="100">First line</td>
+                <td>Last line</td>
+            </tr>
+            <tr>
+                <td width="50">0</td>
+                <td width="250">24 text lines/192 pixels</td>
+                <td width="100">55 ($37)</td>
+                <td>246 ($f6)</td>
+            </tr>
+            <tr>
+                <td width="50">1</td>
+                <td width="250">25 text lines/200 pixels</td>
+                <td width="100">51 ($33)</td>
+                <td>250 ($fa)</td>
+            </tr>
+        </table>
+        </center></div><p>&nbsp;</p>
+        <div align="center"><center><table border="1"
+        cellspacing="0" width="100%" bordercolor="#D69418">
+            <tr>
+                <td width="50">CSEL</td>
+                <td width="250">Display window width</td>
+                <td width="100">First X coo.</td>
+                <td>Last X coo.</td>
+            </tr>
+            <tr>
+                <td width="50">0</td>
+                <td width="250">38 characters/304 Pixel</td>
+                <td width="100">31 ($1f)</td>
+                <td>334 ($14e) </td>
+            </tr>
+            <tr>
+                <td width="50">1</td>
+                <td width="250">40 characters/320 Pixel</td>
+                <td width="100">24 ($18)</td>
+                <td>343 ($157)</td>
+            </tr>
+        </table>
+        </center></div><p>If RSEL=0 the upper and lower border
+        are each extended by 4 pixels into the display window, if
+        CSEL=0 the left border is extended by 7 pixels and the
+        right one by 9 pixels. The position of the display window
+        and its resolution do not change, RSEL/CSEL only switch
+        the starting and ending position of the border display.
+        The size of the video matrix also stays constantly at
+        40×25 characters.</p>
+        <p>With XSCROLL/YSCROLL (bits 0-2 of registers $d011
+        (XSCROLL) and $d016 (YSCROLL)), the position of the
+        graphics inside the display window can be scrolled in
+        single-pixel units up to 7 pixels to the right and to the
+        bottom. This can be used for soft scrolling. The position
+        of the display window itself doesn't change. To keep the
+        graphics aligned with the window, X/YSCROLL have to be 0
+        and 3 for 25 lines/40 columns and both 7 for 24 lines/38
+        columns.</p>
+        <p>The dimensions of the video display for the different
+        VIC types are as follows:</p>
+        <div align="center"><center><table border="1"
+        cellspacing="0" width="100%" bordercolor="#D69418">
+            <tr>
+                <td valign="top" width="16%">Type</td>
+                <td valign="top" width="16%">Video system</td>
+                <td valign="top" width="16%"># of lines</td>
+                <td valign="top" width="16%">Visible lines</td>
+                <td valign="top" width="16%">Cykles/line</td>
+                <td valign="top">Visible pixels/line</td>
+            </tr>
+            <tr>
+                <td width="16%">6567R56A</td>
+                <td width="16%">NTSC-M</td>
+                <td width="16%">262</td>
+                <td width="16%">234</td>
+                <td width="16%">64</td>
+                <td>411</td>
+            </tr>
+            <tr>
+                <td width="16%">6567R8</td>
+                <td width="16%">NTSC-M</td>
+                <td width="16%">263</td>
+                <td width="16%">235</td>
+                <td width="16%">65</td>
+                <td>418</td>
+            </tr>
+            <tr>
+                <td width="16%">6569</td>
+                <td width="16%">PAL-B</td>
+                <td width="16%">312</td>
+                <td width="16%">284</td>
+                <td width="16%">63</td>
+                <td>403</td>
+            </tr>
+        </table>
+        </center></div><p>&nbsp;</p>
+        <div align="center"><center><table border="1"
+        cellspacing="0" width="100%" bordercolor="#D69418">
+            <tr>
+                <td valign="top" width="16%">Type</td>
+                <td valign="top" width="16%">First vblank line</td>
+                <td valign="top" width="16%">Last vblank line</td>
+                <td valign="top" width="16%">First X coo. of a
+                line</td>
+                <td valign="top" width="16%">First visible<br>
+                X coo.</td>
+                <td valign="top">Last visible<br>
+                X coo.</td>
+            </tr>
+            <tr>
+                <td width="16%">6567R56A</td>
+                <td width="16%">13</td>
+                <td width="16%">40</td>
+                <td width="16%">412 ($19c)</td>
+                <td width="16%">488 ($1e8)</td>
+                <td>388 ($184) </td>
+            </tr>
+            <tr>
+                <td width="16%">6567R8</td>
+                <td width="16%">13</td>
+                <td width="16%">40</td>
+                <td width="16%">412 ($19c)</td>
+                <td width="16%">489 ($1e9)</td>
+                <td>396 ($18c)</td>
+            </tr>
+            <tr>
+                <td width="16%">6569</td>
+                <td width="16%">300</td>
+                <td width="16%">15</td>
+                <td width="16%">404 ($194)</td>
+                <td width="16%">480 ($1e0)</td>
+                <td>380 ($17c) </td>
+            </tr>
+        </table>
+        </center></div><p>If you are wondering why the first
+        visible X coordinates seem to come after the last visible
+        ones: This is because for the reference point to mark the
+        beginning of a raster line, the occurrence of the raster
+        IRQ has been chosen, which doesn't coincide with X
+        coordinate 0 but with the coordinate given as &quot;First
+        X coo. of a line&quot;. The X coordinates run up to $1ff
+        (only $1f7 on the 6569) within a line, then comes X
+        coordinate 0. This is explained in more detail in the
+        explanation of the structure of a raster line.</p>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.5."><font size="4"><strong>3.5.
+                BAD LINES</strong></font></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>As already mentioned, the VIC needs 40
+        additional bus cycles when fetching the character
+        pointers (i.e. the character codes of one text line from
+        the video matrix), because the 63-65 bus cycles available
+        for transparent (unnoticed by the processor) access for
+        the VIC during the first clock phases within a line are
+        not sufficient to read both the character pointers and
+        the pixel data for the characters from memory.</p>
+        <p>For this reason, the VIC uses the mechanism described
+        in section <a href="vic_article_2.htm#2.4.3.">2.4.3.</a>
+        to &quot;stun&quot; the processor for 40-43 cycles during
+        the first pixel line of each text line to read the
+        character pointers. The raster lines in which this
+        happens are usually called &quot;Bad Lines&quot;
+        (&quot;bad&quot; because they stop the processor and thus
+        slow down the computer and lead to problems if the
+        precise timing of a program is essential, e.g. for the
+        transmission of data to/from a floppy drive).</p>
+        <p>The character pointer access is also done in the
+        bitmap modes, because the video matrix data is then used
+        for color information.</p>
+        <p>Normally, every eighth line inside the display window,
+        starting with the very first line of the graphics, is a
+        Bad Line, i.e the first raster lines of each text line.
+        So the position of the Bad Lines depends on the YSCROLL.
+        As you will see later, the whole graphics display and
+        memory access scheme depend completely on the position of
+        the Bad Lines.</p>
+        <p>It is therefore necessary to introduce a more general
+        definition, namely that of a &quot;Bad Line
+        Condition&quot;:</p>
+        <blockquote>
+            <p>A Bad Line Condition is given at any arbitrary
+            clock cycle, if at the negative edge of ø0 at the
+            beginning of the cycle RASTER <img src="gr_gl.gif"
+            alt="[bigger or equal]" width="8" height="9"> $30 and
+            RASTER <img src="kl_gl.gif" alt="[smaller or equal]"
+            width="8" height="9"> $f7 and the lower three bits of
+            RASTER are equal to YSCROLL and if the DEN bit was
+            set during an arbitrary cycle of raster line $30.</p>
+        </blockquote>
+        <p>This definition has to be taken literally. You can
+        generate and take away a Bad Line condition multiple
+        times within an arbitrary raster line in the range of
+        $30-$f7 by modifying YSCROLL, and thus make every raster
+        line within the display window completely or partially a
+        Bad Line, or trigger or suppress all the other functions
+        that are connected with a Bad Line Condition. If
+        YSCROLL=0, a Bad Line Condition occurs in raster line $30
+        as soon as the DEN bit (register $d011, bit 4) is set
+        (for more about the DEN bit, see section <a
+        href="vic_article_3.9.htm#3.10.">3.10.</a>).</p>
+        <p>The following three sections describe the function
+        units that are used for displaying the graphics. Section <a
+        href="vic_article_3.6.htm">3.6.</a> explains the the
+        memory interface that is used to read the graphics data
+        and the timing of the accesses within a raster line.
+        Section <a href="vic_article_3.7.htm">3.7.</a> is about
+        the display unit that converts the text and bitmap
+        graphics data into colors and generates the addresses for
+        the memory access. Section <a href="vic_article_3.8.htm">3.8.</a>
+        covers the sprites and their address generation.</p>
+        <hr color="#D69418">
+        </td>
+    </tr>
+</table>
+</center></div><div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td valign="top" width="50%"><a href="vic_article_3.htm"><img
+        src="linkarrow_left.gif" alt="[previous]" border="0"
+        width="15" height="15"></a></td>
+        <td align="right" valign="top" width="50%"><a
+        href="vic_article_3.6.htm"><img src="linkarrow_right.gif"
+        alt="[next]" border="0" width="15" height="15"></a></td>
+    </tr>
+</table>
+</center></div>
+</body>
+</html>

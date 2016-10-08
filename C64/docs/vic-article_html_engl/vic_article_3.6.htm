@@ -1,0 +1,310 @@
+<html>
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>vic article 3.6. - 3.6.3.</title>
+ <style type="text/css">
+  <!--
+   a:link {text-decoration: none }
+   a:active {text-decoration: none }
+   a:visited {text-decoration: none }
+   a:hover {color:#d66418;}
+  -->
+ </style>
+</head>
+
+<body bgcolor="#000000" text="#D69418" link="#D64818" vlink="#D64818" alink="#D66418">
+
+<div align="center"><center>
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td width="100%"><hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.6."><font size="4"><strong>3.6.
+                MEMORY ACCESS</strong></font></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><div align="center"><center><table
+        border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.6.1."><font size="3"><strong>3.6.1.
+                THE X COORDINATES</strong></font></a></td>
+                <td align="right" valign="top"><a href="#3.6."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>Before explaining the timing of memory
+        accesses within a raster line, we will quickly explain
+        how to obtain the X coordinates. This is necessary
+        because the VIC doesn't have a counterpart to the RASTER
+        register (which gives the current Y coordinate) to hold
+        the X coordinates, so you cannot simply read them with
+        the processor. But the VIC surely keeps track of the X
+        coordinates internally as the horizontal sprite positions
+        are based on them, and a pulse at the lightpen input LP
+        latches the current X position in the register LPX
+        ($d013).</p>
+        <p>Determining the absolute X coordinates of events
+        within a raster line is not trivial as you cannot e.g.
+        simply put a sprite to a well-defined X coordinate and
+        conclude from the text characters displayed at the same X
+        position to the X coordinates of the memory accesses
+        belonging to these characters. The memory access and the
+        display are separate function units and the read graphics
+        data is not immediately displayed on the screen (there is
+        a delay of 12 pixels).</p>
+        <p>So a different approach has been taken: The absolute
+        position of a single X coordinate within the raster line
+        was measured with the LPX register and the other X
+        coordinates were determined relative to this. To do that,
+        the IRQ output of the VIC has been connected to the LP
+        input and the VIC has been programmed for a raster line
+        interrupt. As the negative edge of IRQ was defined to be
+        the start of a raster line, the absolute X position of
+        the line start could be determined. The position of the
+        negative edge of BA during a Bad Line was also measured
+        with this method and the result was consistent with the
+        relative distance of IRQ and BA to each other. Based on
+        these two measurements, the X coordinates of all other
+        events within a raster line have been determined (see <a
+        href="vic_article_appendix.htm#a">[4]</a>). Not until now
+        the sprite X coordinates were used to be able to
+        determine the moment of the display generation of the
+        text characters.</p>
+        <p>This of course implicitly assumes that the LPX
+        coordinates are the same as the sprite X coordinates.
+        There is, however, no indication and thus no reason to
+        suppose that they don't (a direct correlation would also
+        be the most simple solution in terms of circuit design).</p>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.6.2."><font size="3"><strong>3.6.2.
+                ACCESS TYPES</strong></font></a></td>
+                <td align="right" valign="top"><a href="#3.6."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The VIC generates two kinds of graphics
+        that require access to memory: The text/bitmap graphics
+        (also often called &quot;background graphics&quot; or
+        simply &quot;graphics&quot;) and the sprite graphics.
+        Both require accesses to two separated memory areas:</p>
+        <p>For the text/bitmap graphics:</p>
+        <ul>
+            <li>The video matrix; an area of 1000 video addresses
+                (40×25, 12 bits each) that can be moved in 1KB
+                steps within the 16KB address space of the VIC
+                with the bits VM10-VM13 of register $d018. It
+                stores the character codes and their color for
+                the text modes and some of the color information
+                of 8×8 pixel blocks for the bitmap modes. The
+                Color RAM is part of the video matrix, it
+                delivers the upper 4 bits of the 12 bit matrix.
+                The data read from the video matrix is stored in
+                an internal buffer in the VIC, the 40×12 bit
+                video matrix/color line.</li>
+        </ul>
+        <ul>
+            <li>The character generator resp. the bitmap; an area
+                of 2048 bytes (bitmap: 8192 bytes) that can be
+                moved in 2KB steps (bitmap: 8KB steps) within the
+                VIC address space with the bits CB11-CB13
+                (bitmap: only CB13) of register $d018. It stores
+                the pixel data of the characters for the text
+                modes and the bitmap for the bitmap modes. The
+                character generator has basically nothing to do
+                with the Char ROM. The Char ROM only contains
+                prepared bit patterns that can be used as
+                character generator, but you can also store the
+                character generator in normal RAM to define your
+                own character images.</li>
+        </ul>
+        <p>For the sprites:</p>
+        <ul>
+            <li>The sprite data pointers; 8 bytes after the end
+                of the video matrix, that select one out of 256
+                blocks of 64 bytes within the VIC address space
+                for each sprite.</li>
+        </ul>
+        <ul>
+            <li>The sprite data; an area of 63 bytes containing
+                the pixel data of the sprites which can be moved
+                in steps of 64 bytes with the sprite data
+                pointers independently for each sprite. </li>
+        </ul>
+        <p>Corresponding to that, the VIC does 4 different kinds
+        of graphics accesses:</p>
+        <ol>
+            <li>To the video matrix (&quot;c-access&quot;, 12
+                bits wide).</li>
+            <li>To the pixel data, i.e. character generator or
+                bitmap (&quot;g-access&quot;, 8 bits wide).</li>
+            <li>To the sprite data pointers
+                (&quot;p-access&quot;, 8 bits wide).</li>
+            <li>To the sprite data (&quot;s-access&quot;, 8 bits
+                wide).</li>
+        </ol>
+        <p>Moreover, the VIC does two additional types of
+        accesses:</p>
+        <ol>
+            <li>Accesses for refreshing the dynamic RAM, 5 read
+                accesses per raster line.</li>
+            <li>Idle accesses. As described, the VIC accesses in
+                every first clock phase although there are some
+                cycles in which no other of the above mentioned
+                accesses is pending. In this case, the VIC does
+                an idle access; a read access to video address
+                $3fff (i.e. to $3fff, $7fff, $bfff or $ffff
+                depending on the VIC bank) of which the result is
+                discarded.</li>
+        </ol>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.6.3."><font size="3"><strong>3.6.3.
+                TIMING OF A RASTER LINE</strong></font></a></td>
+                <td align="right" valign="top"><a href="#3.6."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The sequence of VIC memory accesses
+        within a raster line is hard-wired, independent of the
+        graphics mode and the same for every raster line. The
+        negative edge of IRQ on a raster interrupt has been used
+        to define the beginning of a line (this is also the
+        moment in which the RASTER register is incremented).
+        Raster line 0 is, however, an exception: In this line,
+        IRQ and incrementing (resp. resetting) of RASTER are
+        performed one cycle later than in the other lines. But
+        for simplicity we assume equal line lengths and define
+        the beginning of raster line 0 to be one cycle before the
+        occurrence of the IRQ.</p>
+        <p>First the timing diagrams, the explanation follows:</p>
+        <p>6569, Bad Line, no sprites: <br>
+        <a href="timing_bks_e.gif"><img
+        src="timing_bks_half_e.gif"
+        alt="[6569, Bad Line, no sprites]" border="0" width="600"
+        height="330"></a></p>
+        <p>6569, no Bad Line, no sprites (abbreviated):<br>
+        <img src="timing_kbks_e.gif"
+        alt="[6569, no Bad Line, no sprites (abbreviated)]"
+        width="600" height="330"></p>
+        <p>6567R56A, Bad Line, sprites 5-7 active in this line,
+        sprite 0 in the next line (abbreviated): <br>
+        <img src="timing_bs57_e.gif"
+        alt="[Bad Line, sprites 5-7 active in this line, sprite 0 in the next line (abbreviated)]"
+        width="600" height="330"></p>
+        <p>6567R8, no Bad Line, sprites 2-7 active in this line,
+        sprites 0-4 in the next line (abbreviated):<br>
+        <img src="timing_kbs27_e.gif"
+        alt="[no Bad Line, sprites 2-7 active in this line, sprites 0-4 in the next line (abbreviated)]"
+        width="600" height="330"></p>
+        <p>The line &quot;Cycl-#&quot; show the number of the
+        clock cycle within the raster line. The line starts with
+        cycle 1 and consists of 63 cycles on the 6569, of 64
+        cycles on the 6567R56A and of 65 cycles on the 6567R8.
+        The last cycle of the previous line and the first cycle
+        of the next line have also been included in the diagrams
+        to make things clearer.</p>
+        <p>The lines &quot;ø0&quot;, &quot;IRQ&quot;,
+        &quot;BA&quot; and &quot;AEC&quot; reflect the state of
+        the bus signals with the same names. ø0 is low in the
+        first phase and high in the second phase.</p>
+        <p>The symbols in the lines &quot;VIC&quot; and
+        &quot;6510&quot; show what kind of access VIC and 6510 do
+        in the corresponding clock phase (for an explanation of
+        the different access types of the VIC see section <a
+        href="#3.6.2.">3.6.2.</a>):</p>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="5" width="100%">
+            <tr>
+                <td valign="top">c </td>
+                <td valign="top">Access to video matrix and Color
+                RAM (c-access)</td>
+            </tr>
+            <tr>
+                <td valign="top">g </td>
+                <td valign="top">Access to character generator or
+                bitmap (g-access)</td>
+            </tr>
+            <tr>
+                <td valign="top" nowrap>0-7 </td>
+                <td valign="top">Reading the sprite data pointer
+                for sprite 0-7 (p-access)</td>
+            </tr>
+            <tr>
+                <td valign="top">s</td>
+                <td valign="top">Reading the sprite data
+                (s-access)</td>
+            </tr>
+            <tr>
+                <td valign="top">r </td>
+                <td valign="top">DRAM refresh</td>
+            </tr>
+            <tr>
+                <td valign="top">i </td>
+                <td valign="top">Idle access</td>
+            </tr>
+            <tr>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+            </tr>
+            <tr>
+                <td valign="top">x </td>
+                <td valign="top">Read or write access of the
+                processor</td>
+            </tr>
+            <tr>
+                <td valign="top">X</td>
+                <td valign="top">Processor may do write accesses,
+                stops on first read (BA is low and so is RDY)</td>
+            </tr>
+        </table>
+        </center></div><p>The line &quot;X coo.&quot; contains
+        the X coordinates of the beginning of each clock phase
+        (thus the &quot;\\\&quot; as a reminder) and the line
+        &quot;Graph.&quot; is a projection of the 40 column
+        display window and the border to these coordinates, for
+        positioning sprites. However, this doesn't correspond to
+        the signal on the VIC video output. Also you cannot see
+        from the &quot;Graph.&quot; line when the border unit
+        generates the border. This happens approx. 8 pixels later
+        than shown in the &quot;Graph.&quot; line.</p>
+        <p>To time the accesses of the processor within a raster
+        line when programming, it's best to use the VIC
+        g-accesses for orientation by changing a byte in graphics
+        memory with the 6510 and watching on the screen on which
+        character the change is first visible. The write access
+        of the processor must then have occurred in the clock
+        phase immediately before. Then you can use the diagrams
+        to determine the clock cycle in which the access took
+        place and count the other accesses relative to it.</p>
+        <hr color="#D69418">
+        </td>
+    </tr>
+</table>
+</center></div><div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td valign="top" width="50%"><a
+        href="vic_article_3.4.htm"><img src="linkarrow_left.gif"
+        alt="[previous]" border="0" width="15" height="15"></a></td>
+        <td align="right" valign="top" width="50%"><a
+        href="vic_article_3.7.htm"><img src="linkarrow_right.gif"
+        alt="[next]" border="0" width="15" height="15"></a></td>
+    </tr>
+</table>
+</center></div>
+</body>
+</html>

@@ -1,0 +1,605 @@
+<html>
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>vic article 3. - 3.3.</title>
+ <style type="text/css">
+  <!--
+   a:link {text-decoration: none }
+   a:active {text-decoration: none }
+   a:visited {text-decoration: none }
+   a:hover {color:#d66418;}
+  -->
+ </style>
+</head>
+
+<body bgcolor="#000000" text="#D69418" link="#D64818" vlink="#D64818" alink="#D66418">
+
+<div align="center"><center>
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td width="100%"><hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3."><font size="4"><strong>3.
+                DESCRIPTION OF THE VIC</strong></font></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_1.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>This chapter is about the single
+        function units in the VIC, their way of working and their
+        unspecified behavior, and the insights into the internal
+        functions of the VIC that can be gained by that.</p>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.1."><font size="4"><strong>3.1.
+                BLOCK DIAGRAM</strong></font></a></td>
+                <td align="right" valign="top"><a href="#3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The following block diagram gives an
+        overview over the internal structure of the VIC and the
+        independently working function units:</p>
+        <p><img src="block_e.gif" width="600" height="800" alt="[Block diagram]"></p>
+        <p>The lightpen unit is not shown.</p>
+        <p>As you can see, the &quot;Raster counter X/Y&quot;
+        plays a central role. This is no surprise as the complete
+        screen display and all bus accesses are synchronized by
+        it.</p>
+        <p>It is important to note that the units for display and
+        for the needed memory accesses are separate from each
+        other for the sprites as well as for the graphics. There
+        is a data buffer between the two units that holds the
+        read graphics data and buffers it for the display
+        circuits. In the normal operation of the VIC, the
+        functions of the two units are so closely tied to each
+        other that they appear like a single function block. By
+        appropriate programming, however, you can decouple the
+        circuits and e.g. display graphics without previously
+        having read data (in this case, the data which are still
+        in the buffer are displayed). </p>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.2."><font size="4"><strong>3.2.
+                REGISTERS</strong></font></a></td>
+                <td align="right" valign="top"><a href="#3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The VIC has 47 read/write registers for
+        the processor to control its functions:</p>
+        <div align="center"><center><table border="1"
+        cellspacing="0" width="100%" bordercolor="#D69418">
+            <tr>
+                <td valign="top"><strong>#</strong></td>
+                <td valign="top"><strong>Adr.</strong></td>
+                <td valign="top"><strong>Bit 7</strong></td>
+                <td valign="top"><strong>Bit 6</strong></td>
+                <td valign="top"><strong>Bit 5</strong></td>
+                <td valign="top"><strong>Bit 4</strong></td>
+                <td valign="top"><strong>Bit 3</strong></td>
+                <td valign="top"><strong>Bit 2</strong></td>
+                <td valign="top"><strong>Bit 1</strong></td>
+                <td valign="top"><strong>Bit 0</strong></td>
+                <td valign="top"><strong>Function</strong></td>
+            </tr>
+            <tr>
+                <td valign="top">0</td>
+                <td valign="top">$d000</td>
+                <td align="center" valign="top" colspan="8">M0X</td>
+                <td valign="top"><font size="2">X coordinate
+                sprite 0</font></td>
+            </tr>
+            <tr>
+                <td valign="top">1</td>
+                <td valign="top">$d001</td>
+                <td align="center" valign="top" colspan="8">M0Y</td>
+                <td valign="top"><font size="2">Y coordinate
+                sprite 0</font></td>
+            </tr>
+            <tr>
+                <td valign="top">2</td>
+                <td valign="top">$d002</td>
+                <td align="center" valign="top" colspan="8">M1X</td>
+                <td valign="top"><font size="2">X coordinate
+                sprite 1</font></td>
+            </tr>
+            <tr>
+                <td valign="top">3</td>
+                <td valign="top">$d003</td>
+                <td align="center" valign="top" colspan="8">M1Y</td>
+                <td valign="top"><font size="2">Y coordinate
+                sprite 1</font></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>$d004</td>
+                <td align="center" valign="top" colspan="8">M2X</td>
+                <td><font size="2">X coordinate sprite 2</font></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>$d005</td>
+                <td align="center" valign="top" colspan="8">M2Y</td>
+                <td><font size="2">Y coordinate sprite 2</font></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>$d006</td>
+                <td align="center" valign="top" colspan="8">M3X</td>
+                <td><font size="2">X coordinate sprite 3</font></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>$d007</td>
+                <td align="center" valign="top" colspan="8">M3Y</td>
+                <td><font size="2">Y coordinate sprite 3</font></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>$d008</td>
+                <td align="center" valign="top" colspan="8">M4X</td>
+                <td><font size="2">X coordinate sprite 4</font></td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>$d009</td>
+                <td align="center" valign="top" colspan="8">M4Y</td>
+                <td><font size="2">Y coordinate sprite 4</font></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>$d00a</td>
+                <td align="center" valign="top" colspan="8">M5X</td>
+                <td><font size="2">X coordinate sprite 5</font></td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>$d00b</td>
+                <td align="center" valign="top" colspan="8">M5Y</td>
+                <td><font size="2">Y coordinate sprite 5</font></td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>$d00c</td>
+                <td align="center" valign="top" colspan="8">M6X</td>
+                <td><font size="2">X coordinate sprite 6</font></td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>$d00d</td>
+                <td align="center" valign="top" colspan="8">M6Y</td>
+                <td><font size="2">Y coordinate sprite 6</font></td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>$d00e</td>
+                <td align="center" valign="top" colspan="8">M7X</td>
+                <td><font size="2">X coordinate sprite 7</font></td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>$d00f</td>
+                <td align="center" valign="top" colspan="8">M7Y</td>
+                <td><font size="2">Y coordinate sprite 7</font></td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>$d010</td>
+                <td align="center" valign="top">M7X8</td>
+                <td align="center" valign="top">M6X8</td>
+                <td align="center" valign="top">M5X8</td>
+                <td align="center" valign="top">M4X8</td>
+                <td align="center" valign="top">M3X8</td>
+                <td align="center" valign="top">M2X8</td>
+                <td align="center" valign="top">M1X8</td>
+                <td align="center" valign="top">M0X8</td>
+                <td><font size="2">MSBs of X coord.</font></td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td>$d011</td>
+                <td align="center" valign="top">RST8</td>
+                <td align="center" valign="top">ECM</td>
+                <td align="center" valign="top">BMM</td>
+                <td align="center" valign="top">DEN</td>
+                <td align="center" valign="top">RSEL</td>
+                <td align="center" valign="top" colspan="3">YSCROLL
+                </td>
+                <td><font size="2">Control register 1</font></td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td>$d012</td>
+                <td align="center" valign="top" colspan="8">RASTER</td>
+                <td><font size="2">Raster counter</font></td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td>$d013</td>
+                <td align="center" valign="top" colspan="8">LPX</td>
+                <td><font size="2">Light pen X</font></td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td>$d014</td>
+                <td align="center" valign="top" colspan="8">LPY</td>
+                <td><font size="2">Light pen Y</font></td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td>$d015</td>
+                <td align="center" valign="top">M7E</td>
+                <td align="center" valign="top">M6E</td>
+                <td align="center" valign="top">M5E</td>
+                <td align="center" valign="top">M4E</td>
+                <td align="center" valign="top">M3E</td>
+                <td align="center" valign="top">M2E</td>
+                <td align="center" valign="top">M1E</td>
+                <td align="center" valign="top">M0E</td>
+                <td><font size="2">Sprite enabled</font></td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td>$d016</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">RES</td>
+                <td align="center" valign="top">MCM</td>
+                <td align="center" valign="top">CSEL</td>
+                <td align="center" valign="top" colspan="3">XSCROLL
+                </td>
+                <td><font size="2">control register 2</font></td>
+            </tr>
+            <tr>
+                <td>23</td>
+                <td>$d017</td>
+                <td align="center" valign="top">M7YE</td>
+                <td align="center" valign="top">M6YE</td>
+                <td align="center" valign="top">M5YE</td>
+                <td align="center" valign="top">M4YE</td>
+                <td align="center" valign="top">M3YE</td>
+                <td align="center" valign="top">M2YE</td>
+                <td align="center" valign="top">M1YE</td>
+                <td align="center" valign="top">M0YE</td>
+                <td><font size="2">Sprite Y expansion</font></td>
+            </tr>
+            <tr>
+                <td>24</td>
+                <td>$d018</td>
+                <td align="center" valign="top">VM13</td>
+                <td align="center" valign="top">VM12</td>
+                <td align="center" valign="top">VM11</td>
+                <td align="center" valign="top">VM10</td>
+                <td align="center" valign="top">CB13</td>
+                <td align="center" valign="top">CB12</td>
+                <td align="center" valign="top">CB11</td>
+                <td align="center" valign="top">-</td>
+                <td><font size="2">Memory pointers</font></td>
+            </tr>
+            <tr>
+                <td>25</td>
+                <td>$d019</td>
+                <td align="center" valign="top">IRQ</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">ILP</td>
+                <td align="center" valign="top">IMMC</td>
+                <td align="center" valign="top">IMBC</td>
+                <td align="center" valign="top">IRST</td>
+                <td><font size="2">Interrupt register</font></td>
+            </tr>
+            <tr>
+                <td>26</td>
+                <td>$d01a</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">ELP</td>
+                <td align="center" valign="top">EMMC</td>
+                <td align="center" valign="top">EMBC</td>
+                <td align="center" valign="top">ERST</td>
+                <td><font size="2">Interrupt enabled</font></td>
+            </tr>
+            <tr>
+                <td>27</td>
+                <td>$d01b</td>
+                <td align="center" valign="top">M7DP</td>
+                <td align="center" valign="top">M6DP</td>
+                <td align="center" valign="top">M5DP</td>
+                <td align="center" valign="top">M4DP</td>
+                <td align="center" valign="top">M3DP</td>
+                <td align="center" valign="top">M2DP</td>
+                <td align="center" valign="top">M1DP</td>
+                <td align="center" valign="top">M0DP</td>
+                <td><font size="2">Sprite data priority</font></td>
+            </tr>
+            <tr>
+                <td>28</td>
+                <td>$d01c</td>
+                <td align="center" valign="top">M7MC</td>
+                <td align="center" valign="top">M6MC</td>
+                <td align="center" valign="top">M5MC</td>
+                <td align="center" valign="top">M4MC</td>
+                <td align="center" valign="top">M3MC</td>
+                <td align="center" valign="top">M2MC</td>
+                <td align="center" valign="top">M1MC</td>
+                <td align="center" valign="top">M0MC</td>
+                <td><font size="2">Sprite multicolor</font></td>
+            </tr>
+            <tr>
+                <td>29</td>
+                <td>$d01d</td>
+                <td align="center" valign="top">M7XE</td>
+                <td align="center" valign="top">M6XE</td>
+                <td align="center" valign="top">M5XE</td>
+                <td align="center" valign="top">M4XE</td>
+                <td align="center" valign="top">M3XE</td>
+                <td align="center" valign="top">M2XE</td>
+                <td align="center" valign="top">M1XE</td>
+                <td align="center" valign="top">M0XE</td>
+                <td><font size="2">Sprite X expansion</font></td>
+            </tr>
+            <tr>
+                <td>30</td>
+                <td>$d01e</td>
+                <td align="center" valign="top">M7M</td>
+                <td align="center" valign="top">M6M</td>
+                <td align="center" valign="top">M5M</td>
+                <td align="center" valign="top">M4M</td>
+                <td align="center" valign="top">M3M</td>
+                <td align="center" valign="top">M2M</td>
+                <td align="center" valign="top">M1M</td>
+                <td align="center" valign="top">M0M</td>
+                <td><font size="2">Sprite-sprite collision</font></td>
+            </tr>
+            <tr>
+                <td>31</td>
+                <td>$d01f</td>
+                <td align="center" valign="top">M7D</td>
+                <td align="center" valign="top">M6D</td>
+                <td align="center" valign="top">M5D</td>
+                <td align="center" valign="top">M4D</td>
+                <td align="center" valign="top">M3D</td>
+                <td align="center" valign="top">M2D</td>
+                <td align="center" valign="top">M1D</td>
+                <td align="center" valign="top">M0D</td>
+                <td><font size="2">Sprite-data collision</font></td>
+            </tr>
+            <tr>
+                <td>32</td>
+                <td>$d020</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">EC</td>
+                <td><font size="2">Border color</font></td>
+            </tr>
+            <tr>
+                <td>33</td>
+                <td>$d021</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">B0C</td>
+                <td><font size="2">Background color 0</font></td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>$d022</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">B1C</td>
+                <td><font size="2">Background color 1</font></td>
+            </tr>
+            <tr>
+                <td>35</td>
+                <td>$d023</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">B2C</td>
+                <td><font size="2">Background color 2</font></td>
+            </tr>
+            <tr>
+                <td>36</td>
+                <td>$d024</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">B3C</td>
+                <td><font size="2">Background color 3</font></td>
+            </tr>
+            <tr>
+                <td>37</td>
+                <td>$d025</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">MM0</td>
+                <td><font size="2">Sprite multicolor 0</font></td>
+            </tr>
+            <tr>
+                <td>38</td>
+                <td>$d026</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">MM1</td>
+                <td><font size="2">Sprite multicolor 1</font></td>
+            </tr>
+            <tr>
+                <td>39</td>
+                <td>$d027</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">M0C</td>
+                <td><font size="2">color sprite 0</font></td>
+            </tr>
+            <tr>
+                <td>40</td>
+                <td>$d028</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">M1C</td>
+                <td><font size="2">color sprite 1</font></td>
+            </tr>
+            <tr>
+                <td>41</td>
+                <td>$d029</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">M2C</td>
+                <td><font size="2">color sprite 2</font></td>
+            </tr>
+            <tr>
+                <td>42</td>
+                <td>$d02a</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">M3C</td>
+                <td><font size="2">color sprite 3</font></td>
+            </tr>
+            <tr>
+                <td>43</td>
+                <td>$d02b</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">M4C</td>
+                <td><font size="2">color sprite 4</font></td>
+            </tr>
+            <tr>
+                <td>44</td>
+                <td>$d02c</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">M5C</td>
+                <td><font size="2">color sprite 5</font></td>
+            </tr>
+            <tr>
+                <td>45</td>
+                <td>$d02d</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">M6C</td>
+                <td><font size="2">color sprite 6</font></td>
+            </tr>
+            <tr>
+                <td>46</td>
+                <td>$d02e</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top">-</td>
+                <td align="center" valign="top" colspan="4">M7C</td>
+                <td><font size="2">color sprite 7</font></td>
+            </tr>
+        </table>
+        </center></div><p>[see my <a
+        href="http://www.minet.uni-jena.de/~andreasg/c64/c64_vic_html.htm">VIC
+        description</a>, <a
+        href="mailto:andreasg@minet.uni-jena.de">A.G.</a>]</p>
+        <p>Notes:</p>
+        <ul>
+            <li>The bits marked with '-' are not connected and
+                give &quot;1&quot; on reading</li>
+            <li>The VIC registers are repeated each 64 bytes in
+                the area $d000-$d3ff, i.e. register 0 appears on
+                addresses $d000, $d040, $d080 etc.</li>
+            <li>The unused addresses $d02f-$d03f give $ff on
+                reading, a write access is ignored</li>
+            <li>The registers $d01e and $d01f cannot be written
+                and are automatically cleared on reading</li>
+            <li>The RES bit (bit 5) of register $d016 has no
+                function on the VIC 6567/6569 examined as yet. On
+                the 6566, this bit is used to stop the VIC.</li>
+            <li>Bit 7 in register $d011 (RST8) is bit 8 of
+                register $d012. Together they are called
+                &quot;RASTER&quot; in the following. A write
+                access to these bits sets the comparison line for
+                the raster interrupt (see section <a
+                href="vic_article_3.9.htm#3.12.">3.12.</a>). </li>
+        </ul>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.3."><font size="4"><strong>3.3.
+                COLOR PALETTE</strong></font></a></td>
+                <td align="right" valign="top"><a href="#3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The VIC has a hard-wired palette of 16
+        colors that are encoded with 4 bits:</p>
+        <p>0 black<br>
+        1 white<br>
+        2 red<br>
+        3 cyan<br>
+        4 pink<br>
+        5 green<br>
+        6 blue<br>
+        7 yellow<br>
+        8 orange<br>
+        9 brown<br>
+        10 light red<br>
+        11 dark gray<br>
+        12 medium gray<br>
+        13 light green<br>
+        14 light blue<br>
+        15 light gray </p>
+        <hr color="#D69418">
+        </td>
+    </tr>
+</table>
+</center></div><div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td valign="top" width="50%"><a href="vic_article_2.htm"><img
+        src="linkarrow_left.gif" alt="[previous]" border="0"
+        width="15" height="15"></a></td>
+        <td align="right" valign="top" width="50%"><a
+        href="vic_article_3.4.htm"><img src="linkarrow_right.gif"
+        alt="[next]" border="0" width="15" height="15"></a></td>
+    </tr>
+</table>
+</center></div>
+</body>
+</html>

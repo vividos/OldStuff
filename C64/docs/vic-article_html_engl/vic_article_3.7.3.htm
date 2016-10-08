@@ -1,0 +1,1539 @@
+<html>
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>vic article 3.7.3.1. - 3.7.3.9.</title>
+ <style type="text/css">
+  <!--
+   a:link {text-decoration: none }
+   a:active {text-decoration: none }
+   a:visited {text-decoration: none }
+   a:hover {color:#d66418;}
+  -->
+ </style>
+</head>
+
+<body bgcolor="#000000" text="#D69418" link="#D64818" vlink="#D64818" alink="#D66418">
+
+<div align="center"><center>
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td width="100%"><hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.7.3.1."><strong>3.7.3.1.
+                STANDARD TEXT MODE (ECM/BMM/MCM=0/0/0)</strong></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.7.htm#3.7.3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>In this mode (as in all text modes),
+        the VIC reads 8 bit character pointers from the video
+        matrix that specify the address of the dot matrix of the
+        character in the character generator. A character set of
+        256 characters is available, each consisting of 8×8
+        pixels which are stored in 8 successive bytes in the
+        character generator. Video matrix and character generator
+        can be moved in memory with the bits VM10-VM13 and
+        CB11-CB13 of register $d018.</p>
+        <p>In standard text mode, every bit in the character
+        generator directly corresponds to one pixel on the
+        screen. The foreground color is given by the color nybble
+        from the video matrix for each character, the background
+        color is set globally with register $d021.</p>
+        <p>c-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">VM13</td>
+                    <td align="center" valign="top" width="7%">VM12</td>
+                    <td align="center" valign="top" width="7%">VM11</td>
+                    <td align="center" valign="top" width="7%">VM10</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">VC7</td>
+                    <td align="center" valign="top" width="7%">VC6</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2</td>
+                    <td align="center" valign="top" width="8%">VC1</td>
+                    <td align="center" valign="top" width="8%">VC0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+        </blockquote>
+        <blockquote>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="8%">11</td>
+                    <td align="center" valign="top" width="8%">10</td>
+                    <td align="center" valign="top" width="8%">9</td>
+                    <td align="center" valign="top" width="8%">8</td>
+                    <td align="center" valign="top" width="8%">7</td>
+                    <td align="center" valign="top" width="8%">6</td>
+                    <td align="center" valign="top" width="8%">5</td>
+                    <td align="center" valign="top" width="8%">4</td>
+                    <td align="center" valign="top" width="9%">3</td>
+                    <td align="center" valign="top" width="9%">2</td>
+                    <td align="center" valign="top" width="9%">1</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" colspan="4"
+                    width="32%">Color of &quot;1&quot; pixels</td>
+                    <td align="center" valign="top" width="8%">D7</td>
+                    <td align="center" valign="top" width="8%">D6</td>
+                    <td align="center" valign="top" width="8%">D5</td>
+                    <td align="center" valign="top" width="8%">D4</td>
+                    <td align="center" valign="top" width="9%">D3</td>
+                    <td align="center" valign="top" width="9%">D2</td>
+                    <td align="center" valign="top" width="9%">D1</td>
+                    <td align="center" valign="top" width="9%">D0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>g-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="right"><table border="1" cellspacing="0"
+            width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">CB13</td>
+                    <td align="center" valign="top" width="7%">CB12</td>
+                    <td align="center" valign="top" width="7%">CB11</td>
+                    <td align="center" valign="top" width="7%">D7</td>
+                    <td align="center" valign="top" width="7%">D6</td>
+                    <td align="center" valign="top" width="7%">D5</td>
+                    <td align="center" valign="top" width="7%">D4</td>
+                    <td align="center" valign="top" width="7%">D3</td>
+                    <td align="center" valign="top" width="7%">D2</td>
+                    <td align="center" valign="top" width="7%">D1</td>
+                    <td align="center" valign="top" width="7%">D0</td>
+                    <td align="center" valign="top" width="7%">RC2</td>
+                    <td align="center" valign="top" width="8%">RC1</td>
+                    <td align="center" valign="top" width="8%">RC0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="12%">7</td>
+                    <td align="center" valign="top" width="12%">6</td>
+                    <td align="center" valign="top" width="12%">5</td>
+                    <td align="center" valign="top" width="12%">4</td>
+                    <td align="center" valign="top" width="13%">3</td>
+                    <td align="center" valign="top" width="13%">2</td>
+                    <td align="center" valign="top" width="13%">1</td>
+                    <td align="center" valign="top" width="13%">0</td>
+                </tr>
+                <tr>
+                    <td valign="top" colspan="8" width="100%">8
+                    pixels (1 bit/pixel)<p>&quot;0&quot;:
+                    Background color 0 ($d021)<br>
+                    &quot;1&quot;: Color from bits 8-11 of c-data</p>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.7.3.2."><strong>3.7.3.2.
+                MULTICOLOR TEXT MODE (ECM/BMM/MCM=0/0/1)</strong></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.7.htm#3.7.3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>This mode allows for displaying
+        four-colored characters at the cost of horizontal
+        resolution. If bit 11 of the c-data is zero, the
+        character is displayed as in standard text mode with only
+        the colors 0-7 available for the foreground. If bit 11 is
+        set, each two adjacent bits of the dot matrix form one
+        pixel. By this means, the resolution of a character of
+        reduced to 4×8 (the pixels are twice as wide, so the
+        total width of the characters doesn't change).</p>
+        <p>It is interesting that not only the bit combination
+        &quot;00&quot; but also &quot;01&quot; is regarded as
+        &quot;background&quot; for the sprite priority and
+        collision detection.</p>
+        <p>c-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="center"><center><table border="1"
+            cellpadding="0" cellspacing="0" width="90%"
+            bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">VM13</td>
+                    <td align="center" valign="top" width="7%">VM12</td>
+                    <td align="center" valign="top" width="7%">VM11</td>
+                    <td align="center" valign="top" width="7%">VM10</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">VC7</td>
+                    <td align="center" valign="top" width="7%">VC6</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2</td>
+                    <td align="center" valign="top" width="8%">VC1</td>
+                    <td align="center" valign="top" width="8%">VC0</td>
+                </tr>
+            </table>
+            </center></div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="8%">11</td>
+                    <td align="center" valign="top" width="8%">10</td>
+                    <td align="center" valign="top" width="8%">9</td>
+                    <td align="center" valign="top" width="8%">8</td>
+                    <td align="center" valign="top" width="8%">7</td>
+                    <td align="center" valign="top" width="8%">6</td>
+                    <td align="center" valign="top" width="8%">5</td>
+                    <td align="center" valign="top" width="8%">4</td>
+                    <td align="center" valign="top" width="9%">3</td>
+                    <td align="center" valign="top" width="9%">2</td>
+                    <td align="center" valign="top" width="9%">1</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="8%">MC
+                    Flag</td>
+                    <td align="center" valign="top" colspan="3"
+                    width="24%">Color of &quot;11&quot; pixels</td>
+                    <td align="center" valign="top" width="8%">D7</td>
+                    <td align="center" valign="top" width="8%">D6</td>
+                    <td align="center" valign="top" width="8%">D5</td>
+                    <td align="center" valign="top" width="8%">D4</td>
+                    <td align="center" valign="top" width="9%">D3</td>
+                    <td align="center" valign="top" width="9%">D2</td>
+                    <td align="center" valign="top" width="9%">D1</td>
+                    <td align="center" valign="top" width="9%">D0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>g-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">CB13</td>
+                    <td align="center" valign="top" width="7%">CB12</td>
+                    <td align="center" valign="top" width="7%">CB11</td>
+                    <td align="center" valign="top" width="7%">D7</td>
+                    <td align="center" valign="top" width="7%">D6</td>
+                    <td align="center" valign="top" width="7%">D5</td>
+                    <td align="center" valign="top" width="7%">D4</td>
+                    <td align="center" valign="top" width="7%">D3</td>
+                    <td align="center" valign="top" width="7%">D2
+                    </td>
+                    <td align="center" valign="top" width="7%">D1</td>
+                    <td align="center" valign="top" width="7%">D0</td>
+                    <td align="center" valign="top" width="7%">RC2</td>
+                    <td align="center" valign="top" width="8%">RC1</td>
+                    <td align="center" valign="top" width="8%">RC0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top">7</td>
+                    <td align="center" valign="top">6</td>
+                    <td align="center" valign="top">5</td>
+                    <td align="center" valign="top">4</td>
+                    <td align="center" valign="top">3</td>
+                    <td align="center" valign="top">2</td>
+                    <td align="center" valign="top">1</td>
+                    <td align="center" valign="top">0</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td valign="top" colspan="8">8 pixels (1
+                    bit/pixel):<p>&quot;0&quot;: Background color
+                    0 ($d021)<br>
+                    &quot;1&quot;: Color from bits 8-10 of c-data
+                    </p>
+                    </td>
+                    <td>MC flag = 0</td>
+                </tr>
+                <tr>
+                    <td colspan="8">4 pixels (2 bits/pixel):<p>&quot;00&quot;:
+                    Background color 0 ($d021)<br>
+                    &quot;01&quot;: Background color 1 ($d022)<br>
+                    &quot;10&quot;: Background color 2 ($d023)<br>
+                    &quot;11&quot;: Color from bits 8-10 of
+                    c-data</p>
+                    </td>
+                    <td>MC flag = 1</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.7.3.3."><strong>3.7.3.3.
+                STANDARD BITMAP MODE (ECM/BMM/MCM=0/1/0)</strong></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.7.htm#3.7.3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>In this mode (as in all bitmap modes),
+        the VIC reads the graphics data from a 320×200 bitmap in
+        which every bit corresponds to one pixel on the screen.
+        The data from the video matrix is used for color
+        information. As the video matrix is still only a 40×25
+        matrix, you can only specify the colors for blocks of
+        8×8 pixels individually (sort of a YC 8:1 format). As
+        the designers of the VIC wanted to realize the bitmap
+        mode with as little additional circuitry as possible (the
+        VIC-I didn't have a bitmap mode), the arrangement of the
+        bitmap in memory is somewhat weird: In contrast to modern
+        video chips that read the bitmap in a linear fashion from
+        memory, the VIC forms an 8×8 pixel block on the screen
+        from 8 successive bytes of the bitmap. The video matrix
+        and the bitmap can be moved in memory with the bits
+        VM10-VM13 and CB13 of register $d018.</p>
+        <p>In standard bitmap mode, every bit in the bitmap
+        directly corresponds to one pixel on the screen.
+        Foreground and background color can be arbitrarily set
+        for every 8×8 block.</p>
+        <p>c-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="center"><center><table border="1"
+            cellpadding="0" cellspacing="0" width="90%"
+            bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">VM13</td>
+                    <td align="center" valign="top" width="7%">VM12</td>
+                    <td align="center" valign="top" width="7%">VM11</td>
+                    <td align="center" valign="top" width="7%">VM10</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">VC7</td>
+                    <td align="center" valign="top" width="7%">VC6</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2</td>
+                    <td align="center" valign="top" width="8%">VC1</td>
+                    <td align="center" valign="top" width="8%">VC0</td>
+                </tr>
+            </table>
+            </center></div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="8%">11</td>
+                    <td align="center" valign="top" width="8%">10</td>
+                    <td align="center" valign="top" width="8%">9</td>
+                    <td align="center" valign="top" width="8%">8</td>
+                    <td align="center" valign="top" width="8%">7</td>
+                    <td align="center" valign="top" width="8%">6</td>
+                    <td align="center" valign="top" width="8%">5</td>
+                    <td align="center" valign="top" width="8%">4</td>
+                    <td align="center" valign="top" width="9%">3</td>
+                    <td align="center" valign="top" width="9%">2</td>
+                    <td align="center" valign="top" width="9%">1</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" colspan="4"
+                    width="32%">unused</td>
+                    <td align="center" valign="top" colspan="4"
+                    width="32%">Color of &quot;1&quot; pixels</td>
+                    <td align="center" valign="top" colspan="4"
+                    width="36%">Color of &quot;0&quot; pixels</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>g-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">CB13</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">VC7</td>
+                    <td align="center" valign="top" width="7%">VC6</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2
+                    </td>
+                    <td align="center" valign="top" width="7%">VC1</td>
+                    <td align="center" valign="top" width="7%">VC0</td>
+                    <td align="center" valign="top" width="7%">RC2</td>
+                    <td align="center" valign="top" width="8%">RC1</td>
+                    <td align="center" valign="top" width="8%">RC0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="12%">7</td>
+                    <td align="center" valign="top" width="12%">6</td>
+                    <td align="center" valign="top" width="12%">5</td>
+                    <td align="center" valign="top" width="12%">4</td>
+                    <td align="center" valign="top" width="13%">3</td>
+                    <td align="center" valign="top" width="13%">2</td>
+                    <td align="center" valign="top" width="13%">1</td>
+                    <td align="center" valign="top" width="13%">0</td>
+                </tr>
+                <tr>
+                    <td valign="top" colspan="8" width="100%">8
+                    pixels (1 bit/pixel)<p>&quot;0&quot;: Color
+                    from bits 0-3 of c-data<br>
+                    &quot;1&quot;: Color from bits 4-7 of c-data</p>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.7.3.4."><strong>3.7.3.4.
+                MULTICOLOR BITMAP MODE (ECM/BMM/MCM=0/1/1)</strong></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.7.htm#3.7.3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>Similar to the multicolor text mode,
+        this mode also forms (twice as wide) pixels by combining
+        two adjacent bits. So the resolution is reduced to
+        160×200 pixels.</p>
+        <p>The bit combination &quot;01&quot; is also treated as
+        &quot;background&quot; for the sprite priority and
+        collision detection, as in multicolor text mode.</p>
+        <p>c-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="center"><center><table border="1"
+            cellpadding="0" cellspacing="0" width="90%"
+            bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">VM13</td>
+                    <td align="center" valign="top" width="7%">VM12</td>
+                    <td align="center" valign="top" width="7%">VM11</td>
+                    <td align="center" valign="top" width="7%">VM10</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">VC7</td>
+                    <td align="center" valign="top" width="7%">VC6</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2</td>
+                    <td align="center" valign="top" width="8%">VC1</td>
+                    <td align="center" valign="top" width="8%">VC0</td>
+                </tr>
+            </table>
+            </center></div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="8%">11</td>
+                    <td align="center" valign="top" width="8%">10</td>
+                    <td align="center" valign="top" width="8%">9</td>
+                    <td align="center" valign="top" width="8%">8</td>
+                    <td align="center" valign="top" width="8%">7</td>
+                    <td align="center" valign="top" width="8%">6</td>
+                    <td align="center" valign="top" width="8%">5</td>
+                    <td align="center" valign="top" width="8%">4</td>
+                    <td align="center" valign="top" width="9%">3</td>
+                    <td align="center" valign="top" width="9%">2</td>
+                    <td align="center" valign="top" width="9%">1</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" colspan="4"
+                    width="32%">Color of &quot;11&quot; pixels</td>
+                    <td align="center" valign="top" colspan="4"
+                    width="32%">Color of &quot;01&quot; pixels</td>
+                    <td align="center" valign="top" colspan="4"
+                    width="36%">Color of &quot;10&quot; pixels</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>g-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">CB13</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">VC7</td>
+                    <td align="center" valign="top" width="7%">VC6</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2
+                    </td>
+                    <td align="center" valign="top" width="7%">VC1</td>
+                    <td align="center" valign="top" width="7%">VC0</td>
+                    <td align="center" valign="top" width="7%">RC2</td>
+                    <td align="center" valign="top" width="8%">RC1</td>
+                    <td align="center" valign="top" width="8%">RC0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top">7</td>
+                    <td align="center" valign="top">6</td>
+                    <td align="center" valign="top">5</td>
+                    <td align="center" valign="top">4</td>
+                    <td align="center" valign="top">3</td>
+                    <td align="center" valign="top">2</td>
+                    <td align="center" valign="top">1</td>
+                    <td align="center" valign="top">0</td>
+                </tr>
+                <tr>
+                    <td colspan="8">4 pixels (2 bits/pixel):<p>&quot;00&quot;:
+                    Background color 0 ($d021)<br>
+                    &quot;01&quot;: Color from bits 4-7 of c-data<br>
+                    &quot;10&quot;: Color from bits 0-3 of c-data<br>
+                    &quot;11&quot;: Color from bits 8-11 of
+                    c-data</p>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.7.3.5."><strong>3.7.3.5.
+                ECM TEXT MODE (ECM/BMM/MCM=1/0/0)</strong></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.7.htm#3.7.3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>This text mode is the same as the
+        standard text mode, but it allows the selection of one of
+        four background colors for every single character. The
+        selection is done with the upper two bits of the
+        character pointer. This, however, reduces the character
+        set from 256 to 64 characters.</p>
+        <p>c-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="center"><center><table border="1"
+            cellpadding="0" cellspacing="0" width="90%"
+            bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">VM13</td>
+                    <td align="center" valign="top" width="7%">VM12</td>
+                    <td align="center" valign="top" width="7%">VM11</td>
+                    <td align="center" valign="top" width="7%">VM10</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">VC7</td>
+                    <td align="center" valign="top" width="7%">VC6</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2</td>
+                    <td align="center" valign="top" width="8%">VC1</td>
+                    <td align="center" valign="top" width="8%">VC0</td>
+                </tr>
+            </table>
+            </center></div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="8%">11</td>
+                    <td align="center" valign="top" width="8%">10</td>
+                    <td align="center" valign="top" width="8%">9</td>
+                    <td align="center" valign="top" width="8%">8</td>
+                    <td align="center" valign="top" width="8%">7</td>
+                    <td align="center" valign="top" width="8%">6</td>
+                    <td align="center" valign="top" width="8%">5</td>
+                    <td align="center" valign="top" width="8%">4</td>
+                    <td align="center" valign="top" width="9%">3</td>
+                    <td align="center" valign="top" width="9%">2</td>
+                    <td align="center" valign="top" width="9%">1</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" colspan="4"
+                    width="32%">Color of &quot;1&quot; pixels</td>
+                    <td align="center" valign="top" colspan="2"
+                    width="16%">Backgr.col. selection</td>
+                    <td align="center" valign="top" width="8%">D5</td>
+                    <td align="center" valign="top" width="8%">D4</td>
+                    <td align="center" valign="top" width="9%">D3</td>
+                    <td align="center" valign="top" width="9%">D2</td>
+                    <td align="center" valign="top" width="9%">D1</td>
+                    <td align="center" valign="top" width="9%">D0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>g-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">CB13</td>
+                    <td align="center" valign="top" width="7%">CB12</td>
+                    <td align="center" valign="top" width="7%">CB11</td>
+                    <td align="center" valign="top" width="7%">0</td>
+                    <td align="center" valign="top" width="7%">0</td>
+                    <td align="center" valign="top" width="7%">D5</td>
+                    <td align="center" valign="top" width="7%">D4</td>
+                    <td align="center" valign="top" width="7%">D3</td>
+                    <td align="center" valign="top" width="7%">D2
+                    </td>
+                    <td align="center" valign="top" width="7%">D1</td>
+                    <td align="center" valign="top" width="7%">D0</td>
+                    <td align="center" valign="top" width="7%">RC2</td>
+                    <td align="center" valign="top" width="8%">RC1</td>
+                    <td align="center" valign="top" width="8%">RC0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top">7</td>
+                    <td align="center" valign="top">6</td>
+                    <td align="center" valign="top">5</td>
+                    <td align="center" valign="top">4</td>
+                    <td align="center" valign="top">3</td>
+                    <td align="center" valign="top">2</td>
+                    <td align="center" valign="top">1</td>
+                    <td align="center" valign="top">0</td>
+                </tr>
+                <tr>
+                    <td colspan="8">8 pixels (1 bit/pixel): <dl>
+                        <dt>&quot;0&quot;: Depending on bits 6/7
+                            of c-data </dt>
+                        <dd>&quot;00&quot;: Background color 0
+                            ($d021)</dd>
+                        <dd>&quot;01&quot;: Background color 1
+                            ($d022)</dd>
+                        <dd>&quot;10&quot;: Background color 2
+                            ($d023)</dd>
+                        <dd>&quot;11&quot;: Background color 3
+                            ($d024)</dd>
+                        <dt>&quot;1&quot;: Color from bits 8-11
+                            of c-data </dt>
+                    </dl>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.7.3.6."><strong>3.7.3.6.
+                INVALID TEXT MODE (ECM/BMM/MCM=1/0/1)</strong></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.7.htm#3.7.3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>Setting the ECM and MCM bits
+        simultaneously doesn't select one of the
+        &quot;official&quot; graphics modes of the VIC but
+        creates only black pixels. Nevertheless, the graphics
+        data sequencer internally generates valid graphics data
+        that can trigger sprite collisions even in this mode. By
+        using sprite collisions, you can also read out the
+        generated data (but you cannot see anything, the screen
+        is black). You can, however, only distinguish foreground
+        and background pixels as you cannot get color information
+        from sprite collisions.</p>
+        <p>The generated graphics is similar to that of the
+        multicolor text mode, but the character set is limited to
+        64 characters as in ECM mode.</p>
+        <p>c-access </p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="center"><center><table border="1"
+            cellpadding="0" cellspacing="0" width="90%"
+            bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">VM13</td>
+                    <td align="center" valign="top" width="7%">VM12</td>
+                    <td align="center" valign="top" width="7%">VM11</td>
+                    <td align="center" valign="top" width="7%">VM10</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">VC7</td>
+                    <td align="center" valign="top" width="7%">VC6</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2</td>
+                    <td align="center" valign="top" width="8%">VC1</td>
+                    <td align="center" valign="top" width="8%">VC0</td>
+                </tr>
+            </table>
+            </center></div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="8%">11</td>
+                    <td align="center" valign="top" width="8%">10</td>
+                    <td align="center" valign="top" width="8%">9</td>
+                    <td align="center" valign="top" width="8%">8</td>
+                    <td align="center" valign="top" width="8%">7</td>
+                    <td align="center" valign="top" width="8%">6</td>
+                    <td align="center" valign="top" width="8%">5</td>
+                    <td align="center" valign="top" width="8%">4</td>
+                    <td align="center" valign="top" width="9%">3</td>
+                    <td align="center" valign="top" width="9%">2</td>
+                    <td align="center" valign="top" width="9%">1</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="8%">MC
+                    Flag</td>
+                    <td align="center" valign="top" colspan="5"
+                    width="40%">unused</td>
+                    <td align="center" valign="top" width="8%">D5</td>
+                    <td align="center" valign="top" width="8%">D4</td>
+                    <td align="center" valign="top" width="9%">D3</td>
+                    <td align="center" valign="top" width="9%">D2</td>
+                    <td align="center" valign="top" width="9%">D1</td>
+                    <td align="center" valign="top" width="9%">D0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>g-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">CB13</td>
+                    <td align="center" valign="top" width="7%">CB12</td>
+                    <td align="center" valign="top" width="7%">CB11</td>
+                    <td align="center" valign="top" width="7%">0</td>
+                    <td align="center" valign="top" width="7%">0</td>
+                    <td align="center" valign="top" width="7%">D5</td>
+                    <td align="center" valign="top" width="7%">D4</td>
+                    <td align="center" valign="top" width="7%">D3</td>
+                    <td align="center" valign="top" width="7%">D2
+                    </td>
+                    <td align="center" valign="top" width="7%">D1</td>
+                    <td align="center" valign="top" width="7%">D0</td>
+                    <td align="center" valign="top" width="7%">RC2</td>
+                    <td align="center" valign="top" width="8%">RC1</td>
+                    <td align="center" valign="top" width="8%">RC0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top">7</td>
+                    <td align="center" valign="top">6</td>
+                    <td align="center" valign="top">5</td>
+                    <td align="center" valign="top">4</td>
+                    <td align="center" valign="top">3</td>
+                    <td align="center" valign="top">2</td>
+                    <td align="center" valign="top">1</td>
+                    <td align="center" valign="top">0</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td valign="top" colspan="8">8 pixels (1
+                    bit/pixel):<p>&quot;0&quot;: Black
+                    (background)<br>
+                    &quot;1&quot;: Black (foreground)</p>
+                    </td>
+                    <td>MC flag = 0</td>
+                </tr>
+                <tr>
+                    <td colspan="8">4 pixels (2 bits/pixel):<p>&quot;00&quot;:
+                    Black (background)<br>
+                    &quot;01&quot;: Black (background)<br>
+                    &quot;10&quot;: Black (foreground)<br>
+                    &quot;11&quot;: Black (foreground)</p>
+                    </td>
+                    <td>MC flag = 1</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.7.3.7."><strong>3.7.3.7.
+                INVALID BITMAP MODE 1 (ECM/BMM/MCM=1/1/0)</strong></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.7.htm#3.7.3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a> </td>
+            </tr>
+        </table>
+        </center></div><p>This mode also only displays a black
+        screen, but the pixels can also be read out with the
+        sprite collision trick.</p>
+        <p>The structure of the graphics is basically as in
+        standard bitmap mode, but the bits 9 and 10 of the
+        g-addresses are always zero due to the set ECM bit and so
+        the graphics is - roughly said - made up of four
+        &quot;sections&quot; that are each repeated four times.</p>
+        <p>c-access </p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="center"><center><table border="1"
+            cellpadding="0" cellspacing="0" width="90%"
+            bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">VM13</td>
+                    <td align="center" valign="top" width="7%">VM12</td>
+                    <td align="center" valign="top" width="7%">VM11</td>
+                    <td align="center" valign="top" width="7%">VM10</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">VC7</td>
+                    <td align="center" valign="top" width="7%">VC6</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2</td>
+                    <td align="center" valign="top" width="8%">VC1</td>
+                    <td align="center" valign="top" width="8%">VC0</td>
+                </tr>
+            </table>
+            </center></div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="8%">11</td>
+                    <td align="center" valign="top" width="8%">10</td>
+                    <td align="center" valign="top" width="8%">9</td>
+                    <td align="center" valign="top" width="8%">8</td>
+                    <td align="center" valign="top" width="8%">7</td>
+                    <td align="center" valign="top" width="8%">6</td>
+                    <td align="center" valign="top" width="8%">5</td>
+                    <td align="center" valign="top" width="8%">4</td>
+                    <td align="center" valign="top" width="9%">3</td>
+                    <td align="center" valign="top" width="9%">2</td>
+                    <td align="center" valign="top" width="9%">1</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" colspan="12"
+                    width="100%">unused</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>g-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">CB13</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">0</td>
+                    <td align="center" valign="top" width="7%">0</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2
+                    </td>
+                    <td align="center" valign="top" width="7%">VC1</td>
+                    <td align="center" valign="top" width="7%">VC0</td>
+                    <td align="center" valign="top" width="7%">RC2</td>
+                    <td align="center" valign="top" width="8%">RC1</td>
+                    <td align="center" valign="top" width="8%">RC0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top">7</td>
+                    <td align="center" valign="top">6</td>
+                    <td align="center" valign="top">5</td>
+                    <td align="center" valign="top">4</td>
+                    <td align="center" valign="top">3</td>
+                    <td align="center" valign="top">2</td>
+                    <td align="center" valign="top">1</td>
+                    <td align="center" valign="top">0</td>
+                </tr>
+                <tr>
+                    <td valign="top" colspan="8">8 pixels (1 bit/pixel):<p>&quot;0&quot;:
+                    Black (background)<br>
+                    &quot;1&quot;: Black (foreground)</p>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.7.3.8."><strong>3.7.3.8.
+                INVALID BITMAP MODE 2 (ECM/BMM/MCM=1/1/1)</strong></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.7.htm#3.7.3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The last invalid mode also creates a
+        black screen but it can also be &quot;scanned&quot; with
+        sprite-graphics collisions. The structure of the graphics
+        is basically as in multicolor bitmap mode, but the bits 9
+        and 10 of the g-addresses are always zero due to the set
+        ECM bit, with the same results as in the first invalid
+        bitmap mode. As usual, the bit combination &quot;01&quot;
+        is part of the background.</p>
+        <p>c-access </p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="center"><center><table border="1"
+            cellpadding="0" cellspacing="0" width="90%"
+            bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">VM13</td>
+                    <td align="center" valign="top" width="7%">VM12</td>
+                    <td align="center" valign="top" width="7%">VM11</td>
+                    <td align="center" valign="top" width="7%">VM10</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">VC7</td>
+                    <td align="center" valign="top" width="7%">VC6</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2</td>
+                    <td align="center" valign="top" width="8%">VC1</td>
+                    <td align="center" valign="top" width="8%">VC0</td>
+                </tr>
+            </table>
+            </center></div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="8%">11</td>
+                    <td align="center" valign="top" width="8%">10</td>
+                    <td align="center" valign="top" width="8%">9</td>
+                    <td align="center" valign="top" width="8%">8</td>
+                    <td align="center" valign="top" width="8%">7</td>
+                    <td align="center" valign="top" width="8%">6</td>
+                    <td align="center" valign="top" width="8%">5</td>
+                    <td align="center" valign="top" width="8%">4</td>
+                    <td align="center" valign="top" width="9%">3</td>
+                    <td align="center" valign="top" width="9%">2</td>
+                    <td align="center" valign="top" width="9%">1</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" colspan="12"
+                    width="100%">unused</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>g-access</p>
+        <blockquote>
+            <p>Addresses</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">CB13</td>
+                    <td align="center" valign="top" width="7%">VC9</td>
+                    <td align="center" valign="top" width="7%">VC8</td>
+                    <td align="center" valign="top" width="7%">0</td>
+                    <td align="center" valign="top" width="7%">0</td>
+                    <td align="center" valign="top" width="7%">VC5</td>
+                    <td align="center" valign="top" width="7%">VC4</td>
+                    <td align="center" valign="top" width="7%">VC3</td>
+                    <td align="center" valign="top" width="7%">VC2
+                    </td>
+                    <td align="center" valign="top" width="7%">VC1</td>
+                    <td align="center" valign="top" width="7%">VC0</td>
+                    <td align="center" valign="top" width="7%">RC2</td>
+                    <td align="center" valign="top" width="8%">RC1</td>
+                    <td align="center" valign="top" width="8%">RC0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top">7</td>
+                    <td align="center" valign="top">6</td>
+                    <td align="center" valign="top">5</td>
+                    <td align="center" valign="top">4</td>
+                    <td align="center" valign="top">3</td>
+                    <td align="center" valign="top">2</td>
+                    <td align="center" valign="top">1</td>
+                    <td align="center" valign="top">0</td>
+                </tr>
+                <tr>
+                    <td colspan="8">4 pixels (2 bits/pixel):<p>&quot;00&quot;:
+                    Black (background)<br>
+                    &quot;01&quot;: Black (background)<br>
+                    &quot;10&quot;: Black (foreground)<br>
+                    &quot;11&quot;: Black (foreground)</p>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><a name="3.7.3.9."><strong>3.7.3.9.
+                IDLE STATE</strong></a></td>
+                <td align="right" valign="top"><a
+                href="vic_article_3.7.htm#3.7.3."><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>In idle state, the VIC reads the
+        graphics data from address $3fff (resp. $39ff if the ECM
+        bit is set) and displays it in the selected graphics
+        mode, but with the video matrix data (normally read in
+        the c-accesses) being all &quot;0&quot; bits. So the byte
+        at address $3fff/$39ff is output repeatedly.</p>
+        <p>c-access </p>
+        <blockquote>
+            <p>No c-accesses occur.</p>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="8%">11</td>
+                    <td align="center" valign="top" width="8%">10</td>
+                    <td align="center" valign="top" width="8%">9</td>
+                    <td align="center" valign="top" width="8%">8</td>
+                    <td align="center" valign="top" width="8%">7</td>
+                    <td align="center" valign="top" width="8%">6</td>
+                    <td align="center" valign="top" width="8%">5</td>
+                    <td align="center" valign="top" width="8%">4</td>
+                    <td align="center" valign="top" width="9%">3</td>
+                    <td align="center" valign="top" width="9%">2</td>
+                    <td align="center" valign="top" width="9%">1</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="8%">0</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                    <td align="center" valign="top" width="9%">0</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <p>g-access</p>
+        <blockquote>
+            <p>Addresses (ECM=0)</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1 </td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Addresses (ECM=1)</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top" width="7%">13</td>
+                    <td align="center" valign="top" width="7%">12</td>
+                    <td align="center" valign="top" width="7%">11</td>
+                    <td align="center" valign="top" width="7%">10</td>
+                    <td align="center" valign="top" width="7%">9</td>
+                    <td align="center" valign="top" width="7%">8</td>
+                    <td align="center" valign="top" width="7%">7</td>
+                    <td align="center" valign="top" width="7%">6</td>
+                    <td align="center" valign="top" width="7%">5</td>
+                    <td align="center" valign="top" width="7%">4</td>
+                    <td align="center" valign="top" width="7%">3</td>
+                    <td align="center" valign="top" width="7%">2</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">0</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">0</td>
+                    <td align="center" valign="top" width="7%">0</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1 </td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="7%">1</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                    <td align="center" valign="top" width="8%">1</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <blockquote>
+            <p>Data</p>
+            <div align="right"><table border="1" cellpadding="0"
+            cellspacing="0" width="90%" bordercolor="#D69418">
+                <tr>
+                    <td align="center" valign="top">7</td>
+                    <td align="center" valign="top">6</td>
+                    <td align="center" valign="top">5</td>
+                    <td align="center" valign="top">4</td>
+                    <td align="center" valign="top">3</td>
+                    <td align="center" valign="top">2</td>
+                    <td align="center" valign="top">1</td>
+                    <td align="center" valign="top">0</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td valign="top" colspan="8">8 pixels (1 bit/pixel):<p>&quot;0&quot;:
+                    Background color 0 ($d021)<br>
+                    &quot;1&quot;: Black</p>
+                    </td>
+                    <td>Standard text mode/<br>
+                    Multicolor text mode/<br>
+                    ECM text mode</td>
+                </tr>
+                <tr>
+                    <td colspan="8">8 pixels (1 bit/pixel):<p>&quot;0&quot;:
+                    Black (background)<br>
+                    &quot;1&quot;: Black (foreground)</p>
+                    </td>
+                    <td>Standard text mode/<br>
+                    Invalid text mode/<br>
+                    Invalid bitmap mode 1</td>
+                </tr>
+                <tr>
+                    <td colspan="8">4 pixels (2 Bit/pixel):<p>&quot;00&quot;:
+                    Background color 0 ($d021)<br>
+                    &quot;01&quot;: Black (background)<br>
+                    &quot;10&quot;: Black (foreground)<br>
+                    &quot;11&quot;: Black (foreground)</p>
+                    </td>
+                    <td>Multicolor bitmap mode</td>
+                </tr>
+                <tr>
+                    <td colspan="8">4 pixels (2 Bit/pixel):<p>&quot;00&quot;:
+                    Schwarz (background)<br>
+                    &quot;01&quot;: Schwarz (background)<br>
+                    &quot;10&quot;: Schwarz (foreground)<br>
+                    &quot;11&quot;: Schwarz (foreground)</p>
+                    </td>
+                    <td>Invalid bitmap mode 2</td>
+                </tr>
+            </table>
+            </div>
+        </blockquote>
+        <hr color="#D69418">
+        </td>
+    </tr>
+</table>
+</center></div><div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td valign="top" width="50%"><a
+        href="vic_article_3.7.htm"><img src="linkarrow_left.gif"
+        alt="[previous]" border="0" width="15" height="15"></a></td>
+        <td align="right" valign="top" width="50%"><a
+        href="vic_article_3.8.htm"><img src="linkarrow_right.gif"
+        alt="[next]" border="0" width="15" height="15"></a></td>
+    </tr>
+</table>
+</center></div>
+</body>
+</html>

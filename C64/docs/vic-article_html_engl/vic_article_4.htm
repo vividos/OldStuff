@@ -1,0 +1,96 @@
+<html>
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>vic article 4.</title>
+ <style type="text/css">
+  <!--
+   a:link {text-decoration: none }
+   a:active {text-decoration: none }
+   a:visited {text-decoration: none }
+   a:hover {color:#d66418;}
+  -->
+ </style>
+</head>
+
+<body bgcolor="#000000" text="#D69418" link="#D64818" vlink="#D64818" alink="#D66418">
+
+<div align="center"><center>
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td width="100%"><hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top"><font size="4"><strong>4. DIE ADDRESSES
+                0 AND 1 AND THE $DE00 AREA</strong></font></td>
+                <td align="right" valign="top"><a
+                href="vic_article_1.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The address range $de00-$dfff of the
+        6510 (see <a href="vic_article_2.htm#2.4.1.">2.4.1.</a>)
+        is reserved for external expansions of the C64 and
+        normally not connected with any other unit (RAM, I/O). A
+        read access will fetch data that looks random at first
+        sight. The same is true for the upper nybbles of the
+        addresses $d800-$dbff (the Color RAM).</p>
+        <p>But on some C64, this data is not &quot;random&quot;
+        at all but rather identical to the data that the VIC has
+        read from memory in the first phase of the clock cycle.
+        This effect is however not reproducible on all machines
+        and not always precisely.</p>
+        <p>Apart from the fact that this gives the possibility to
+        measure the VIC timing completely by software (the timing
+        diagrams in <a href="vic_article_appendix.htm#a">[4]</a>
+        on which the diagrams in this article are based, have
+        e.g. been created with this method), you can also make
+        the 6510 execute programs in the $de00-area or in the
+        Color RAM if the VIC displays a graphics in such a way
+        that the 6510 gets valid opcodes from the graphics data
+        read by the VIC.</p>
+        <p>With a similar effect you can also write to RAM
+        addresses 0 and 1 from the processor. They are normally
+        not available as the internal data direction register and
+        data register of the 6510 I/O port are mapped to these
+        addresses, and the data bus drivers stay in tri-state on
+        a write access. But the R/W line is set to low state
+        (this can be explained as the I/O port has been
+        integrated afterwards into the existing design of the
+        6502) and so the byte read by the VIC in the first clock
+        phase is written to RAM. If you want to write a certain
+        value to addresses 0 or 1 you only have to write an
+        arbitrary value to these addresses and take care that the
+        VIC read the desired value from RAM in the clock phase
+        before.</p>
+        <p>The addresses 0 and 1 can of course also be read by
+        the processor. Either with via the $de00-area of with the
+        aid of sprite collisions. For this, you make the VIC
+        display a bitmap starting at address 0 and move a sprite
+        consisting only of one pixel over the single bits of the
+        first two bytes of the bitmap. Depending on whether a
+        collision has been detected or not, you can find out the
+        state of the single bits and put them together to one
+        byte. </p>
+        <hr color="#D69418">
+        </td>
+    </tr>
+</table>
+</center></div><div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td valign="top" width="50%"><a
+        href="vic_article_3.14.htm"><img src="linkarrow_left.gif"
+        alt="[previous]" border="0" width="15" height="15"></a></td>
+        <td align="right" valign="top" width="50%"><a
+        href="vic_article_appendix.htm"><img
+        src="linkarrow_right.gif" alt="[next]" border="0"
+        width="15" height="15"></a></td>
+    </tr>
+</table>
+</center></div>
+</body>
+</html>

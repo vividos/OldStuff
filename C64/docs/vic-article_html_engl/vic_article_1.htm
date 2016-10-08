@@ -1,0 +1,272 @@
+<html>
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>vic article 0. - 1.</title>
+ <style type="text/css">
+  <!--
+   a:link {text-decoration: none }
+   a:active {text-decoration: none }
+   a:visited {text-decoration: none }
+   a:hover {color:#d66418;}
+  -->
+ </style>
+</head>
+
+<body bgcolor="#000000" text="#D69418" link="#D64818" vlink="#D64818" alink="#D66418">
+
+<div align="center"><center>
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td width="100%"><p align="center"><a name="begin"><font
+        size="4">The MOS 6567/6569 video controller (VIC-II)</font></a><font
+        size="4"><br>
+        and its application in the Commodore 64<br>
+        by </font><a
+        href="mailto:bauec002@goofy.zdv.uni-mainz.de"><font
+        size="4">Christian Bauer</font></a><br>
+        28. August1996</p>
+        <p align="center"><font size="4">converted to HTML by </font><a
+        href="mailto:andreasg@minet.uni-jena.de"><font size="4">Andreas
+        Grützmann</font></a><font size="4"><br>
+        </font><font size="3">28. Juli 1999<br>
+        </font></p>
+        <p align="left"><a href="vic_artikel_1.htm"><font
+        size="3"><img src="linkarrow_right.gif" border="0"
+        width="15" height="15">Diese Dokumentation in deutsch</font></a><font
+        size="3"><br>
+        </font><a href="vic-artikel.txt"><font size="3"><img
+        src="linkarrow_right.gif" border="0" width="15"
+        height="15"></font></a><a href="vic-artikel.txt"><font
+        size="3">Deutsche Textversion</font></a><font size="3">
+        (von Christian Bauer)<br>
+        </font><a href="vic-article.txt"><img
+        src="linkarrow_right.gif" border="0" width="15"
+        height="15"></a><a href="vic-article.txt"><font size="3">English
+        Textversion</font></a><font size="3"> (by Chrisian Bauer)<br>
+        </font><a href="vic-artikel_html_dt.zip"><img
+        src="linkarrow_right.gif" border="0" width="15"
+        height="15"></a><a href="vic-artikel_html_dt.zip"><font
+        size="3">VIC-Artikel_html_dt.zip</font></a><font size="3">
+        - Komplettes Document inkl. Bilder, deutsche Version
+        (140k)<br>
+        </font><a href="vic-article_html_engl.zip"><font size="3"><img
+        src="linkarrow_right.gif" border="0" width="15"
+        height="15">VIC-article_html_engl.zip</font></a><font
+        size="3"> - complete document incl. pictures, english
+        version (130k)<br>
+        </font></p>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top" nowrap><a name="0."><font
+                size="4"><strong>0. CONTENTS</strong></font></a></td>
+                <td align="right" valign="top" nowrap><a
+                href="#begin"><img src="linkarrow_up.gif"
+                alt="[up]" border="0" width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><dl>
+            <dt><a href="#0.">0. Contents</a><br>
+                </dt>
+            <dt><a href="#1.">1. Introduction</a><br>
+                </dt>
+            <dt><a href="vic_article_2.htm">2. The architecture
+                of the Commodore 64 </a></dt>
+            <dd><a href="vic_article_2.htm#2.1.">2.1. Overview<br>
+                </a><a href="vic_article_2.htm#2.2.">2.2. 6510
+                prozessor<br>
+                </a><a href="vic_article_2.htm#2.3.">2.3.
+                6567/6569 graphics chip<br>
+                </a><a href="vic_article_2.htm#2.4.">2.4. Memory </a><dl>
+                    <dd><a href="vic_article_2.htm#2.4.1.">2.4.1.
+                        Memory map as seen by the 6510<br>
+                        </a><a href="vic_article_2.htm#2.4.2.">2.4.2.
+                        Memory map as seen by the VIC<br>
+                        </a><a href="vic_article_2.htm#2.4.3.">2.4.3.
+                        Memory access of 6510 and VIC<br>
+                        </a></dd>
+                </dl>
+            </dd>
+            <dt><a href="vic_article_3.htm">3. Description of the
+                VIC </a></dt>
+            <dd><a href="vic_article_3.htm#3.1.">3.1. Block
+                diagram<br>
+                </a><a href="vic_article_3.htm#3.2.">3.2.
+                Registers<br>
+                </a><a href="vic_article_3.htm#3.3.">3.3. Color
+                palette<br>
+                </a><a href="vic_article_3.4.htm">3.4. Display
+                generation and display window dimensions<br>
+                </a><a href="vic_article_3.4.htm#3.5.">3.5. Bad
+                Lines<br>
+                </a><a href="vic_article_3.6.htm">3.6. Memory
+                access </a><dl>
+                    <dd><a href="vic_article_3.6.htm#3.6.1.">3.6.1.
+                        The X coordinates<br>
+                        </a><a href="vic_article_3.6.htm#3.6.2.">3.6.2.
+                        Access types<br>
+                        </a><a href="vic_article_3.6.htm#3.6.3.">3.6.3.
+                        Timing of a raster line<br>
+                        </a><a href="vic_artikel_3.6.htm#3.6.3."></a></dd>
+                </dl>
+            </dd>
+            <dd><a href="vic_article_3.7.htm">3.7. Text-/bitmap
+                display </a><dl>
+                    <dd><a href="vic_article_3.7.htm#3.7.1.">3.7.1.
+                        Idle state/display state<br>
+                        </a><a href="vic_article_3.7.htm#3.7.2.">3.7.2.
+                        VC and RC<br>
+                        </a><a href="vic_article_3.7.htm#3.7.3.">3.7.3.
+                        Graphics modes </a><dl>
+                            <dd><a
+                                href="vic_article_3.7.3.htm#3.7.3.1.">3.7.3.1.
+                                Standard text mode
+                                (ECM/BMM/MCM=0/0/0)<br>
+                                </a><a
+                                href="vic_article_3.7.3.htm#3.7.3.2.">3.7.3.2.
+                                Multicolor text mode
+                                (ECM/BMM/MCM=0/0/1)<br>
+                                </a><a
+                                href="vic_article_3.7.3.htm#3.7.3.3.">3.7.3.3.
+                                Standard bitmap mode
+                                (ECM/BMM/MCM=0/1/0)<br>
+                                </a><a
+                                href="vic_article_3.7.3.htm#3.7.3.4.">3.7.3.4.
+                                Multicolor bitmap mode
+                                (ECM/BMM/MCM=0/1/1)<br>
+                                </a><a
+                                href="vic_article_3.7.3.htm#3.7.3.5.">3.7.3.5.
+                                ECM text mode (ECM/BMM/MCM=1/0/0)<br>
+                                </a><a
+                                href="vic_article_3.7.3.htm#3.7.3.6.">3.7.3.6.
+                                Invalid text mode
+                                (ECM/BMM/MCM=1/0/1)<br>
+                                </a><a
+                                href="vic_article_3.7.3.htm#3.7.3.7.">3.7.3.7.
+                                Invalid bitmap mode 1
+                                (ECM/BMM/MCM=1/1/0)<br>
+                                </a><a
+                                href="vic_article_3.7.3.htm#3.7.3.8.">3.7.3.8.
+                                Invalid bitmap mode 2
+                                (ECM/BMM/MCM=1/1/1)<br>
+                                </a><a
+                                href="vic_article_3.7.3.htm#3.7.3.9.">3.7.3.9.
+                                Idle state<br>
+                                </a><a
+                                href="vic_artikel_3.7.3.htm#3.7.3.9."></a></dd>
+                        </dl>
+                    </dd>
+                </dl>
+            </dd>
+            <dd><a href="vic_article_3.8.htm">3.8. Sprites </a><dl>
+                    <dd><a href="vic_article_3.8.htm#3.8.1.">3.8.1.
+                        Memory access and display<br>
+                        </a><a href="vic_article_3.8.htm#3.8.2.">3.8.2.
+                        Priority and collision detection<br>
+                        </a><a href="vic_artikel_3.8.htm#3.8.2."></a></dd>
+                </dl>
+            </dd>
+            <dd><a href="vic_article_3.9.htm">3.9. The border
+                units<br>
+                </a><a href="vic_article_3.9.htm#3.10.">3.10.
+                Display Enable<br>
+                </a><a href="vic_article_3.9.htm#3.11.">3.11.
+                Lightpen<br>
+                </a><a href="vic_article_3.9.htm#3.12.">3.12. VIC
+                interrupts<br>
+                </a><a href="vic_article_3.9.htm#3.13.">3.13.
+                DRAM refresh<br>
+                </a><a href="vic_article_3.14.htm">3.14.
+                Effects/applications<br>
+                </a><a href="vic_artikel_3.14.htm"></a><dl>
+                    <dd><a href="vic_article_3.14.htm#3.14.1.">3.14.1.
+                        Hyperscreen<br>
+                        </a><a
+                        href="vic_article_3.14.htm#3.14.2.">3.14.2.
+                        FLD<br>
+                        </a><a
+                        href="vic_article_3.14.htm#3.14.3.">3.14.3.
+                        FLI<br>
+                        </a><a
+                        href="vic_article_3.14.htm#3.14.4.">3.14.4.
+                        Linecrunch<br>
+                        </a><a
+                        href="vic_article_3.14.htm#3.14.5.">3.14.5.
+                        Doubled text lines<br>
+                        </a><a
+                        href="vic_article_3.14.htm#3.14.6.">3.14.6.
+                        DMA delay<br>
+                        </a><a
+                        href="vic_article_3.14.htm#3.14.7.">3.14.7.
+                        Sprite stretching<br>
+                        </a><a
+                        href="vic_artikel_3.14.htm#3.14.7."></a></dd>
+                </dl>
+            </dd>
+            <dt><a href="vic_article_4.htm">4. The adresses 0 and
+                1 and the $de00 area</a></dt>
+            <dt>&nbsp;</dt>
+            <dt><a href="vic_article_appendix.htm#a">Appendix A:
+                Bibliography<br>
+                </a></dt>
+            <dt><a href="vic_article_appendix.htm#b">Appendix B:
+                Acknowledgements </a></dt>
+        </dl>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top" nowrap><a name="1."><font
+                size="4"><strong>1. INTRODUCTION</strong></font></a></td>
+                <td align="right" valign="top" nowrap><a
+                href="#begin"><img src="linkarrow_up.gif"
+                alt="[up]" border="0" width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>This paper is an attempt to summarize
+        the results of various people's examinations of the
+        graphics chip &quot;6567/6569 Video Interface Controller
+        (VIC-II)&quot; (simply called &quot;VIC&quot; in the
+        following) used in the legendary Commodore 64, and to
+        provide a complete reference to its specified and
+        unspecified properties. It is primarily intended for C64
+        programmers and authors of C64 emulators, but should also
+        be interesting to &quot;outsiders&quot; interested in
+        hardware design and programming and hacking a computer up
+        to the last bits. For this purpose, some general
+        information (e.g. the C64 memory map) already known to
+        experienced C64 programmers has been included as well.</p>
+        <p>The description of the unspecified properties is based
+        on tests done by Marko Mäkelä, Andreas Boose, Pasi
+        Ojala, Wolfgang Lorenz and myself (not to mention
+        numerous others) during the last years. It also covers
+        internal registers and workings of the VIC. As no
+        schematics of the VIC are available it can of course only
+        be speculative, but in all cases a model has been chosen
+        that explains the observed phenomena with the minimally
+        required circuitry. E.g. for the video matrix counter
+        (VC), a model with two simple counters was given
+        preference to a more elaborate one with a +40 adder.</p>
+        <p>Although some measurements have been done with an
+        oscilloscope directly on the chip, most insights are
+        based on test programs on the C64 and by comparing them
+        with the implementation in single cycle emulations like
+        &quot;Frodo SC&quot;. </p>
+        <hr color="#D69418">
+        </td>
+    </tr>
+</table>
+</center></div><div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td align="right" valign="top" width="100%"><a
+        href="vic_article_2.htm"><img src="linkarrow_right.gif"
+        alt="[next]" border="0" width="15" height="15"></a></td>
+    </tr>
+</table>
+</center></div>
+</body>
+</html>

@@ -1,0 +1,767 @@
+<html>
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>vic article 2. - 2.4.3.</title>
+ <style type="text/css">
+  <!--
+   a:link {text-decoration: none }
+   a:active {text-decoration: none }
+   a:visited {text-decoration: none }
+   a:hover {color:#d66418;}
+  -->
+ </style>
+</head>
+
+<body bgcolor="#000000" text="#D69418" link="#D64818" vlink="#D64818" alink="#D66418">
+
+<div align="center"><center>
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td><hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top" nowrap><a name="2."><font
+                size="4"><strong>2. THE ARCHITECTURE OF THE
+                COMMODORE 64</strong></font></a></td>
+                <td align="right" valign="top" nowrap><a
+                href="vic_article_1.htm"><img
+                src="linkarrow_up.gif" alt="[up]" border="0"
+                width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>This chapter gives an overview of the
+        basic hardware architecture of the C64 and the
+        integration of the VIC into the system.</p>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top" nowrap><a name="2.1."><font
+                size="4"><strong>2.1. OVERVIEW</strong></font></a></td>
+                <td align="right" valign="top" nowrap><a
+                href="#2."><img src="linkarrow_up.gif" alt="[up]"
+                border="0" width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The C64 basically consists of the
+        following units:</p>
+        <ul>
+            <li>6510 8 bit microprocessor</li>
+            <li>6567/6569 VIC-II graphics chip</li>
+            <li>6581 SID sound chip</li>
+            <li>Two 6526 CIA I/O chips</li>
+            <li>64KB DRAM (64K*8 bit) main memory</li>
+            <li>0.5KB SRAM (1K*4 bit) Color RAM</li>
+            <li>16KB ROM (16K*8 bit) for operating system and
+                BASIC interpreter</li>
+            <li>4KB ROM (4K*8 bit) character generator</li>
+        </ul>
+        <p>Most chips are manufactured in NMOS technology.</p>
+        <hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top" nowrap><a name="2.2."><font
+                size="4"><strong>2.2. 6510 PROCESSOR</strong></font></a></td>
+                <td align="right" valign="top" nowrap><a
+                href="#2."><img src="linkarrow_up.gif" alt="[up]"
+                border="0" width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The 6510 microprocessor <a
+        href="vic_article_appendix.htm#a">[1]</a> has an 8 bit
+        data bus and a 16 bit address bus and is object code
+        compatible with the famous 6502. It has two external
+        interrupt inputs (one maskable (IRQ) and one non-maskable
+        (NMI)) and as a special feature a 6 bit wide
+        bidirectional I/O port. It is clocked at 1MHz in the C64.</p>
+        <p>Important signals:</p>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="5" width="100%">
+            <tr>
+                <td valign="top">ø2</td>
+                <td valign="top">Processor clock output<br>
+                This clock signal is the reference for the
+                complete bus timing. Its frequency is 1022.7 kHz
+                (NTSC models) or 985.248 kHz (PAL models). One
+                period of this signal corresponds to one clock
+                cycle consisting of two phases: ø2 is low in the
+                first phase and high in the second phase (hence
+                the name 'ø2' for &quot;phase 2&quot;). The 6510
+                only accesses the bus in the second clock phase,
+                the VIC normally only in the first phase. </td>
+            </tr>
+            <tr>
+                <td valign="top">R/W</td>
+                <td valign="top">This signal flags a read (R/W
+                high) or write (R/W low) access.</td>
+            </tr>
+            <tr>
+                <td valign="top">IRQ</td>
+                <td valign="top">If this input is held on low
+                level, an interrupt sequence is triggered unless
+                interrupts are masked with the interrupt mask bit
+                in the status register. The interrupt sequence
+                begins after two or more clock cycles at the
+                start of the next instruction. With this pin, the
+                VIC can trigger an interrupt in the processor.
+                Interrupts are only recognized if the RDY line is
+                high.</td>
+            </tr>
+            <tr>
+                <td valign="top">RDY</td>
+                <td valign="top">If this line is low during a
+                read access, the processor stops with the address
+                lines reflecting the current address being
+                fetched. It is ignored during write accesses. In
+                the C64, RDY is used to stop the processor if the
+                VIC needs additional bus cycles for character
+                pointer and sprite data accesses. It is connected
+                to the BA signal on the VIC.</td>
+            </tr>
+            <tr>
+                <td valign="top">AEC</td>
+                <td valign="top">This pin tri-states the address
+                lines. This is used for making the processor
+                address bus inactive during VIC accesses. The
+                signal is connected to the AEC output on the VIC.</td>
+            </tr>
+            <tr>
+                <td valign="top" nowrap>P0-P5</td>
+                <td valign="top">This is the built-in 6 bit I/O
+                port. Each line can be individually programmed as
+                input or output. A data direction register and a
+                data register are internally mapped to addresses
+                0 and 1, respectively. You may therefore expect
+                that the processor cannot access the RAM
+                addresses 0 and 1 (as they are overlayed by the
+                I/O port), but more on this later...</td>
+            </tr>
+        </table>
+        </center></div><hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top" nowrap><a name="2.3."><font
+                size="4"><strong>2.3. 6567/6569 GRAPHICS CHIP</strong></font></a></td>
+                <td align="right" valign="top" nowrap><a
+                href="#2."><img src="linkarrow_up.gif" alt="[up]"
+                border="0" width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The 656* series graphics chip by MOS
+        Technologies were originally designed to be used in video
+        games and graphics terminals. But as the sales in these
+        markets have been rather poor, Commodore decided to use
+        the chips when they were planning to make their own home
+        computers.</p>
+        <p>In the C64, the &quot;Video Interface Controller II
+        (VIC-II)&quot; <a href="vic_article_appendix.htm#a">[2]</a>
+        has been used, featuring 3 text based (40x25 characters
+        with 8x8 pixels each) and 2 bitmap based (320x200 pixels)
+        video modes, 8 hardware sprites and a fixed palette of 16
+        colors. It can manage up to 16KB of dynamic RAM
+        (including the generation of RAS and CAS and the RAM
+        refresh) and also has a light pen input and interrupt
+        possibilities.</p>
+        <p>Two VIC types appear in the C64: The 6567 in NTSC
+        machines and the 6569 in PAL machines. There are several
+        mask steppings of both types, but the differences are
+        mostly neglectable with the exception of the 6567R56A.
+        Newer C64 versions are bearing the functionally
+        equivalent chips 8562 (NTSC) and 8565 (PAL). In the
+        following, only 6567/6569 will be mentioned, but all
+        statements are applicable for the 856* chips. There is
+        also a 6566 designed to be connected to static RAM but
+        this one was never used in C64s.</p>
+        <p>Important signals:</p>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="5" width="100%">
+            <tr>
+                <td valign="top" nowrap>A0-A13 </td>
+                <td valign="top">The 14 bit video address bus
+                used by the VIC to address 16KB of memory. The
+                address bits A0-A5 and A8-A13 are multiplexed in
+                pairs (i.e. A0/A8, A1/A9 etc.) on one pin each.
+                The bits A6-A11 are (additionally) available on
+                separate lines.</td>
+            </tr>
+            <tr>
+                <td valign="top" nowrap>D0-D11</td>
+                <td valign="top">A 12 bit wide data bus over
+                which the VIC accesses the memory. The lower 8
+                bits are connected to the main memory and the
+                processor data bus, the upper 4 bits are
+                connected to a special 4 bit wide static memory
+                (1024 addresses, A0-A9) used for storing color
+                information, the Color RAM.</td>
+            </tr>
+            <tr>
+                <td valign="top" nowrap>IRQ</td>
+                <td valign="top">This output is wired to the IRQ
+                input on the processor and makes it possible for
+                the VIC to trigger interrupts. The VIC has four
+                interrupt sources: On reaching a certain raster
+                line (raster interrupt), on the collision of two
+                or more sprites, on the collision of sprites with
+                graphics data and on a negative edge on the light
+                pen input.</td>
+            </tr>
+            <tr>
+                <td valign="top" nowrap>BA</td>
+                <td valign="top">With this signal, the VIC
+                indicated that the bus is available to the
+                processor during the second clock phase (ø2
+                high). BA is normally high as the VIC accesses
+                the bus mostly during the first phase. But for
+                the character pointer and sprite data accesses,
+                the VIC also needs the bus sometimes during the
+                second phase. In this case, BA goes low three
+                cycles before the VIC access. After that, AEC
+                remains low during the second phase and the VIC
+                performs the accesses. Why three cycles? BA is
+                connected to the RDY line of the processor as
+                mentioned, but this line is ignored on write
+                accesses (the CPU can only be interrupted on
+                reads), and the 6510 never does more than three
+                writes in sequence (see <a
+                href="vic_article_appendix.htm#a">[5]</a>).</td>
+            </tr>
+            <tr>
+                <td valign="top" nowrap>AEC</td>
+                <td valign="top">This pin is wired to the
+                processor signal with the same name (see there).
+                It reflects the state of the data and address
+                line drivers of the VIC. If AEC is high, they are
+                in tri-state. AEC is normally low during the
+                first clock phase (ø2 low) and high during the
+                second phase so that the VIC can access the bus
+                during the first phase and the 6510 during the
+                second phase. If the VIC also needs the bus in
+                the second phase, AEC remains low.</td>
+            </tr>
+            <tr>
+                <td valign="top">LP</td>
+                <td valign="top">This input is intended for
+                connecting a light pen. On a negative edge, the
+                current position of the raster beam is latched to
+                the registers LPX and LPY. As this pin shares a
+                line with the keyboard matrix, it can also be
+                accessed by software.</td>
+            </tr>
+            <tr>
+                <td valign="top">øIN</td>
+                <td valign="top">This is the feed for the pixel
+                clock of 8.18 MHz (NTSC) or 7.88 MHz (PAL) that
+                is generated from the crystal frequency. Eight
+                pixels are displayed per bus clock cycle (ø2).</td>
+            </tr>
+            <tr>
+                <td valign="top">ø0</td>
+                <td valign="top">From the pixel clock on øIN,
+                the VIC generates the system clock of 1.023 MHz
+                (NTSC) or 0.985 MHz (PAL) by dividing øIN by
+                eight. It is available on this pin and fed into
+                the processor which in turn generated the signal
+                ø2 from it.</td>
+            </tr>
+        </table>
+        </center></div><hr color="#D69418">
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top" nowrap><a name="2.4."><font
+                size="4"><strong>2.4. MEMORY</strong></font></a></td>
+                <td align="right" valign="top" nowrap><a
+                href="#2."><img src="linkarrow_up.gif" alt="[up]"
+                border="0" width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>Three memory areas in the C64 are
+        involved with the graphics:</p>
+        <ul>
+            <li>The 64KB main memory</li>
+            <li>The 1K*4 bit Color RAM</li>
+            <li>The 4KB character generator ROM (Char ROM)</li>
+        </ul>
+        <p>In the following two sections it is explained how
+        these memory areas share the address space as seen by the
+        CPU and the VIC. After that, the basics of memory access
+        and DRAM handling are mentioned.</p>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top" nowrap><a name="2.4.1."><font
+                size="3"><strong>2.4.1 MEMORY MAP AS SEEN BY THE
+                6510</strong></font></a></td>
+                <td align="right" valign="top" nowrap><a
+                href="#2.4."><img src="linkarrow_up.gif"
+                alt="[up]" border="0" width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The 6510 can address 64KB linearly with
+        its 16 address lines. With the aid of a special PAL chip
+        in the C64, many different memory configurations can be
+        used via the 6510 I/O port lines and control lines on the
+        expansion port (see <a href="vic_article_appendix.htm#a">[3]</a>).
+        Only the standard configuration will be discussed here as
+        the other configurations don't change the position of the
+        different areas. They only map in additional areas of the
+        main memory.</p>
+        <p>So this is the memory map as seen by the 6510:</p>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td align="center" valign="bottom" colspan="3">The
+                area at $d000-$dfff with</td>
+            </tr>
+            <tr>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">CHAREN=1</td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">CHAREN=0</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td><div align="center"><center><table border="0"
+                cellpadding="0" cellspacing="0" width="100%"
+                height="100%">
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="30">$ffff</td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="30">$e000</td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="30">$d000</td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="30">$c000</td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="90">$a000<br>
+                        <font size="4"><strong>.<br>
+                        .<br>
+                        .</strong></font></td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="30">$0002</td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="30">$0001</td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td>&nbsp;</td>
+                <td><div align="center"><center><table border="1"
+                cellpadding="0" cellspacing="0" width="100%"
+                bordercolor="#D69418" height="100%">
+                    <tr>
+                        <td align="center" width="100%"
+                        height="30">Kernal ROM</td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="100%"
+                        height="30">I/O, Char ROM</td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="100%"
+                        height="30">RAM</td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="100%"
+                        height="30">Basic ROM</td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="100%"
+                        height="90">RAM</td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="100%"
+                        height="30">I/O port DR</td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="100%"
+                        height="30">I/O port DDR</td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td><img src="span.gif" alt="[ { Klammer]"
+                width="31" height="271"></td>
+                <td><div align="center"><center><table border="0"
+                cellpadding="0" cellspacing="0" width="100%"
+                height="100%">
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="30">$e000</td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="30">$df00</td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="30">$de00</td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="30">$dd00</td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="50">$dc00</td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="50">$d800</td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top"
+                        width="100%" height="50">$d400</td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td>&nbsp;</td>
+                <td><div align="center"><center><table border="1"
+                cellpadding="0" cellspacing="0" width="100%"
+                bordercolor="#D69418" height="100%">
+                    <tr>
+                        <td align="center" height="30">I/O 2</td>
+                    </tr>
+                    <tr>
+                        <td align="center" height="30">I/O 1</td>
+                    </tr>
+                    <tr>
+                        <td align="center" height="30">CIA 2</td>
+                    </tr>
+                    <tr>
+                        <td align="center" height="30">CIA 1</td>
+                    </tr>
+                    <tr>
+                        <td align="center" height="50">Color RAM</td>
+                    </tr>
+                    <tr>
+                        <td align="center" height="50">SID
+                        registers</td>
+                    </tr>
+                    <tr>
+                        <td align="center" height="50">VIC
+                        registers</td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td>&nbsp;</td>
+                <td><div align="center"><center><table border="1"
+                cellpadding="0" cellspacing="0" width="100%"
+                bordercolor="#D69418" height="272">
+                    <tr>
+                        <td align="center" width="100%" nowrap>Char
+                        ROM</td>
+                    </tr>
+                </table>
+                </center></div></td>
+            </tr>
+            <tr>
+                <td align="right" valign="top">$0000</td>
+                <td align="right" valign="top">&nbsp;</td>
+                <td align="right" valign="top">&nbsp;</td>
+                <td align="right" valign="top">&nbsp;</td>
+                <td align="right" valign="top">$d000</td>
+                <td>&nbsp;</td>
+                <td align="right" valign="top">&nbsp;</td>
+                <td align="right" valign="top">&nbsp;</td>
+                <td align="right" valign="top">&nbsp;</td>
+            </tr>
+        </table>
+        </center></div><p>Basically, the 64KB main memory can be
+        accessed in a linear fashion, but they are overlaid by
+        ROM and register areas at several positions. A write
+        access to a ROM area will store the byte in the RAM lying
+        &quot;under&quot; the ROM. The 6510 I/O port is mapped to
+        addresses $0000 (for the data direction register) and
+        $0001 (for the data register).</p>
+        <p>In the area at $d000-$dfff you can switch between the
+        I/O chip registers and the Color RAM, or the character
+        generator ROM, with the signal CHAREN (which is bit 2 of
+        the 6510 I/O port). The Color RAM is mapped at
+        $d800-$dbff and connected to the lower 4 data bits. The
+        upper 4 bits are open and have &quot;random&quot; values
+        on reading. The two areas named &quot;I/O 1&quot; and
+        &quot;I/O 2&quot; are reserved for expansion cards and
+        also open under normal circumstances. Hence, a read
+        access will fetch &quot;random&quot; values here too (it
+        will be explained in chapter 4 that these values are not
+        really random. Reading from open addresses fetches the
+        last byte read by the VIC on many C64s).</p>
+        <p>The 47 registers of the VIC are mapped in at $d000.
+        Due to the incomplete address decoding, they are repeated
+        every 64 bytes in the area $d000-$d3ff.</p>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top" nowrap><a name="2.4.2."><strong>2.4.2
+                MEMORY MAP AS SEEN BY THE VIC</strong></a></td>
+                <td align="right" valign="top" nowrap><a
+                href="#2.4."><img src="linkarrow_up.gif"
+                alt="[up]" border="0" width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>The VIC has only 14 address lines, so
+        it can only address 16KB of memory. It can access the
+        complete 64KB main memory all the same because the 2
+        missing address bits are provided by one of the CIA I/O
+        chips (they are the inverted bits 0 and 1 of port A of
+        CIA 2). With that you can select one of 4 16KB banks for
+        the VIC at a time.</p>
+        <p>The (extended) memory map as seen by the VIC looks
+        like this:</p>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="200">
+            <tr>
+                <td><div align="center"><center><table border="0"
+                cellpadding="0" cellspacing="0" width="100%"
+                height="100%">
+                    <tr>
+                        <td valign="top" width="100%">$ffff </td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td>&nbsp;</td>
+                <td align="center"><div align="center"><center><table
+                border="1" cellpadding="0" cellspacing="0"
+                width="100%" bordercolor="#D69418" height="100">
+                    <tr>
+                        <td align="center" width="100%"
+                        bordercolor="#D69418">RAM</td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td>&nbsp;</td>
+                <td align="center">Bank 3</td>
+            </tr>
+            <tr>
+                <td><div align="center"><center><table border="0"
+                cellpadding="0" cellspacing="0" width="100%"
+                height="100%">
+                    <tr>
+                        <td valign="top" width="100%">$c000</td>
+                    </tr>
+                    <tr>
+                        <td valign="top" width="100%">$a000</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">$9000</td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td>&nbsp;</td>
+                <td align="center"><div align="center"><center><table
+                border="1" cellpadding="0" cellspacing="0"
+                width="100%" bordercolor="#D69418" height="100">
+                    <tr>
+                        <td align="center" width="100%">RAM</td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="100%">Char ROM</td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="100%">RAM</td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td>&nbsp;</td>
+                <td align="center">Bank 2</td>
+            </tr>
+            <tr>
+                <td><div align="center"><center><table border="0"
+                cellpadding="0" cellspacing="0" width="100%"
+                height="100%">
+                    <tr>
+                        <td valign="top" width="100%">$8000</td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td>&nbsp;</td>
+                <td align="center"><div align="center"><center><table
+                border="1" cellpadding="0" cellspacing="0"
+                width="100%" bordercolor="#D69418" height="100">
+                    <tr>
+                        <td align="center" width="100%">RAM</td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td>&nbsp;</td>
+                <td align="center">Bank 1</td>
+            </tr>
+            <tr>
+                <td><div align="center"><center><table border="0"
+                cellpadding="0" cellspacing="0" width="100%"
+                height="100%">
+                    <tr>
+                        <td valign="top" width="100%">$4000</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">$2000</td>
+                    </tr>
+                    <tr>
+                        <td valign="top" width="100%">$1000</td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td>&nbsp;</td>
+                <td align="center"><div align="center"><center><table
+                border="1" cellpadding="0" cellspacing="0"
+                width="100%" bordercolor="#D69418" height="100">
+                    <tr>
+                        <td align="center" width="100%">RAM</td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="100%">Char ROM</td>
+                    </tr>
+                    <tr>
+                        <td align="center" width="100%">RAM</td>
+                    </tr>
+                </table>
+                </center></div></td>
+                <td>&nbsp;</td>
+                <td align="center">Bank 0</td>
+            </tr>
+            <tr>
+                <td valign="top">$0000</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td align="center">&nbsp;</td>
+            </tr>
+        </table>
+        </center></div><p>The Char ROM is mapped in at the VIC
+        addresses $1000-$1fff in banks 0 and 2 (it appears at
+        $9000 in the above diagram, but remember that the VIC
+        doesn't know about the two address bits generated by the
+        CIA. From the VIC's point of view, the Char ROM is at
+        $1000-$1fff also in bank 2).</p>
+        <p>The attentive reader will already have noticed that
+        the Color RAM doesn't appear anywhere. But as explained
+        earlier, the VIC has a 12 bit data bus of which the upper
+        4 bits are connected with the Color RAM. Generally
+        speaking, the sole purpose of the upper 4 bits of the VIC
+        data bus is to read from the Color RAM. The Color RAM is
+        addressed by the lower 10 bits of the VIC address bus and
+        is therefore available in all banks at all addresses.</p>
+        <div align="center"><center><table border="0"
+        cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top" nowrap><a name="2.4.3."><strong>2.4.3
+                MEMORY ACCESS OF THE 6510 AND VIC</strong></a></td>
+                <td align="right" valign="top" nowrap><a
+                href="#2.4."><img src="linkarrow_up.gif"
+                alt="[up]" border="0" width="15" height="15"></a></td>
+            </tr>
+        </table>
+        </center></div><p>6510 and VIC are both based on a
+        relatively simple hard-wired design. Both chips make a
+        memory access in EVERY clock cycle, even if that is not
+        necessary at all. E.g if the processor is busy executing
+        an internal operation like indexed addressing in one
+        clock cycle, that really doesn't require an access to
+        memory, it nevertheless performs a read and discards the
+        read byte. The VIC only performs read accesses, while the
+        6510 performs both reads and writes.</p>
+        <p>There are no wait states, no internal caches and no
+        sophisticated access protocols for the bus as seen with
+        more modern processors. Every access is done in a single
+        cycle.</p>
+        <p>The VIC generates the clock frequencies for the system
+        bus and the RAS and CAS signals for accessing the dynamic
+        RAM (for both the processor and the VIC). So it has
+        primary control over the bus and may &quot;stun&quot; the
+        processor sometime or another when it needs additional
+        cycles for memory accesses. Besides this, the VIC takes
+        care of the DRAM refresh by reading from 5 refresh
+        addresses in each raster line.</p>
+        <p>The division of accesses between 6510 and VIC is
+        basically static: Each clock cycle (one period of the ø2
+        signal) consists of two phases. The VIC accesses in the
+        first phase (ø2 low), the processor in the second phase
+        (ø2 high). The AEC signal closely follows ø2. That way
+        the 6510 and VIC can both use the memory alternatively
+        without disturbing each other.</p>
+        <p>However, the VIC sometimes needs more cycles than made
+        available to it by this scheme. This is the case when the
+        VIC accesses the character pointers and the sprite data.
+        In the first case it needs 40 additional cycles, in the
+        second case it needs 2 cycles per sprite. BA will then go
+        low 3 cycles before the VIC takes over the bus completely
+        (3 cycles is the maximum number of successive write
+        accesses of the 6510). After 3 cycles, AEC stays low
+        during the second clock phase so that the VIC can output
+        its addresses.</p>
+        <p>The following diagram illustrates the process of the
+        take-over:</p>
+        <p><img src="busaktivity.gif" width="600" height="206"></p>
+        <p>The line &quot;Chip&quot; designates which chip is
+        just accessing the bus (as said before, there is an
+        access in every cycle). &quot;V&quot; stands for the VIC,
+        &quot;P&quot; for the 6510. The cycles designated with
+        &quot;p&quot; are accesses of the 6510 that are only
+        performed if they are write accesses. The first
+        &quot;p&quot; read access stops the 6510, at least after
+        the third &quot;p&quot; as the 6510 never does more than
+        3 write accesses in succession. On a &quot;p&quot; read
+        access the processor addresses are still output on the
+        bus because AEC is still high. </p>
+        <p>The diagram describes the normal process of a bus
+        take-over. By appropriately modifying the VIC register
+        $d011, it is possible to force a bus take-over at
+        extraordinary times. This is explained in <a
+        href="vic_article_3.htm">chapter 3</a> as well as the
+        complete bus timing of a VIC raster line.</p>
+        <hr color="#D69418">
+        </td>
+    </tr>
+</table>
+</center></div><div align="center"><center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+    <tr>
+        <td valign="top" width="50%"><a href="vic_article_1.htm"><img
+        src="linkarrow_left.gif" alt="[previous]" border="0"
+        width="15" height="15"></a></td>
+        <td align="right" valign="top" width="50%"><a
+        href="vic_article_3.htm"><img src="linkarrow_right.gif"
+        alt="[next]" border="0" width="15" height="15"></a></td>
+    </tr>
+</table>
+</center></div>
+</body>
+</html>
