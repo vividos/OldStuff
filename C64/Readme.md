@@ -11,6 +11,11 @@ for 2D games in general.
 Just open the C64.sln with Microsoft Visual Studio 2015 and check out the
 projects.
 
+### d64view ###
+
+d64view is a d64 disk image viewer, it has its own solution file (see sub folder
+C64/src/d64view). See more: [d64view Readme](src/d64view/Readme.md "d64view readme").
+
 ### GameClient2D ###
 
 Some classes for a 2D game client that may (or may not) use paletted 8-bit

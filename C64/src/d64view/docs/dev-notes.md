@@ -1,5 +1,4 @@
-developer notes
----------------
+# developer notes #
 
 This document contains various infos about development of d64view in no
 specific order.
