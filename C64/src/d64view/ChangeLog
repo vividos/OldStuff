@@ -1,0 +1,1270 @@
+2003-09-08 21:19  vividos
+
+	* Makefile.am (1.4):
+
+	added missing dist files
+
+2003-09-08 21:18  vividos
+
+	* win32/d64view.mak (1.2):
+
+	updated with changes from .dsp
+
+2003-09-08 21:10  vividos
+
+	* Makefile.am (1.3), configure.ac (1.5), source/Makefile.am (1.3),
+	  source/Makefile.common (1.6), win32/Makefile.mingw (1.4):
+
+	updated headers
+
+2003-09-08 20:57  vividos
+
+	* win32/d64view.dsp (1.16):
+
+	added about.hpp
+
+2003-09-08 20:56  vividos
+
+	* source/about.hpp (1.1):
+
+	moved about dialog code to here
+
+2003-09-08 20:56  vividos
+
+	* source/mainframe.hpp (1.9):
+
+	added "show directory listing" menu item
+
+2003-09-08 20:56  vividos
+
+	* source/mainframe.cpp (1.14):
+
+	moved about dialog to own header file
+
+2003-09-08 20:55  vividos
+
+	* source/: app.hpp (1.10), bamview.cpp (1.7), bamview.hpp (1.6),
+	  canvas.cpp (1.6), canvas.hpp (1.8), chargen.cpp (1.4),
+	  charset.cpp (1.9), childframe.cpp (1.9), childframe.hpp (1.5),
+	  d64image.hpp (1.4), dirview.cpp (1.10), dirview.hpp (1.9),
+	  doctempl.cpp (1.3), doctempl.hpp (1.4), document.cpp (1.11),
+	  document.hpp (1.9), imagebase.cpp (1.3), version.hpp (1.4):
+
+	updated source code documentation
+
+2003-09-08 20:04  vividos
+
+	* docs/d64view.html (1.1):
+
+	added web page for d64view
+
+2003-09-08 20:03  vividos
+
+	* docs/d64view.png (1.1):
+
+	added screenshot
+
+2003-09-08 20:01  vividos
+
+	* source/: app.cpp (1.20), charset.cpp (1.8):
+
+	removed gcc -Wall warning
+
+2003-09-06 08:25  vividos
+
+	* ChangeLog (1.2):
+
+	updated ChangeLog
+
+2003-09-06 08:19  vividos
+
+	* autogen.sh (1.2):
+
+	removed deleting unneeded file reference
+
+2003-09-06 08:18  vividos
+
+	* docs/dev-notes.txt (1.6):
+
+	added comment about wxWindows configure switch
+
+2003-09-06 07:46  vividos
+
+	* source/: childframe.cpp (1.8), childframe.hpp (1.4):
+
+	added OnCloseWindow() handler to remove menu from file history; prevents crash when closing child frames
+
+2003-07-23 20:00  vividos
+
+	* Readme (1.4):
+
+	removed a blank
+
+2003-07-23 19:59  vividos
+
+	* linux/d64view.1 (1.2):
+
+	updated with description
+
+2003-07-23 19:53  vividos
+
+	* docs/dev-notes.txt (1.5):
+
+	added some stuff
+
+2003-05-25 10:12  vividos
+
+	* docs/doxygen.cfg (1.4):
+
+	bumped version number
+
+2003-05-25 10:01  vividos
+
+	* source/mainframe.cpp (1.13):
+
+	fixed comment
+
+2003-05-25 10:01  vividos
+
+	* source/app.cpp (1.19):
+
+	made second template invisible in file open dialog
+
+2003-05-25 09:27  vividos
+
+	* docs/dev-notes.txt (1.4):
+
+	fixed a bug
+
+2003-05-25 09:26  vividos
+
+	* source/childframe.cpp (1.7):
+
+	fixed bug with messed up file history
+
+2003-05-25 09:26  vividos
+
+	* source/mainframe.cpp (1.12):
+
+	fixed bug where file history is messed up: config file is loaded first, then menus are added and used in file history class
+
+2003-05-25 09:25  vividos
+
+	* source/app.cpp (1.18):
+
+	enlarged app window a bit
+
+2003-05-24 12:14  vividos
+
+	* Readme (1.3):
+
+	updated copyright years
+
+2003-05-24 12:12  vividos
+
+	* Makefile.am (1.2):
+
+	added d64view.mak
+
+2003-05-24 12:11  vividos
+
+	* win32/.cvsignore (1.3):
+
+	ignore .dep files
+
+2003-05-24 12:11  vividos
+
+	* win32/build.bat (1.4):
+
+	added building via makefile
+
+2003-05-24 12:07  vividos
+
+	* win32/d64view.mak (1.1):
+
+	added nmake makefile
+
+2003-05-24 12:06  vividos
+
+	* docs/dev-notes.txt (1.3):
+
+	improved mingw32/MSYS description
+	added possible make targets
+
+2003-05-24 11:20  vividos
+
+	* linux/d64view.1 (1.1):
+
+	added linux manpage
+
+2003-05-24 11:19  vividos
+
+	* source/Makefile.am (1.2):
+
+	removed unneeded compiler flag redefines
+
+2003-05-24 11:19  vividos
+
+	* source/Makefile.common (1.5):
+
+	added version.hpp
+
+2003-05-24 11:09  vividos
+
+	* source/common.hpp (1.13):
+
+	included config.h when available
+
+2003-05-24 11:07  vividos
+
+	* source/.cvsignore (1.2):
+
+	added more files to ignore
+
+2003-05-24 11:05  vividos
+
+	* configure.ac (1.4):
+
+	fixed linking
+
+2003-05-24 09:54  vividos
+
+	* source/.cvsignore (1.1):
+
+	Updated by TortoiseCVS
+
+2003-05-24 09:54  vividos
+
+	* source/Makefile.am (1.1):
+
+	added automake makefile
+
+2003-05-24 09:52  vividos
+
+	* .cvsignore (1.2):
+
+	added built makefiles
+
+2003-05-24 09:49  vividos
+
+	* docs/dev-notes.txt (1.2):
+
+	added some compiling notes
+	added more details to TODO-list
+
+2003-05-24 09:48  vividos
+
+	* configure.ac (1.3):
+
+	added compiler flags for mingw32 compile
+	added output of status at the end of configure run
+
+2003-05-24 09:34  vividos
+
+	* source/document.cpp (1.10):
+
+	fixed bug: passed a wxString object to wxString::Printf()
+
+2003-05-24 09:21  vividos
+
+	* configure.ac (1.2):
+
+	added wxWindows check
+	bumped version number
+
+2003-05-24 08:59  vividos
+
+	* source/Makefile.common (1.4):
+
+	added GPL header
+
+2003-05-24 08:57  vividos
+
+	* acinclude.m4 (1.1):
+
+	added wxWindows check macros
+
+2003-05-24 08:29  vividos
+
+	* autogen.sh (1.1):
+
+	added bootstrap script
+
+2003-05-24 08:29  vividos
+
+	* .cvsignore (1.1):
+
+	added files to ignore
+
+2003-05-24 08:23  vividos
+
+	* ChangeLog (1.1):
+
+	added changelog generated with 'cvs2cl.pl -r -S --no-wrap --gmt'
+
+2003-05-24 08:16  vividos
+
+	* source/mainframe.cpp (1.11):
+
+	changed case for d64view about dialog string
+
+2003-05-24 07:47  vividos
+
+	* Makefile.am (1.1):
+
+	added automake makefile
+
+2003-05-19 21:19  vividos
+
+	* docs/dev-notes.txt (1.1):
+
+	added developer notes file
+
+2003-05-19 21:17  vividos
+
+	* source/version.hpp (1.3), win32/d64view.nsi (1.9):
+
+	bumped version number
+
+2003-05-19 21:16  vividos
+
+	* win32/d64view_res.rc (1.3):
+
+	added version info
+	protected wx resources by APSTUDIO_INVOKED block
+
+2003-05-19 21:11  vividos
+
+	* win32/resource.h (1.4):
+
+	updated comment
+
+2003-05-19 21:08  vividos
+
+	* source/: app.cpp (1.17), app.hpp (1.9), bamview.cpp (1.6),
+	  bamview.hpp (1.5), canvas.cpp (1.5), canvas.hpp (1.7),
+	  chargen.cpp (1.3), charset.cpp (1.7), charset.hpp (1.4),
+	  childframe.cpp (1.6), childframe.hpp (1.3), common.hpp (1.12),
+	  d64image.cpp (1.7), d64image.hpp (1.3), ddeserv.cpp (1.4),
+	  dirview.cpp (1.9), dirview.hpp (1.8), doctempl.cpp (1.2),
+	  doctempl.hpp (1.3), document.cpp (1.9), document.hpp (1.8),
+	  imagebase.cpp (1.2), imagebase.hpp (1.8), mainframe.cpp (1.10),
+	  mainframe.hpp (1.8), pch.cpp (1.2), version.hpp (1.2):
+
+	updated copyright info in header
+
+2003-05-19 21:04  vividos
+
+	* source/childframe.cpp (1.5):
+
+	removed superfluous info menu
+	added support for file history in child frames (still buggy)
+
+2003-05-19 21:04  vividos
+
+	* win32/Makefile.mingw (1.3):
+
+	added strip target
+
+2003-05-19 20:50  vividos
+
+	* source/doctempl.hpp (1.2):
+
+	added documentation
+
+2003-05-19 19:57  vividos
+
+	* win32/Makefile.mingw (1.2):
+
+	added silent 'clean'
+
+2003-05-19 19:56  vividos
+
+	* source/: document.cpp (1.8), document.hpp (1.7):
+
+	fixed memory leak by deleting disk image ptr in dtor
+	added warning when file could not be opened
+
+2003-05-19 19:54  vividos
+
+	* source/d64image.cpp (1.6):
+
+	fixed memory overrun
+	too much bam bits were extracted
+
+2003-05-19 19:53  vividos
+
+	* source/d64image.hpp (1.2):
+
+	added default ctor/dtor
+
+2003-05-19 19:53  vividos
+
+	* source/: dirview.cpp (1.8), dirview.hpp (1.7):
+
+	fixed activating views
+	fixed memory leak where view frame was overwritten with NULL
+
+2003-05-19 19:51  vividos
+
+	* source/childframe.cpp (1.4):
+
+	added "name" to wxDocMDIChildFrame ctor
+
+2003-05-19 19:50  vividos
+
+	* source/app.cpp (1.16):
+
+	view frames are now opened cascaded
+
+2003-05-19 17:29  vividos
+
+	* source/Makefile.common (1.3), win32/d64view.dsp (1.15):
+
+	added doctempl.cpp/.hpp
+
+2003-05-19 17:28  vividos
+
+	* source/app.cpp (1.15):
+
+	using custom document template
+
+2003-05-19 17:28  vividos
+
+	* source/bamview.hpp (1.4):
+
+	changed frame type
+
+2003-05-19 17:27  vividos
+
+	* source/: doctempl.cpp (1.1), doctempl.hpp (1.1):
+
+	added custom document template class
+
+2003-05-19 17:26  vividos
+
+	* source/: document.cpp (1.7), document.hpp (1.6):
+
+	added OnCloseDocument() handler to fix memory leak
+
+2003-05-14 09:58  vividos
+
+	* source/: bamview.hpp (1.3), common.hpp (1.11):
+
+	updated documentation
+
+2003-05-14 09:48  vividos
+
+	* docs/doxygen.cfg (1.3):
+
+	updated for doxygen 1.3
+
+2003-01-30 14:38  vividos
+
+	* configure.ac (1.1):
+
+	added first configure file
+
+2003-01-29 13:58  vividos
+
+	* win32/Makefile.mingw (1.1):
+
+	added makefile for mingw32
+
+2003-01-29 13:32  vividos
+
+	* source/common.hpp (1.10):
+
+	added fix for mingw32
+
+2003-01-29 11:11  vividos
+
+	* source/mainframe.cpp (1.9):
+
+	added version number usage
+
+2002-12-15 22:36  vividos
+
+	* source/Makefile.common (1.2):
+
+	added all needed files
+
+2002-12-15 22:36  vividos
+
+	* win32/d64view_res.rc (1.2):
+
+	used winresrc.h instead of MFC afxres.h
+
+2002-12-14 15:13  vividos
+
+	* source/bamview.cpp (1.5):
+
+	blocks with errors are drawn with red background now
+
+2002-12-14 15:12  vividos
+
+	* source/: canvas.cpp (1.4), canvas.hpp (1.6):
+
+	added red background drawing
+
+2002-12-14 15:11  vividos
+
+	* source/common.hpp (1.9):
+
+	added red color value
+
+2002-12-14 14:58  vividos
+
+	* win32/: d64view.dsp (1.14), d64view.rc (1.4), d64view_res.rc
+	  (1.1):
+
+	renamed d64view.rc to d64view_res.rc
+
+2002-12-14 13:56  vividos
+
+	* source/imagebase.hpp (1.7):
+
+	changed function get_error_code() to have a blocknum parameter only
+
+2002-12-14 13:47  vividos
+
+	* docs/doxygen.cfg (1.2):
+
+	updated version number
+
+2002-12-14 13:47  vividos
+
+	* source/charset.cpp (1.6):
+
+	added more function comments
+
+2002-12-14 13:46  vividos
+
+	* source/ddeserv.cpp (1.3):
+
+	added more documentation
+
+2002-12-14 13:34  vividos
+
+	* source/: app.cpp (1.14), bamview.cpp (1.4), bamview.hpp (1.2),
+	  dirview.cpp (1.7), dirview.hpp (1.6), document.cpp (1.6),
+	  document.hpp (1.5):
+
+	renamed document and view classes
+
+2002-12-14 13:34  vividos
+
+	* source/imagebase.hpp (1.6):
+
+	added comments
+
+2002-12-14 13:33  vividos
+
+	* source/: childframe.cpp (1.3), childframe.hpp (1.2),
+	  mainframe.cpp (1.8):
+
+	added "help" menu entry
+
+2002-12-14 13:22  vividos
+
+	* source/version.hpp (1.1):
+
+	added version file
+
+2002-12-14 13:22  vividos
+
+	* win32/d64view.dsp (1.13):
+
+	added version.hpp
+
+2002-12-14 13:08  vividos
+
+	* source/childframe.cpp (1.2):
+
+	tried to add file history to child frame menu
+
+2002-12-14 13:07  vividos
+
+	* source/: app.cpp (1.13), app.hpp (1.8):
+
+	added comments
+	changed size of child windows dependent on view type
+
+2002-12-14 13:05  vividos
+
+	* source/canvas.hpp (1.5):
+
+	moved OnDraw and OnEraseBackground to public section
+
+2002-12-14 13:04  vividos
+
+	* source/common.hpp (1.8):
+
+	added check for wxUSE_PRINTING_ARCHITECTURE
+
+2002-12-14 13:03  vividos
+
+	* source/: bamview.cpp (1.3), dirview.cpp (1.6):
+
+	added call to canvas' OnDraw to get printing to work
+
+2002-12-14 12:10  vividos
+
+	* source/bamview.cpp (1.2):
+
+	added sector label
+
+2002-12-14 11:58  vividos
+
+	* win32/d64view.nsi (1.8):
+
+	changed icon to use
+
+2002-12-14 11:51  vividos
+
+	* win32/d64view.dsp (1.12):
+
+	added some files
+
+2002-12-14 11:51  vividos
+
+	* win32/d64view.nsi (1.7):
+
+	updated version number
+
+2002-12-14 11:50  vividos
+
+	* source/: app.cpp (1.12), app.hpp (1.7):
+
+	added doc templates for the two views
+	used child frame class to create child frames
+
+2002-12-14 11:47  vividos
+
+	* source/: bamview.cpp (1.1), bamview.hpp (1.1):
+
+	added bam view
+
+2002-12-14 11:47  vividos
+
+	* source/: childframe.cpp (1.1), childframe.hpp (1.1):
+
+	added child frame class
+
+2002-12-14 11:46  vividos
+
+	* source/mainframe.hpp (1.7):
+
+	changed comment
+
+2002-12-14 11:45  vividos
+
+	* source/: dirview.cpp (1.5), dirview.hpp (1.5):
+
+	renamed d64view_view to d64view_dir_view
+
+2002-12-13 18:57  vividos
+
+	* source/document.cpp (1.5):
+
+	changed comment
+
+2002-12-13 18:57  vividos
+
+	* source/mainframe.hpp (1.6):
+
+	moved menu command id's to top
+
+2002-12-13 18:57  vividos
+
+	* source/mainframe.cpp (1.7):
+
+	disabled "info | about" menu
+
+2002-12-13 00:47  vividos
+
+	* win32/build.bat (1.3):
+
+	don't compress icons
+
+2002-12-02 23:14  vividos
+
+	* win32/d64view.nsi (1.6):
+
+	added removal of d64view.ini
+
+2002-12-02 23:14  vividos
+
+	* win32/d64view.dsp (1.11):
+
+	added resource include path
+
+2002-12-02 23:14  vividos
+
+	* win32/d64view.rc (1.3):
+
+	added wx.rc include
+
+2002-12-02 23:13  vividos
+
+	* source/app.cpp (1.11):
+
+	called done_dde_server() on exit
+
+2002-12-02 23:13  vividos
+
+	* source/: canvas.cpp (1.3), canvas.hpp (1.4):
+
+	fixed ctor parameter
+	added implementation for set_charset
+
+2002-12-02 23:13  vividos
+
+	* source/: mainframe.cpp (1.6), mainframe.hpp (1.5):
+
+	added about menu item
+	added MRU list
+	added config load/save
+
+2002-12-02 23:12  vividos
+
+	* source/ddeserv.cpp (1.2):
+
+	added function done_dde_server()
+
+2002-12-02 16:01  vividos
+
+	* Readme (1.2):
+
+	added contact info
+
+2002-12-02 15:58  vividos
+
+	* win32/d64view.nsi (1.5):
+
+	bumped version to 0.97
+
+2002-12-02 15:58  vividos
+
+	* win32/build.bat (1.2):
+
+	omitted upx package
+
+2002-12-02 15:51  vividos
+
+	* win32/: d64view.rc (1.2), resource.h (1.3):
+
+	added numerical icon resources
+
+2002-12-02 15:48  vividos
+
+	* win32/d64view.dsp (1.10):
+
+	added ddeserv.cpp
+
+2002-12-02 15:47  vividos
+
+	* docs/: .cvsignore (1.1), doxygen.cfg (1.1), d64.txt (1.1):
+
+	added
+
+2002-12-02 15:46  vividos
+
+	* source/: canvas.hpp (1.3), chargen.cpp (1.2), dirview.cpp (1.4):
+
+	fixed doxygen warnings
+
+2002-12-02 15:42  vividos
+
+	* source/app.cpp (1.10):
+
+	added init'ing of dde server
+
+2002-12-02 15:42  vividos
+
+	* source/ddeserv.cpp (1.1):
+
+	added
+
+2002-12-02 15:41  vividos
+
+	* win32/resource.h (1.2):
+
+	changes by msvc
+
+2002-12-02 15:01  vividos
+
+	* win32/d64view.nsi (1.4):
+
+	removed uninstaller, too
+
+2002-12-02 14:33  vividos
+
+	* win32/d64view.nsi (1.3):
+
+	added removing of registry keys
+
+2002-12-02 14:31  vividos
+
+	* win32/d64view.nsi (1.2):
+
+	fixed files to use
+	added registry keys
+
+2002-12-02 14:31  vividos
+
+	* win32/build.bat (1.1):
+
+	added batch file to build installer
+
+2002-12-02 14:27  vividos
+
+	* win32/d64view.reg (1.3):
+
+	removed reg file
+
+2002-12-02 14:11  vividos
+
+	* win32/d64view.dsp (1.9):
+
+	added chargen.cpp
+
+2002-12-02 14:10  vividos
+
+	* source/charset.cpp (1.5):
+
+	used new chargen array
+	used color constants
+
+2002-12-02 14:10  vividos
+
+	* source/: mainframe.cpp (1.5), mainframe.hpp (1.4):
+
+	added file dropping
+	added icon for child frames
+
+2002-12-02 14:09  vividos
+
+	* source/app.cpp (1.9):
+
+	resized windows and added icons
+
+2002-12-02 14:09  vividos
+
+	* source/: canvas.cpp (1.2), canvas.hpp (1.2):
+
+	added background erasing
+
+2002-12-02 14:09  vividos
+
+	* source/common.hpp (1.7):
+
+	added c64 colors
+
+2002-12-02 14:08  vividos
+
+	* source/chargen.cpp (1.1):
+
+	added
+
+2002-12-02 14:07  vividos
+
+	* data/chargen (1.2):
+
+	removed file (now in chargen.cpp
+
+2002-12-02 13:23  vividos
+
+	* win32/d64view.reg (1.2):
+
+	added default icon
+
+2002-12-02 13:18  vividos
+
+	* win32/d64view.dsp (1.8):
+
+	removed debug options from release target
+
+2002-12-02 13:15  vividos
+
+	* win32/d64view.dsp (1.7):
+
+	using precompiled header through common.hpp now
+	added icons
+
+2002-12-02 13:14  vividos
+
+	* win32/: d64.ico (1.1), d64view.ico (1.1), d64view.rc (1.1),
+	  resource.h (1.1):
+
+	added icons
+
+2002-12-02 13:13  vividos
+
+	* win32/.cvsignore (1.2):
+
+	added .aps files
+
+2002-12-02 12:40  vividos
+
+	* win32/d64view.dsp (1.6):
+
+	added canvas.cpp/.hpp
+
+2002-12-02 12:40  vividos
+
+	* source/: canvas.cpp (1.1), canvas.hpp (1.1):
+
+	added c64 screen canvas class
+
+2002-12-02 12:39  vividos
+
+	* source/: dirview.cpp (1.3), dirview.hpp (1.4):
+
+	added drawing d64 dir on canvas
+
+2002-12-02 12:37  vividos
+
+	* source/: charset.cpp (1.4), charset.hpp (1.3):
+
+	added charset bitmap
+	fixed ascii remapping function
+
+2002-12-02 12:37  vividos
+
+	* source/d64image.cpp (1.5):
+
+	added extraction of disk label/id
+
+2002-12-02 12:36  vividos
+
+	* source/document.hpp (1.4):
+
+	added function to retrieve disk image
+
+2002-12-02 12:36  vividos
+
+	* source/document.cpp (1.4):
+
+	comment change
+
+2002-12-02 12:35  vividos
+
+	* source/mainframe.cpp (1.4):
+
+	removed function
+
+2002-12-02 12:35  vividos
+
+	* source/imagebase.hpp (1.5):
+
+	added disk label/id functions
+
+2002-12-02 12:35  vividos
+
+	* source/app.hpp (1.6):
+
+	added function to retrieve charset object
+
+2002-12-01 22:57  vividos
+
+	* source/d64image.cpp (1.4):
+
+	added loading of d64 images
+
+2002-12-01 22:56  vividos
+
+	* source/imagebase.hpp (1.4):
+
+	added directory entry and block availability map functions
+
+2002-12-01 22:56  vividos
+
+	* source/dirview.hpp (1.3):
+
+	added comment
+
+2002-11-28 16:55  vividos
+
+	* source/: app.cpp (1.8), app.hpp (1.5):
+
+	added loading of charset
+
+2002-11-16 17:41  vividos
+
+	* source/charset.cpp (1.3):
+
+	added loading of chargen data
+
+2002-11-16 17:31  vividos
+
+	* win32/d64view.dsp (1.5):
+
+	added app.hpp
+
+2002-11-16 17:31  vividos
+
+	* source/: dirview.cpp (1.2), dirview.hpp (1.2):
+
+	added OnCreate and OnClose methods
+
+2002-11-16 17:30  vividos
+
+	* source/document.hpp (1.3):
+
+	removed GetDocName() again
+
+2002-11-16 17:30  vividos
+
+	* source/document.cpp (1.3):
+
+	document name is set, too
+
+2002-11-16 17:30  vividos
+
+	* source/app.cpp (1.7):
+
+	enlarged child window a bit
+
+2002-11-16 17:22  vividos
+
+	* source/app.hpp (1.4):
+
+	fixed type of variable "mainframe"
+
+2002-11-16 17:20  vividos
+
+	* source/: app.cpp (1.6), app.hpp (1.3):
+
+	added CreateChildFrame() function
+
+2002-11-16 17:20  vividos
+
+	* source/d64image.cpp (1.3):
+
+	image_filename is set at load_image()
+
+2002-11-16 17:19  vividos
+
+	* source/document.hpp (1.2):
+
+	added GetDocName() to document class
+
+2002-11-16 17:19  vividos
+
+	* source/imagebase.hpp (1.3):
+
+	added get_image_filename() to class
+
+2002-11-16 17:18  vividos
+
+	* source/common.hpp (1.6):
+
+	added <string> to STL includes
+
+2002-11-16 17:07  vividos
+
+	* source/: app.cpp (1.5), app.hpp (1.2):
+
+	moved DECLARE_APP to header, too
+
+2002-11-16 17:05  vividos
+
+	* source/: app.cpp (1.4), app.hpp (1.1):
+
+	moved d64view_app declaration to header file
+
+2002-11-16 16:18  vividos
+
+	* source/imagebase.hpp (1.2):
+
+	used type c64_byte
+
+2002-11-16 16:18  vividos
+
+	* source/common.hpp (1.5):
+
+	added type c64_byte
+
+2002-11-16 16:15  vividos
+
+	* win32/d64view.reg (1.1):
+
+	added registry script to register .d64 extension for d64view
+
+2002-11-16 16:12  vividos
+
+	* Readme (1.1):
+
+	added basic readme file
+
+2002-11-16 16:05  vividos
+
+	* source/: charset.cpp (1.2), charset.hpp (1.2):
+
+	added ascii to screen code remapping
+
+2002-11-16 15:54  vividos
+
+	* win32/d64view.nsi (1.1):
+
+	added install script
+
+2002-11-16 15:51  vividos
+
+	* data/chargen (1.1):
+
+	added c64 charset data
+
+2002-11-16 15:47  vividos
+
+	* win32/d64view.dsp (1.4):
+
+	added more files
+
+2002-11-16 15:47  vividos
+
+	* source/: charset.cpp (1.1), charset.hpp (1.1):
+
+	added charset class
+
+2002-11-16 15:45  vividos
+
+	* source/Makefile.common (1.1):
+
+	added common makefile
+
+2002-11-16 15:42  vividos
+
+	* source/: mainframe.cpp (1.3), mainframe.hpp (1.3):
+
+	used some wxWindows standard menu id's
+
+2002-11-16 15:30  vividos
+
+	* source/app.cpp (1.3):
+
+	added doc manager
+	added doc template for doc/view class
+
+2002-11-16 15:29  vividos
+
+	* source/: dirview.cpp (1.1), dirview.hpp (1.1):
+
+	added view class skeleton
+
+2002-11-16 15:29  vividos
+
+	* source/document.cpp (1.2):
+
+	added macro to implement doc class
+
+2002-11-16 15:28  vividos
+
+	* source/: mainframe.cpp (1.2), mainframe.hpp (1.2):
+
+	changed main frame to wxDocMDIParentFrame
+
+2002-11-16 15:28  vividos
+
+	* source/common.hpp (1.4):
+
+	added doc/mdi include
+
+2002-11-16 15:06  vividos
+
+	* source/d64image.cpp (1.2):
+
+	added sectors_per_track list entries
+
+2002-11-16 15:05  vividos
+
+	* source/: document.cpp (1.1), document.hpp (1.1):
+
+	added document class
+
+2002-11-16 15:00  vividos
+
+	* source/common.hpp (1.3):
+
+	added STL includes
+	added doc/view includes
+
+2002-11-16 14:59  vividos
+
+	* source/: d64image.cpp (1.1), d64image.hpp (1.1):
+
+	added d64 disk image class
+
+2002-11-16 14:54  vividos
+
+	* source/: imagebase.cpp (1.1), imagebase.hpp (1.1):
+
+	added disk image base class interface
+
+2002-11-16 14:09  vividos
+
+	* win32/d64view.dsp (1.3):
+
+	added some more files
+
+2002-11-16 14:08  vividos
+
+	* source/app.cpp (1.2):
+
+	used new main frame
+
+2002-11-16 14:08  vividos
+
+	* source/: mainframe.cpp (1.1), mainframe.hpp (1.1):
+
+	added first basic MDI main frame
+
+2002-11-16 13:55  vividos
+
+	* source/app.cpp (1.1):
+
+	added wxApp derived application class
+
+2002-11-16 13:55  vividos
+
+	* source/common.hpp (1.2):
+
+	added commment
+
+2002-11-16 13:48  vividos
+
+	* source/common.hpp (1.1):
+
+	added common includes file
+
+2002-11-16 13:45  vividos
+
+	* source/pch.cpp (1.1):
+
+	added precompiled header module
+
+2002-11-16 13:45  vividos
+
+	* win32/d64view.dsp (1.2):
+
+	fixed precompiled header generation
+
+2002-11-16 13:40  vividos
+
+	* win32/.cvsignore (1.1):
+
+	added some files and folders to ignore
+
+2002-11-16 13:39  vividos
+
+	* win32/: d64view.dsp (1.1), d64view.dsw (1.1):
+
+	added msvc project files
+
+2002-11-16 13:38  vividos
+
+	* Copying (1.1):
+
+	added GNU General Public License
+

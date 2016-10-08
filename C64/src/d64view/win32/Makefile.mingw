@@ -1,0 +1,75 @@
+#
+# d64view - a d64 disk image viewer
+# Copyright (c) 2002,2003 Michael Fink
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# mingw32 makefile for d64view
+#
+# $Id: Makefile.mingw,v 1.4 2003/09/08 21:10:29 vividos Exp $
+#
+
+WXWIN = d:/projekte/wxMSW
+
+#
+# variables
+#
+
+CC = gcc
+CXX = c++
+CXXFLAGS = -I../source/ -I$(WXWIN)/include -O2
+DEFINES = -D__GNUWIN32__ -D__WXMSW__ -D_X86_=1 -DWIN32 -D_WIN32 -DWINVER=0x0400 -D__MINGW32__
+LDFLAGS = -mwindows -s -L$(WXWIN)/lib/
+
+include ../source/Makefile.common
+
+d64view_CPPs = $(filter %.cpp,$(d64view_SOURCES))
+
+d64view_OBJS = $(d64view_CPPs:%.cpp=../source/%.o) \
+	d64view_res.o
+
+d64view_LIBS = -lmingw32 -lkernel32 -luser32 \
+	-lwxmsw -lcomctl32 -lwsock32 \
+	-lole32 -loleaut32 -luuid
+
+d64view_EXEC = d64view.exe
+
+#
+# build rules
+#
+
+all: d64view
+
+d64view: $(d64view_EXEC)
+$(d64view_EXEC): $(d64view_OBJS)
+	$(CXX) $(LDFLAGS) -o $(@) $(d64view_OBJS) $(d64view_LIBS)
+
+strip:
+	strip $(d64view_EXEC)
+
+clean:
+	rm -f $(d64view_OBJS)
+	rm -f $(d64view_EXEC)
+
+
+#
+# compile rules
+#
+
+%.o: %.cpp
+	$(CXX) $(CFLAGS) $(CXXFLAGS) $(DEFINES) -c $(<) -o $*.o
+
+%.o: %.rc
+	windres -i $(<) -o $*.o --output-format=coff --include-dir=$(@D) --include-dir=$(WXWIN)/include
