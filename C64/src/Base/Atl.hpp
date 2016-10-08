@@ -18,13 +18,7 @@
 #elif defined(__ANDROID__)
 
 // Android
-#include <cstdint>
-typedef uint_least8_t BYTE;
-typedef uint_least16_t WORD;
-typedef uint_least32_t DWORD;
-#define _T(x) L##x
-#define ATLTRACE (void)
-#define ATLASSERT(x) ;
-//#include "AndroidString.hpp"
+#include "Android.hpp"
+#include "CString.hpp"
 
 #endif
