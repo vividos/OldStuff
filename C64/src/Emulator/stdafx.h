@@ -7,6 +7,5 @@
 #pragma once
 
 // includes
-#include <atlbase.h>
-#include <atlstr.h>
+#include "Atl.hpp"
 #include <SDL.h>

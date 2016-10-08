@@ -7,12 +7,6 @@
 #pragma once
 
 // includes
-#define WIN32_LEAN_AND_MEAN
-
-#include <SDKDDKVer.h>
-
-#include <atlbase.h>
-#include <atlstr.h>
+#include "Atl.hpp"
 #include <SDL.h>
-
 #include "Common.hpp"
