@@ -10,6 +10,7 @@
 #include "Intro.hpp"
 #include "RenderWindow2D.hpp"
 #include "PalettedSurface.hpp"
+#include <cmath>
 
 #pragma warning(disable: 28159) // Consider using 'GetTickCount64' instead of 'GetTickCount'
 
@@ -75,16 +76,20 @@ std::vector<std::vector<Uint8>> allBarColors =
 
 Intro::Intro()
    :MainGameLoop(true, _T("c64intro")),
+#ifdef _WIN32
    window(new RenderWindow2D(xres, yres, false, _T("Scale2x"), 2)),
+#elif defined(__ANDROID__)
+   window(new RenderWindow2D(xres, yres, true, _T(""), 1)),
+#endif
    buffer(new PalettedSurface(xres, yres, window->BitsPerPixel())),
    currentBigRasterBarState(movingOut)
 {
    buffer->SetPalette<16>(palette);
 
-   dwStartTicks = GetTickCount();
+   startTicks = SDL_GetTicks();
 
    // triggers a new bar at first tick
-   dwBigRasterBarStartTicks = dwStartTicks + DWORD(c_bigRasterBarMovingTime * 1000.0 + 100);
+   bigRasterBarStartTicks = startTicks + Uint32(c_bigRasterBarMovingTime * 1000.0 + 100);
 
    scrollerPos = 0.0;
 
@@ -115,7 +120,7 @@ void Intro::UpdateCaption(const CString& caption)
 
 void Intro::OnTick()
 {
-   DWORD dwCurrentTicks = GetTickCount() - dwStartTicks;
+   Uint32 dwCurrentTicks = SDL_GetTicks() - startTicks;
    double elapsed = dwCurrentTicks / 1000.0;
 
    CalcMovingBars(elapsed);
@@ -131,22 +136,22 @@ void Intro::CalcMovingBars(double elapsed)
    const float barHeight = 30.0;
 
    float amplitudeBlue = 20.0;
-   rasterBarPosBlue = int(movingBarStart + amplitudeBlue * sin(deg2rad(elapsed / 2.0 * 360.0)));
+   rasterBarPosBlue = int(movingBarStart + amplitudeBlue * std::sin(deg2rad(elapsed / 2.0 * 360.0)));
 
    float meanGreen = movingBarEnd - barHeight;
    float amplitudeGreen = 20.0;
-   rasterBarPosGreen = int(meanGreen + amplitudeGreen * -abs(sin(deg2rad((elapsed + 0.5) / 1.5 * 360.0))));
+   rasterBarPosGreen = int(meanGreen + amplitudeGreen * -abs(std::sin(deg2rad((elapsed + 0.5) / 1.5 * 360.0))));
 
    float meanRed = movingBarStart + movingBarWidth / 2.0;
    float amplitudeRed = movingBarWidth / 2.0;
-   rasterBarPosRed = int(meanRed + amplitudeRed * sin(deg2rad(elapsed / 4.0 * 360.0)));
+   rasterBarPosRed = int(meanRed + amplitudeRed * std::sin(deg2rad(elapsed / 4.0 * 360.0)));
 
-   rasterBarRedForeground = cos(deg2rad(elapsed / 4.0 * 360.0)) > 0;
+   rasterBarRedForeground = std::cos(deg2rad(elapsed / 4.0 * 360.0)) > 0;
 }
 
 void Intro::CalcScrollerBar(double elapsed)
 {
-   rasterBarPosScroller = int(135.0 + 20.0 * -abs(sin(deg2rad(elapsed / 4.0 * 360.0))));
+   rasterBarPosScroller = int(135.0 + 20.0 * -abs(std::sin(deg2rad(elapsed / 4.0 * 360.0))));
 
    scrollerPos = elapsed * c_scrollCharsPerSecond;
 
@@ -158,7 +163,7 @@ void Intro::CalcScrollerBar(double elapsed)
 
 void Intro::CalcBigRasterBar()
 {
-   DWORD dwBigRasterBarCurrentTicks = GetTickCount() - dwBigRasterBarStartTicks;
+   Uint32 dwBigRasterBarCurrentTicks = SDL_GetTicks() - bigRasterBarStartTicks;
    double bigRasterBarElapsed = dwBigRasterBarCurrentTicks / 1000.0;
 
    switch (currentBigRasterBarState)
@@ -169,11 +174,11 @@ void Intro::CalcBigRasterBar()
          ATLTRACE(_T("changing to bar state DISPLAY\n"));
 
          currentBigRasterBarState = display;
-         dwBigRasterBarStartTicks = GetTickCount();
+         bigRasterBarStartTicks = SDL_GetTicks();
       }
 
       rasterBarPosBig =
-         int(162.0 + 37.0 - 37.0 * sin(deg2rad(bigRasterBarElapsed / c_bigRasterBarMovingTime / 4.0 * 360.0)));
+         int(162.0 + 37.0 - 37.0 * std::sin(deg2rad(bigRasterBarElapsed / c_bigRasterBarMovingTime / 4.0 * 360.0)));
       break;
 
    case display:
@@ -183,7 +188,7 @@ void Intro::CalcBigRasterBar()
          ATLTRACE(_T("changing to bar state MOVING-OUT\n"));
 
          currentBigRasterBarState = movingOut;
-         dwBigRasterBarStartTicks = GetTickCount();
+         bigRasterBarStartTicks = SDL_GetTicks();
       }
       break;
 
@@ -193,13 +198,13 @@ void Intro::CalcBigRasterBar()
          ATLTRACE(_T("changing to bar state MOVING-IN\n"));
 
          currentBigRasterBarState = movingIn;
-         dwBigRasterBarStartTicks = GetTickCount();
+         bigRasterBarStartTicks = SDL_GetTicks();
 
          bigRasterBarIndex = size_t(double(rand() * allBarColors.size()) / RAND_MAX);
       }
 
       rasterBarPosBig =
-         int(162.0 + 37.0 - 37.0 * sin(deg2rad(bigRasterBarElapsed / c_bigRasterBarMovingTime / 4.0 * 360.0 + 90.0)));
+         int(162.0 + 37.0 - 37.0 * std::sin(deg2rad(bigRasterBarElapsed / c_bigRasterBarMovingTime / 4.0 * 360.0 + 90.0)));
       break;
 
    default:
@@ -358,8 +363,16 @@ void Intro::DrawRasterBars(Uint8* raster, unsigned int size, unsigned int ypos)
    }
 }
 
+#ifdef __ANDROID__
+extern "C" void Java_org_libsdl_app_SDLActivity_nativeInit();
+#endif
+
 int main(int argc, char* argv[])
 {
+#ifdef __ANDROID__
+   void* p = (void*)&Java_org_libsdl_app_SDLActivity_nativeInit;
+#endif
+
    argc; argv;
 
    Intro intro;

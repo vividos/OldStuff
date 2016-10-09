@@ -75,7 +75,7 @@ private:
    // model
 
    /// tick count of start of intro
-   DWORD dwStartTicks;
+   Uint32 startTicks;
 
    // top part: moving logo
 
@@ -117,5 +117,5 @@ private:
    BigRasterBarState currentBigRasterBarState;
 
    /// start tick count for current state of big raster bar
-   DWORD dwBigRasterBarStartTicks;
+   Uint32 bigRasterBarStartTicks;
 };
