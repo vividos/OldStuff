@@ -9,7 +9,5 @@
 #define WIN32_LEAN_AND_MEAN
 
 // includes
-#include <SDKDDKVer.h>
-#include <atlbase.h>
-#include <atlstr.h>
+#include "Atl.hpp"
 #include <SDL.h>

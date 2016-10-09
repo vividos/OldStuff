@@ -32,6 +32,8 @@ typedef const WCHAR* LPCWSTR;
 typedef CHAR TCHAR;
 typedef const TCHAR* LPCTSTR;
 
+typedef TCHAR _TCHAR;
+
 #define _T(x) x
 
 // android logging
@@ -57,5 +59,6 @@ inline void AndroidLog(android_LogPriority prio, LPCSTR tag, LPCSTR file, UINT l
 
 // tchar.h stuff
 #define _tfopen fopen
+#define _ftprintf fprintf
 
 #define __nop()

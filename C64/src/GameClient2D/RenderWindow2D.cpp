@@ -9,7 +9,9 @@
 #include "StdAfx.h"
 #include "RenderWindow2D.hpp"
 #include "PalettedSurface.hpp"
+#ifdef _WIN32
 #include "ScalerLib.hpp"
+#endif
 #include <map>
 
 /// mapping from scaler name to dll name
@@ -19,10 +21,10 @@ static std::map<CString, CString> scalerToDllMap =
 };
 
 RenderWindow2D::RenderWindow2D(unsigned int width, unsigned int height, bool fullscreen, const CString& scaler, unsigned int requestedScaleFactor)
-   :scalerFunc(nullptr),
-   scaleFactor(1),
+   :scaleFactor(1),
    unscaledWidth(width),
-   unscaledHeight(height)
+   unscaledHeight(height),
+   scalerFunc(nullptr)
 {
    LoadScaler(scaler, requestedScaleFactor);
 
@@ -203,6 +205,7 @@ void RenderWindow2D::LoadScaler(const CString& scaler, unsigned int& requestedSc
    if (requestedScaleFactor == 1)
       return;
 
+#ifdef _WIN32
    if (scalerToDllMap.find(scaler) != scalerToDllMap.end())
    {
       scalerLib = std::make_shared<ScalerLib>(scalerToDllMap[scaler]);
@@ -211,6 +214,7 @@ void RenderWindow2D::LoadScaler(const CString& scaler, unsigned int& requestedSc
          scalerFunc = scalerLib->GetScalerFunc();
       }
    }
+#endif
 
    if (scalerFunc == nullptr)
    {

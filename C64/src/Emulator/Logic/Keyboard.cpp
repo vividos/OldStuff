@@ -25,6 +25,7 @@ void Keyboard::SetKeyState(BYTE keyCode, bool keyState, bool shiftState)
 {
    ATLTRACE(_T("SetKeyState: keyCode=%02x keyState=%i shiftState=%i\n"), keyCode, keyState ? 1 : 0, shiftState ? 1 : 0);
 
+#ifdef _WIN32
    if (m_joystickNumPadEmulation &&
       (keyCode == VK_RCONTROL ||
       (keyCode >= VK_NUMPAD1 && keyCode <= VK_NUMPAD9))
@@ -47,6 +48,7 @@ void Keyboard::SetKeyState(BYTE keyCode, bool keyState, bool shiftState)
       SetKeyState(VK_RIGHT, keyState, !shiftState);
       return;
    }
+#endif
 
    BYTE pa = 0;
    BYTE pb = 0;
@@ -65,6 +67,7 @@ void Keyboard::SetKeyState(BYTE keyCode, bool keyState, bool shiftState)
 
 void Keyboard::SetJoystickState(BYTE keyCode, bool keyState)
 {
+#ifdef _WIN32
    if (keyCode == VK_RCONTROL)
       m_numPadJoystickState[0] = keyState;
    else
@@ -72,6 +75,7 @@ void Keyboard::SetJoystickState(BYTE keyCode, bool keyState)
       {
          m_numPadJoystickState[keyCode - VK_NUMPAD1 + 1] = keyState;
       }
+#endif
 }
 
 BYTE Keyboard::CalcJoystickPort2NumPadMask() const
@@ -98,6 +102,7 @@ BYTE Keyboard::CalcJoystickPort2NumPadMask() const
 
 bool Keyboard::CalcPortBitIndices(BYTE keyCode, bool shiftState, BYTE& pa, BYTE& pb)
 {
+#ifdef _WIN32
    switch (keyCode)
    {
    case VK_PAUSE: pa = 7; pb = 7; break;
@@ -188,6 +193,7 @@ bool Keyboard::CalcPortBitIndices(BYTE keyCode, bool shiftState, BYTE& pa, BYTE&
    default:
       return false;
    }
+#endif
 
    return true;
 }

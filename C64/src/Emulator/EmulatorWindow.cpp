@@ -16,7 +16,9 @@
 #include "PC64File.hpp"
 #include "EliteProcessorCallback.hpp"
 #include "GianaSistersProcessorCallback.hpp"
+#ifdef _WIN32
 #include <SDL_syswm.h>
+#endif
 #include <algorithm>
 
 /// C64 color map
@@ -261,6 +263,7 @@ void EmulatorWindow::OnEvent(SDL_Event& evt)
 {
    switch (evt.type)
    {
+#ifdef _WIN32
    case SDL_SYSWMEVENT:
    {
       SDL_SysWMmsg& msg = *evt.syswm.msg;
@@ -271,6 +274,7 @@ void EmulatorWindow::OnEvent(SDL_Event& evt)
       }
    }
    break;
+#endif
 
    case SDL_KEYDOWN:
       // handle key presses
@@ -300,6 +304,7 @@ void EmulatorWindow::OnEvent(SDL_Event& evt)
 
 void EmulatorWindow::OnKeyMessage(const SDL_SysWMmsg& msg)
 {
+#ifdef _WIN32
    // only handle virtual keycodes with 8 bit
    BYTE keyCode = static_cast<BYTE>(msg.msg.win.wParam & 0xFF);
 
@@ -333,6 +338,7 @@ void EmulatorWindow::OnKeyMessage(const SDL_SysWMmsg& msg)
       keyCode,
       msg.msg.win.msg == WM_KEYDOWN,
       shiftState);
+#endif
 }
 
 void EmulatorWindow::OutputLine(WORD wRasterline, BYTE abLine[0x0200])

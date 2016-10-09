@@ -55,7 +55,7 @@ private:
       unsigned char* destBuffer,
       const unsigned char* sourceBuffer,
       unsigned int unscaledWidth,
-      unsigned int unscaledHeight) throw();
+      unsigned int unscaledHeight);
 
    /// point scale scaler function
    static void PointScale(unsigned int bufferType,
