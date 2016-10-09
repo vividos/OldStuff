@@ -13,61 +13,34 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameClient2D", "GameClient2
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Emulator.Logic", "Emulator\Logic\Emulator.Logic.vcxproj", "{B6E88330-23A9-4159-B402-FB4FB8858724}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Emulator.Logic.Android", "Emulator\Logic\Emulator.Logic.Android.vcxproj", "{015FF1D8-42F8-4EC1-9046-A69E9FB77F85}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Android Projects", "Android Projects", "{871DBD55-3807-4A80-8B9F-BE99F534ADCB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|ARM = Debug|ARM
 		Debug|x86 = Debug|x86
-		Release|ARM = Release|ARM
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AD90517E-B68D-4B1F-8F39-99A14B5D58F8}.Debug|ARM.ActiveCfg = Debug|Win32
 		{AD90517E-B68D-4B1F-8F39-99A14B5D58F8}.Debug|x86.ActiveCfg = Debug|Win32
 		{AD90517E-B68D-4B1F-8F39-99A14B5D58F8}.Debug|x86.Build.0 = Debug|Win32
-		{AD90517E-B68D-4B1F-8F39-99A14B5D58F8}.Release|ARM.ActiveCfg = Release|Win32
 		{AD90517E-B68D-4B1F-8F39-99A14B5D58F8}.Release|x86.ActiveCfg = Release|Win32
 		{AD90517E-B68D-4B1F-8F39-99A14B5D58F8}.Release|x86.Build.0 = Release|Win32
-		{17973C14-4D9A-4908-97CF-02D66A1F0B29}.Debug|ARM.ActiveCfg = Debug|Win32
 		{17973C14-4D9A-4908-97CF-02D66A1F0B29}.Debug|x86.ActiveCfg = Debug|Win32
 		{17973C14-4D9A-4908-97CF-02D66A1F0B29}.Debug|x86.Build.0 = Debug|Win32
-		{17973C14-4D9A-4908-97CF-02D66A1F0B29}.Release|ARM.ActiveCfg = Release|Win32
 		{17973C14-4D9A-4908-97CF-02D66A1F0B29}.Release|x86.ActiveCfg = Release|Win32
 		{17973C14-4D9A-4908-97CF-02D66A1F0B29}.Release|x86.Build.0 = Release|Win32
-		{AFC1CFF4-8F5E-453F-9D90-372D8A40531F}.Debug|ARM.ActiveCfg = Debug|Win32
 		{AFC1CFF4-8F5E-453F-9D90-372D8A40531F}.Debug|x86.ActiveCfg = Debug|Win32
 		{AFC1CFF4-8F5E-453F-9D90-372D8A40531F}.Debug|x86.Build.0 = Debug|Win32
-		{AFC1CFF4-8F5E-453F-9D90-372D8A40531F}.Release|ARM.ActiveCfg = Release|Win32
 		{AFC1CFF4-8F5E-453F-9D90-372D8A40531F}.Release|x86.ActiveCfg = Release|Win32
 		{AFC1CFF4-8F5E-453F-9D90-372D8A40531F}.Release|x86.Build.0 = Release|Win32
-		{C6712AAA-B1F2-46C6-97C7-60BF43FDAF7F}.Debug|ARM.ActiveCfg = Debug|Win32
 		{C6712AAA-B1F2-46C6-97C7-60BF43FDAF7F}.Debug|x86.ActiveCfg = Debug|Win32
 		{C6712AAA-B1F2-46C6-97C7-60BF43FDAF7F}.Debug|x86.Build.0 = Debug|Win32
-		{C6712AAA-B1F2-46C6-97C7-60BF43FDAF7F}.Release|ARM.ActiveCfg = Release|Win32
 		{C6712AAA-B1F2-46C6-97C7-60BF43FDAF7F}.Release|x86.ActiveCfg = Release|Win32
 		{C6712AAA-B1F2-46C6-97C7-60BF43FDAF7F}.Release|x86.Build.0 = Release|Win32
-		{B6E88330-23A9-4159-B402-FB4FB8858724}.Debug|ARM.ActiveCfg = Debug|Win32
 		{B6E88330-23A9-4159-B402-FB4FB8858724}.Debug|x86.ActiveCfg = Debug|Win32
 		{B6E88330-23A9-4159-B402-FB4FB8858724}.Debug|x86.Build.0 = Debug|Win32
-		{B6E88330-23A9-4159-B402-FB4FB8858724}.Release|ARM.ActiveCfg = Release|Win32
 		{B6E88330-23A9-4159-B402-FB4FB8858724}.Release|x86.ActiveCfg = Release|Win32
 		{B6E88330-23A9-4159-B402-FB4FB8858724}.Release|x86.Build.0 = Release|Win32
-		{015FF1D8-42F8-4EC1-9046-A69E9FB77F85}.Debug|ARM.ActiveCfg = Debug|ARM
-		{015FF1D8-42F8-4EC1-9046-A69E9FB77F85}.Debug|ARM.Build.0 = Debug|ARM
-		{015FF1D8-42F8-4EC1-9046-A69E9FB77F85}.Debug|x86.ActiveCfg = Debug|x86
-		{015FF1D8-42F8-4EC1-9046-A69E9FB77F85}.Debug|x86.Build.0 = Debug|x86
-		{015FF1D8-42F8-4EC1-9046-A69E9FB77F85}.Release|ARM.ActiveCfg = Release|ARM
-		{015FF1D8-42F8-4EC1-9046-A69E9FB77F85}.Release|ARM.Build.0 = Release|ARM
-		{015FF1D8-42F8-4EC1-9046-A69E9FB77F85}.Release|x86.ActiveCfg = Release|x86
-		{015FF1D8-42F8-4EC1-9046-A69E9FB77F85}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{015FF1D8-42F8-4EC1-9046-A69E9FB77F85} = {871DBD55-3807-4A80-8B9F-BE99F534ADCB}
 	EndGlobalSection
 EndGlobal
