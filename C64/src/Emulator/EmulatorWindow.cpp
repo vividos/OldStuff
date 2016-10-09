@@ -70,12 +70,12 @@ void EmulatorWindow::Configure(EmulatorOptions& options)
 {
    if (options.DebugMode())
    {
-      m_machine.GetVideoInterfaceController().SetShowDebugInfo(true);
+      m_emulator.GetVideoInterfaceController().SetShowDebugInfo(true);
    }
 
    if (options.JoystickNumPadEmulation())
    {
-      m_machine.GetKeyboard().SetJoystickNumPadEmulation(true);
+      m_emulator.GetKeyboard().SetJoystickNumPadEmulation(true);
    }
 
    if (options.StartProgramCounter() != 0)
