@@ -65,7 +65,7 @@ EmulatorOptions::EmulatorOptions()
    });
 
    RegisterOption(_T("d"), _T("debug"),
-      _T("runs emulator in debug mode, showing VIC status infos"),
+      _T("runs emulator in debug mode, showing VIC and CPU status infos"),
       0,
       [&](auto dummy) -> bool
    {
