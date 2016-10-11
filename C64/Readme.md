@@ -3,13 +3,14 @@
 ## About ##
 
 This folder contains several C64 related projects. Among them are an emulator
-for the 6210 processor, a C64 style intro that uses SDL2 and some useful code
+for the 6510 processor, a C64 style intro that uses SDL2 and some useful code
 for 2D games in general.
 
 ## Source Code ##
 
 Just open the C64.sln with Microsoft Visual Studio 2015 and check out the
-projects.
+projects. There are also some experimental Android projects that use the
+Android C++ project templates. Check out C64.Android.sln.
 
 ### d64view ###
 
@@ -28,13 +29,36 @@ C64 intro/demo style is used.
 
 ### Emulator ###
 
-This is the start up project for a basic C64 emulator. The project opens a
-window and tries to start the first SYS command. See
+This is the start up project for a basic C64 emulator. Note that it isn't a
+complete emulator, but more of an experimental toolkit to run parts of a C64
+machine.
+
+The application opens a window and tries to start the first SYS command. See
 
    Emulator.exe --help
 
-for command line options. During running emulator you have the following keyboard
-commands:
+for command line options:
+
+   C64 Emulator
+
+   Syntax: Emulator <params> <args>
+   Options:
+    -h -? --help
+      Shows help
+    -l --load
+      loads specified tape (.t64) or program file (.p00)
+    -e --entry
+      specifies an entry number when loading a tape (.t64) file; specify * to load all entries from a tape image
+    -f --fullscreen
+      shows the emulator in fullscreen on start (toggle with Alt+Enter)
+    -j --joystick
+      enables port 2 joystick emulation via NumPad and Right-Ctrl keys
+    -s --sys
+      sets start program counter, in decimal (e.g. 2064) or hex ($0820, 0x0820)
+    -d --debug
+      runs emulator in debug mode, showing VIC and CPU status infos
+
+During running emulator you have the following keyboard commands:
 
 - Alt+Enter:  Toggle Fullscreen
 - Alt+X:      Quit emulator
@@ -43,9 +67,47 @@ commands:
 
 All other keys as mapped to a C64 keyboard.
 
+So basically you load a tape or program file, specify a start program counter
+(or let it detect the first SYS command in the file) and let it run. In debug
+mode the emulator window gets bigger. The VIC state is visualized with some
+bars in the middle of the screen, right to the C64 screen. And the rest of the
+screen, on the right side, visualizes CPU activity.
+
+#### VIC visualisation ####
+
+The first column of the visualisations contains a white line when a VIC
+interrupt occured in this rasterline.
+
+The second column shows the VIC bad line condition:
+
+- red: in upper or lower border
+- black: bad line condition
+- light blue: normal line, without bad line condition
+
+The third column shows the VIC graphics mode:
+
+- cyan: Bitmap mode, monochrome
+- pink: Bitmap mode, multicolor
+- yellow: Character mode, monochrome
+- blue: Character mode, multicolor
+- green: Character mode, extended multicolor
+
+The remaining space shows vertical lines for each of the 8 sprites when they
+are visible in the respective raster lines.
+
+#### CPU visualisation ####
+
+The CPU visualisation shows a CPU performance map for the whole C64 memory.
+The following colors are used:
+
+- black: memory location wasn't used
+- green: memory location was read from
+- red: memory location was written to
+- pink: opcode from memory location was executed
+
 #### Screenshots ####
 
-Here are some screenshots of games that already function
+Here are some screenshots of games that already work.
 
 Emulator running Elite:
 
