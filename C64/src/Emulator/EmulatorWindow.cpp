@@ -14,6 +14,7 @@
 #include "PalettedSurface.hpp"
 #include "TapeFile.hpp"
 #include "PC64File.hpp"
+#include "ProcessorPerformanceMap.hpp"
 #include "EliteProcessorCallback.hpp"
 #include "GianaSistersProcessorCallback.hpp"
 #ifdef _WIN32
@@ -71,6 +72,8 @@ void EmulatorWindow::Configure(EmulatorOptions& options)
    if (options.DebugMode())
    {
       m_emulator.GetVideoInterfaceController().SetShowDebugInfo(true);
+
+      m_processorPerformanceMap = std::make_shared<ProcessorPerformanceMap>();
    }
 
    if (options.JoystickNumPadEmulation())
@@ -140,6 +143,9 @@ void EmulatorWindow::Run()
    if (m_emulator.GetVideoInterfaceController().GetShowDebugInfo())
    {
       m_windowWidth = 480; // show extended VIC infos
+
+      if (m_processorPerformanceMap != nullptr)
+         m_windowWidth += 256;  // show extended CPU infos
    }
 
    CreateEmulatorWindow();
@@ -155,15 +161,23 @@ void EmulatorWindow::Run()
       }
    }
 
-   m_emulator.GetProcessor().SetProgramCounter(m_startProgramCounter);
+   C64::Processor6510& processor = m_emulator.GetProcessor();
+
+   processor.SetProgramCounter(m_startProgramCounter);
 
    if (m_processorCallback != nullptr)
-      m_emulator.GetProcessor().AddProcessorCallback(m_processorCallback.get());
+      processor.AddProcessorCallback(m_processorCallback.get());
+
+   if (m_processorPerformanceMap != nullptr)
+      processor.AddProcessorCallback(m_processorPerformanceMap.get());
 
    MainGameLoop::Run();
 
+   if (m_processorPerformanceMap != nullptr)
+      processor.RemoveProcessorCallback(m_processorPerformanceMap.get());
+
    if (m_processorCallback != nullptr)
-      m_emulator.GetProcessor().RemoveProcessorCallback(m_processorCallback.get());
+      processor.RemoveProcessorCallback(m_processorCallback.get());
 }
 
 WORD EmulatorWindow::FindBasicSysCommand(WORD startAddress)
@@ -244,6 +258,9 @@ void EmulatorWindow::OnTick()
 {
    m_screenUpdated = false;
 
+   if (m_processorPerformanceMap != nullptr)
+      m_processorPerformanceMap->Clear();
+
    while (!m_screenUpdated)
    {
       m_emulator.GetVideoInterfaceController().Step();
@@ -255,6 +272,22 @@ void EmulatorWindow::OnTick()
 
 void EmulatorWindow::OnRender()
 {
+   if (m_processorPerformanceMap != nullptr)
+   {
+      Uint8* perfMap = m_processorPerformanceMap->Data();
+      Uint8* data = m_surface->Data();
+
+      data += 480;
+
+      for (BYTE high = 0x00; high < 0xFF; high++)
+      {
+         memcpy(data, perfMap, 256);
+
+         perfMap += 256;
+         data += m_surface->Width();
+      }
+   }
+
    m_window->Blit(0, 0, *m_surface);
    m_window->Update();
 }

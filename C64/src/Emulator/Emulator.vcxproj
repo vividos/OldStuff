@@ -92,6 +92,7 @@
     <ClCompile Include="EmulatorOptions.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="EmulatorWindow.cpp" />
+    <ClCompile Include="ProcessorPerformanceMap.cpp" />
     <ClCompile Include="ProgramOptions.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -104,6 +105,7 @@
     <ClInclude Include="EmulatorOptions.hpp" />
     <ClInclude Include="EmulatorWindow.hpp" />
     <ClInclude Include="GianaSistersProcessorCallback.hpp" />
+    <ClInclude Include="ProcessorPerformanceMap.hpp" />
     <ClInclude Include="ProgramOptions.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

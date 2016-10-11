@@ -15,6 +15,7 @@
 class EmulatorOptions;
 class RenderWindow2D;
 class PalettedSurface;
+class ProcessorPerformanceMap;
 struct SDL_SysWMmsg;
 
 /// main emulator window
@@ -86,6 +87,9 @@ private:
 
    /// start program counter, or 0 when a SYS command should be searched
    WORD m_startProgramCounter;
+
+   /// processor performance map; may be null
+   std::shared_ptr<ProcessorPerformanceMap> m_processorPerformanceMap;
 
    /// processor callback; may be null
    std::shared_ptr<C64::IProcessorCallback> m_processorCallback;
