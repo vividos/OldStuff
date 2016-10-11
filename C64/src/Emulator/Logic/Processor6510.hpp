@@ -293,10 +293,19 @@ public:
    virtual ~IProcessorCallback() throw() {}
 
    /// called when PC changes on JMP, JSR, RTS, RTI and interrupts
-   virtual void OnProgramCounterChange() = 0;
+   virtual void OnProgramCounterChange() {}
 
    /// called when an opcode step is made
    virtual void OnStep() {}
+
+   /// called when a memory load is made
+   virtual void OnLoad(WORD address) { address; }
+
+   /// called when a memory store is made
+   virtual void OnStore(WORD address) { address; }
+
+   /// called when an opcode is executed
+   virtual void OnExecute(WORD address, unsigned int instructionSize) { address; instructionSize; }
 };
 
 /// MOS 6510 processor implementation

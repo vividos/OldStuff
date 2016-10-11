@@ -9,6 +9,7 @@
 #include "StdAfx.h"
 #include "Processor6510.hpp"
 #include "MemoryManager.hpp"
+#include <algorithm>
 
 using C64::Processor6510;
 using C64::AddressingMode;
@@ -114,17 +115,16 @@ void Processor6510::Step()
    m_uiProcessedOpcodes++;
 
    // send notification of PC change
-   {
-      std::set<IProcessorCallback*>::const_iterator iter, stop;
-      iter = m_setCallbacks.begin(); stop = m_setCallbacks.end();
-      for (; iter != stop; iter++)
-         (*iter)->OnStep();
-   }
+   std::for_each(m_setCallbacks.begin(), m_setCallbacks.end(),
+      [](IProcessorCallback* callback) { callback->OnStep(); });
 
    if (m_debugOutput)
       m_opcodeText.Format(_T("%04x "), m_wProgramCounter);
 
    BYTE bOpcode = m_memoryManager.Peek(m_wProgramCounter++);
+
+   std::for_each(m_setCallbacks.begin(), m_setCallbacks.end(),
+      [&](IProcessorCallback* callback) { callback->OnExecute(m_wProgramCounter - 1, 1); });
 
    // count cycles
    m_uiElapsedCycles += g_abOpcodeCycles[bOpcode];
@@ -441,10 +441,8 @@ void Processor6510::Step()
 
    if (bProgramCounterChanged)
    {
-      std::set<IProcessorCallback*>::const_iterator iter, stop;
-      iter = m_setCallbacks.begin(); stop = m_setCallbacks.end();
-      for (; iter != stop; iter++)
-         (*iter)->OnProgramCounterChange();
+      std::for_each(m_setCallbacks.begin(), m_setCallbacks.end(),
+         [](IProcessorCallback* callback) { callback->OnProgramCounterChange(); });
    }
 }
 
@@ -475,11 +473,17 @@ void Processor6510::Interrupt(C64::InterruptType enInterruptType)
 
 BYTE Processor6510::Load(WORD wAddr)
 {
+   std::for_each(m_setCallbacks.begin(), m_setCallbacks.end(),
+      [wAddr](IProcessorCallback* callback) { callback->OnLoad(wAddr); });
+
    return m_memoryManager.Peek(wAddr);
 }
 
 void Processor6510::Store(WORD wAddr, BYTE bValue)
 {
+   std::for_each(m_setCallbacks.begin(), m_setCallbacks.end(),
+      [wAddr](IProcessorCallback* callback) { callback->OnStore(wAddr); });
+
    m_memoryManager.Poke(wAddr, bValue);
 }
 
