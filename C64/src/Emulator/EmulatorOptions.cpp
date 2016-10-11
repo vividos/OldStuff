@@ -34,25 +34,42 @@ EmulatorOptions::EmulatorOptions()
 
    RegisterOption(_T("f"), _T("fullscreen"),
       _T("shows the emulator in fullscreen on start (toggle with Alt+Enter)"),
-      m_fullscreen);
+      0,
+      [&](auto dummy) -> bool
+   {
+      m_fullscreen = true;
+      return true;
+   });
 
    RegisterOption(_T("j"), _T("joystick"),
       _T("enables port 2 joystick emulation via NumPad and Right-Ctrl keys"),
-      m_joystickNumPadEmulation);
+      0,
+      [&](auto dummy) -> bool
+   {
+      m_joystickNumPadEmulation = true;
+      return true;
+   });
 
    RegisterOption(_T("s"), _T("sys"), _T("sets start program counter, in decimal (e.g. 2064) or hex ($0820, 0x0820)"),
       [&](const CString& arg) -> bool
    {
       if (arg.Find(_T("$")) != -1)
-         m_startProgramCounter = _tcstoul(arg.Mid(1), nullptr, 16);
+         m_startProgramCounter = static_cast<WORD>(_tcstoul(arg.Mid(1), nullptr, 16));
       else
          if (arg.Find(_T("0x")) != -1)
-            m_startProgramCounter = _tcstoul(arg.Mid(2), nullptr, 16);
+            m_startProgramCounter = static_cast<WORD>(_tcstoul(arg.Mid(2), nullptr, 16));
          else
-            m_startProgramCounter = _ttoi(arg);
+            m_startProgramCounter = static_cast<WORD>(_ttoi(arg));
 
       return true;
    });
 
-   RegisterOption(_T("d"), _T("debug"), _T("runs emulator in debug mode, showing VIC status infos"), m_debugMode);
+   RegisterOption(_T("d"), _T("debug"),
+      _T("runs emulator in debug mode, showing VIC status infos"),
+      0,
+      [&](auto dummy) -> bool
+   {
+      m_debugMode = true;
+      return true;
+   });
 }
