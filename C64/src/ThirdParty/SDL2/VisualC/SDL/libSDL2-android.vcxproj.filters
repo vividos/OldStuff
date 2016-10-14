@@ -1,0 +1,663 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src Files">
+      <UniqueIdentifier>{05b81f4d-747c-4c37-bde8-9152edddb892}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\audio Files">
+      <UniqueIdentifier>{14b6a52a-ecbb-41ab-a129-60ba296c92bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\audio Files\android Files">
+      <UniqueIdentifier>{d3b1d208-f352-47fd-a343-e20636cc65d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\audio Files\dummy Files">
+      <UniqueIdentifier>{388bdb8a-dd8b-4128-9d18-f42805bcc853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\atomic Files">
+      <UniqueIdentifier>{7002af36-5498-437b-8a4d-26c40e7e81b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\core Files">
+      <UniqueIdentifier>{50192f6e-b2a4-4948-a41f-07bea32fe2d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\cpuinfo Files">
+      <UniqueIdentifier>{62ac262f-7b65-4db5-88f5-b899133d9c17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\dynapi Files">
+      <UniqueIdentifier>{29af87f3-4a08-475e-b63b-c82accbd3bd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\events Files">
+      <UniqueIdentifier>{a0c269c7-f5e4-45d6-bf6f-682bbc58f28f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\file Files">
+      <UniqueIdentifier>{789483be-7b18-49d2-8815-feaa3c1eb934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\haptic Files">
+      <UniqueIdentifier>{b4536231-84a3-4d5a-b5c1-fe0f6b80c2f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\haptic Files\dummy Files">
+      <UniqueIdentifier>{b4c58489-44a4-4272-bbda-b0bbc87a11c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\joystick Files">
+      <UniqueIdentifier>{40cf55ee-f5e5-41ff-b24e-b2de98c5225a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\joystick Files\android Files">
+      <UniqueIdentifier>{0a4a10b7-08f6-4771-aa12-6acd6c281974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\loadso Files">
+      <UniqueIdentifier>{eff185c7-077d-4e3a-bebf-1c33ffbfed20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\loadso Files\dlopen Files">
+      <UniqueIdentifier>{d3b5c9c4-38a3-4efb-a8da-9f927e30563e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\power Files">
+      <UniqueIdentifier>{ceb155f3-f895-4266-bc19-67b03696b923}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\power Files\android Files">
+      <UniqueIdentifier>{23ab3721-ac83-48e6-82a2-ddebeb6c2c0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\filesystem Files">
+      <UniqueIdentifier>{64510898-9190-4211-9565-d9081924de91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\filesystem Files\android Files">
+      <UniqueIdentifier>{e67f3a96-fe7a-4da8-ae52-ab676ffbd606}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\render Files">
+      <UniqueIdentifier>{8b530110-e046-4335-b0ad-591b67df1978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\render Files\opengles2 Files">
+      <UniqueIdentifier>{4b3e1879-9714-4d07-a5ee-c017ee1f6351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\stdlib Files">
+      <UniqueIdentifier>{e4755667-c00a-4d37-b447-21ea8f262c8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\thread Files">
+      <UniqueIdentifier>{81129935-e047-4721-9fde-ded4f6199697}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\thread Files\pthread Files">
+      <UniqueIdentifier>{06b6b83f-fe97-49b4-b083-2d44a14af760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\timer Files">
+      <UniqueIdentifier>{cbb2bb6a-d7a5-4a50-bc15-3ca8f263f9bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\timer Files\unix Files">
+      <UniqueIdentifier>{4623e5b2-e9eb-4022-ac46-f96933a42df1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\video Files">
+      <UniqueIdentifier>{fe71cd46-4f14-4076-a847-bd2f0729f142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\video Files\android Files">
+      <UniqueIdentifier>{82b17187-7ea7-45ea-b962-9eae2cf7cef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\test Files">
+      <UniqueIdentifier>{7532bf0c-4c72-4169-aaa3-6fb1d58c1fb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\render Files\software Files">
+      <UniqueIdentifier>{45192461-620a-4be0-9e56-3f5edb704d98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\render Files\opengles Files">
+      <UniqueIdentifier>{1bba0705-a3f2-487e-b233-3e491b7687bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src Files\render Files\opengl Files">
+      <UniqueIdentifier>{dd2b6f0c-3eda-4e9f-8c12-2755c23eb40d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\SDL.c">
+      <Filter>src Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SDL_assert.c">
+      <Filter>src Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SDL_error.c">
+      <Filter>src Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SDL_hints.c">
+      <Filter>src Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SDL_log.c">
+      <Filter>src Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audio\android\SDL_androidaudio.c">
+      <Filter>src Files\audio Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audio\SDL_audio.c">
+      <Filter>src Files\audio Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audio\SDL_audiocvt.c">
+      <Filter>src Files\audio Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audio\SDL_audiodev.c">
+      <Filter>src Files\audio Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audio\SDL_audiotypecvt.c">
+      <Filter>src Files\audio Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audio\SDL_mixer.c">
+      <Filter>src Files\audio Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audio\SDL_wave.c">
+      <Filter>src Files\audio Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\audio\dummy\SDL_dummyaudio.c">
+      <Filter>src Files\audio Files\dummy Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\atomic\SDL_spinlock.c">
+      <Filter>src Files\atomic Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\atomic\SDL_atomic.c">
+      <Filter>src Files\atomic Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\android\SDL_android.c">
+      <Filter>src Files\core Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpuinfo\SDL_cpuinfo.c">
+      <Filter>src Files\cpuinfo Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dynapi\SDL_dynapi.c">
+      <Filter>src Files\dynapi Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\events\SDL_clipboardevents.c">
+      <Filter>src Files\events Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\events\SDL_dropevents.c">
+      <Filter>src Files\events Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\events\SDL_events.c">
+      <Filter>src Files\events Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\events\SDL_gesture.c">
+      <Filter>src Files\events Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\events\SDL_keyboard.c">
+      <Filter>src Files\events Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\events\SDL_mouse.c">
+      <Filter>src Files\events Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\events\SDL_quit.c">
+      <Filter>src Files\events Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\events\SDL_touch.c">
+      <Filter>src Files\events Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\events\SDL_windowevents.c">
+      <Filter>src Files\events Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\file\SDL_rwops.c">
+      <Filter>src Files\file Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\haptic\SDL_haptic.c">
+      <Filter>src Files\haptic Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\haptic\dummy\SDL_syshaptic.c">
+      <Filter>src Files\haptic Files\dummy Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\joystick\SDL_gamecontroller.c">
+      <Filter>src Files\joystick Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\joystick\SDL_joystick.c">
+      <Filter>src Files\joystick Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\joystick\android\SDL_sysjoystick.c">
+      <Filter>src Files\joystick Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\loadso\dlopen\SDL_sysloadso.c">
+      <Filter>src Files\loadso Files\dlopen Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\power\SDL_power.c">
+      <Filter>src Files\power Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\power\android\SDL_syspower.c">
+      <Filter>src Files\power Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\filesystem\android\SDL_sysfilesystem.c">
+      <Filter>src Files\filesystem Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\SDL_d3dmath.c">
+      <Filter>src Files\render Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\SDL_render.c">
+      <Filter>src Files\render Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\SDL_yuv_mmx.c">
+      <Filter>src Files\render Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\SDL_yuv_sw.c">
+      <Filter>src Files\render Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\opengles2\SDL_render_gles2.c">
+      <Filter>src Files\render Files\opengles2 Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\opengles2\SDL_shaders_gles2.c">
+      <Filter>src Files\render Files\opengles2 Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stdlib\SDL_getenv.c">
+      <Filter>src Files\stdlib Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stdlib\SDL_iconv.c">
+      <Filter>src Files\stdlib Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stdlib\SDL_malloc.c">
+      <Filter>src Files\stdlib Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stdlib\SDL_qsort.c">
+      <Filter>src Files\stdlib Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stdlib\SDL_stdlib.c">
+      <Filter>src Files\stdlib Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stdlib\SDL_string.c">
+      <Filter>src Files\stdlib Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\thread\SDL_thread.c">
+      <Filter>src Files\thread Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\thread\pthread\SDL_syscond.c">
+      <Filter>src Files\thread Files\pthread Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\thread\pthread\SDL_sysmutex.c">
+      <Filter>src Files\thread Files\pthread Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\thread\pthread\SDL_syssem.c">
+      <Filter>src Files\thread Files\pthread Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\thread\pthread\SDL_systhread.c">
+      <Filter>src Files\thread Files\pthread Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\thread\pthread\SDL_systls.c">
+      <Filter>src Files\thread Files\pthread Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\timer\SDL_timer.c">
+      <Filter>src Files\timer Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\timer\unix\SDL_systimer.c">
+      <Filter>src Files\timer Files\unix Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_blit.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_blit_0.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_blit_1.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_blit_A.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_blit_auto.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_blit_copy.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_blit_N.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_blit_slow.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_bmp.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_clipboard.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_egl.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_fillrect.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_pixels.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_rect.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_RLEaccel.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_shape.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_stretch.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_surface.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\SDL_video.c">
+      <Filter>src Files\video Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\android\SDL_androidclipboard.c">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\android\SDL_androidevents.c">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\android\SDL_androidgl.c">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\android\SDL_androidkeyboard.c">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\android\SDL_androidmessagebox.c">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\android\SDL_androidmouse.c">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\android\SDL_androidtouch.c">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\android\SDL_androidvideo.c">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\video\android\SDL_androidwindow.c">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_assert.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_common.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_compare.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_crc32.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_font.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_fuzzer.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_harness.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_imageBlit.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_imageBlitBlend.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_imageFace.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_imagePrimitives.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_imagePrimitivesBlend.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_log.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_md5.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test\SDL_test_random.c">
+      <Filter>src Files\test Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\software\SDL_blendfillrect.c">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\software\SDL_blendline.c">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\software\SDL_blendpoint.c">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\software\SDL_drawline.c">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\software\SDL_drawpoint.c">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\software\SDL_render_sw.c">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\software\SDL_rotate.c">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\opengles\SDL_render_gles.c">
+      <Filter>src Files\render Files\opengles Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\opengl\SDL_render_gl.c">
+      <Filter>src Files\render Files\opengl Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\opengl\SDL_shaders_gl.c">
+      <Filter>src Files\render Files\opengl Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\SDL_assert_c.h">
+      <Filter>src Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SDL_error_c.h">
+      <Filter>src Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SDL_internal.h">
+      <Filter>src Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audio\android\SDL_androidaudio.h">
+      <Filter>src Files\audio Files\android Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audio\SDL_audio_c.h">
+      <Filter>src Files\audio Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audio\SDL_audiodev_c.h">
+      <Filter>src Files\audio Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audio\SDL_audiomem.h">
+      <Filter>src Files\audio Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audio\SDL_sysaudio.h">
+      <Filter>src Files\audio Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audio\SDL_wave.h">
+      <Filter>src Files\audio Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\audio\dummy\SDL_dummyaudio.h">
+      <Filter>src Files\audio Files\dummy Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\android\SDL_android.h">
+      <Filter>src Files\core Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dynapi\SDL_dynapi.h">
+      <Filter>src Files\dynapi Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dynapi\SDL_dynapi_overrides.h">
+      <Filter>src Files\dynapi Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dynapi\SDL_dynapi_procs.h">
+      <Filter>src Files\dynapi Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\blank_cursor.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\default_cursor.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\scancodes_darwin.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\scancodes_linux.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\scancodes_windows.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\scancodes_xfree86.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\SDL_clipboardevents_c.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\SDL_dropevents_c.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\SDL_events_c.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\SDL_gesture_c.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\SDL_keyboard_c.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\SDL_mouse_c.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\SDL_sysevents.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\SDL_touch_c.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\events\SDL_windowevents_c.h">
+      <Filter>src Files\events Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\haptic\SDL_haptic_c.h">
+      <Filter>src Files\haptic Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\haptic\SDL_syshaptic.h">
+      <Filter>src Files\haptic Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\joystick\SDL_gamecontrollerdb.h">
+      <Filter>src Files\joystick Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\joystick\SDL_joystick_c.h">
+      <Filter>src Files\joystick Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\joystick\SDL_sysjoystick.h">
+      <Filter>src Files\joystick Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\joystick\android\SDL_sysjoystick_c.h">
+      <Filter>src Files\joystick Files\android Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\mmx.h">
+      <Filter>src Files\render Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\SDL_d3dmath.h">
+      <Filter>src Files\render Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\SDL_sysrender.h">
+      <Filter>src Files\render Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\SDL_yuv_sw_c.h">
+      <Filter>src Files\render Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\opengles2\SDL_gles2funcs.h">
+      <Filter>src Files\render Files\opengles2 Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\opengles2\SDL_shaders_gles2.h">
+      <Filter>src Files\render Files\opengles2 Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\thread\SDL_systhread.h">
+      <Filter>src Files\thread Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\thread\SDL_thread_c.h">
+      <Filter>src Files\thread Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\thread\pthread\SDL_sysmutex_c.h">
+      <Filter>src Files\thread Files\pthread Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\thread\pthread\SDL_systhread_c.h">
+      <Filter>src Files\thread Files\pthread Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\timer\SDL_timer_c.h">
+      <Filter>src Files\timer Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\SDL_blit.h">
+      <Filter>src Files\video Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\SDL_blit_auto.h">
+      <Filter>src Files\video Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\SDL_blit_copy.h">
+      <Filter>src Files\video Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\SDL_blit_slow.h">
+      <Filter>src Files\video Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\SDL_egl_c.h">
+      <Filter>src Files\video Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\SDL_pixels_c.h">
+      <Filter>src Files\video Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\SDL_rect_c.h">
+      <Filter>src Files\video Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\SDL_RLEaccel_c.h">
+      <Filter>src Files\video Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\SDL_shape_internals.h">
+      <Filter>src Files\video Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\SDL_sysvideo.h">
+      <Filter>src Files\video Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\android\SDL_androidclipboard.h">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\android\SDL_androidevents.h">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\android\SDL_androidkeyboard.h">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\android\SDL_androidmessagebox.h">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\android\SDL_androidmouse.h">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\android\SDL_androidtouch.h">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\android\SDL_androidvideo.h">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\video\android\SDL_androidwindow.h">
+      <Filter>src Files\video Files\android Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\software\SDL_blendfillrect.h">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\software\SDL_blendline.h">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\software\SDL_blendpoint.h">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\software\SDL_draw.h">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\software\SDL_drawline.h">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\software\SDL_drawpoint.h">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\software\SDL_render_sw_c.h">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\software\SDL_rotate.h">
+      <Filter>src Files\render Files\software Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\opengles\SDL_glesfuncs.h">
+      <Filter>src Files\render Files\opengles Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\opengl\SDL_glfuncs.h">
+      <Filter>src Files\render Files\opengl Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\render\opengl\SDL_shaders_gl.h">
+      <Filter>src Files\render Files\opengl Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

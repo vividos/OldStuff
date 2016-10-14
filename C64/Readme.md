@@ -12,6 +12,11 @@ Just open the C64.sln with Microsoft Visual Studio 2015 and check out the
 projects. There are also some experimental Android projects that use the
 Android C++ project templates. Check out C64.Android.sln.
 
+### SDL2 for Android ###
+
+See the subfolder [SDL2](src/ThirdParty/SDL2/Readme.md "SDL2 Readme") for
+instructions on how to compile SDL2 for Android using Visual Studio 2015.
+
 ### d64view ###
 
 d64view is a d64 disk image viewer, it has its own solution file (see sub folder
