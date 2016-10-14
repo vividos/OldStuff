@@ -410,19 +410,70 @@ void Processor6510::Step()
       BitOperation(addrAbsolute);
       break;
 
-   case 0x1a:
-   case 0x3a:
-   case 0x5a:
-   case 0x7a:
-   case 0xda:
-   case 0xfa:
    case opNOP: // do nothing
       if (m_debugOutput)
          m_opcodeText.AppendFormat(_T("NOP"));
       break;
 
+      // illegal opcodes
+   case illNOP_1:
+   case illNOP_2:
+   case illNOP_3:
+   case illNOP_4:
+   case illNOP_5:
+   case illNOP_6:
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("NOP"));
+      break;
+
+   case illNOP_imm_1:
+   case illNOP_imm_2:
+   case illNOP_imm_3:
+   case illNOP_imm_4:
+   case illNOP_imm_5:
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("NOP "));
+      FetchAddress(addrImmediate);
+      break;
+
+   case illNOP_abs:
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("NOP "));
+      FetchAddress(addrAbsolute);
+      break;
+
+   case illNOP_abx_1:
+   case illNOP_abx_2:
+   case illNOP_abx_3:
+   case illNOP_abx_4:
+   case illNOP_abx_5:
+   case illNOP_abx_6:
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("NOP "));
+      FetchAddress(addrAbsoluteIndexedX);
+      break;
+
+   case illNOP_zp_1:
+   case illNOP_zp_2:
+   case illNOP_zp_3:
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("NOP "));
+      FetchAddress(addrZeropage);
+      break;
+
+   case illNOP_zpx_1:
+   case illNOP_zpx_2:
+   case illNOP_zpx_3:
+   case illNOP_zpx_4:
+   case illNOP_zpx_5:
+   case illNOP_zpx_6:
+      if (m_debugOutput)
+         m_opcodeText.AppendFormat(_T("NOP "));
+      FetchAddress(addrZeropageIndexedX);
+      break;
+
    default:
-      ATLTRACE(_T("unknown opcode: %02x"), bOpcode);
+      ATLTRACE(_T("unknown opcode: %02x\n"), bOpcode);
       break;
    }
 

@@ -251,6 +251,40 @@ enum Opcode
    opBRK = 0x00,
    opRTI = 0x40,
    opNOP = 0xea,
+
+   // illegal opcodes
+   illNOP_1 = 0x1a,
+   illNOP_2 = 0x3a,
+   illNOP_3 = 0x5a,
+   illNOP_4 = 0x7a,
+   illNOP_5 = 0xda,
+   illNOP_6 = 0xfa,
+
+   illNOP_imm_1 = 0x80,
+   illNOP_imm_2 = 0x82,
+   illNOP_imm_3 = 0xc2,
+   illNOP_imm_4 = 0xe2,
+   illNOP_imm_5 = 0x89,
+
+   illNOP_abs = 0x0c,
+
+   illNOP_abx_1 = 0x1c,
+   illNOP_abx_2 = 0x3c,
+   illNOP_abx_3 = 0x5c,
+   illNOP_abx_4 = 0x7c,
+   illNOP_abx_5 = 0xdc,
+   illNOP_abx_6 = 0xfc,
+
+   illNOP_zp_1 = 0x04,
+   illNOP_zp_2 = 0x44,
+   illNOP_zp_3 = 0x64,
+
+   illNOP_zpx_1 = 0x14,
+   illNOP_zpx_2 = 0x34,
+   illNOP_zpx_3 = 0x54,
+   illNOP_zpx_4 = 0x74,
+   illNOP_zpx_5 = 0xd4,
+   illNOP_zpx_6 = 0xf4,
 };
 
 /// logical operation type
