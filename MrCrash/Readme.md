@@ -2,9 +2,11 @@
 
 ## About ##
 
-MrCrash is a tool to analyse applications that may crash (e.g. the application closes without any windows left, shows a "Windows Error Reporting" dialog or shows other crash-y behavior).
+MrCrash is a tool to analyse applications that may crash (e.g. the application closes without any
+windows left, shows a "Windows Error Reporting" dialog or shows other crash-y behavior).
 
-Error reporting information are collected then, and these infos can help developers to better determine the reason of the crash.
+Error reporting information are collected then, and these infos can help developers to better
+determine the reason of the crash.
 
 ## Download ##
 
@@ -16,13 +18,19 @@ Visit [https://github.com/vividos/OldStuff/releases]() for releases of all OldSt
 
 ## Screenshots ##
 
-When Mr. Crash is started without an applicaton to monitor, the "Select debug target" dialog is shown:
+When Mr. Crash is started without an applicaton to monitor, the "Select debug target" dialog is
+shown:
 
-![Select debug target](images/select-debug-target.png)
+![Select debug target](images/mrcrash-select-debug-target.png)
 
 When the application to monitor has crashed, the following "Save results" dialog is shown:
 
-![Save results](images/save-results.png)
+![Save results](images/mrcrash-save-results.png)
+
+To test MrCrash, a test application called CrashTestDummy is also supplied, to try out different
+crashes:
+
+![Crash test dummy application](images/crashtestdummy.png)
 
 ## Technical Background ##
 
