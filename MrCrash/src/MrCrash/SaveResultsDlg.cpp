@@ -45,6 +45,7 @@ LRESULT SaveResultsDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*
 
       int iItem = m_listResults.InsertItem(0, entry.m_cszTitle);
       m_listResults.SetItemText(iItem, 1, entry.m_cszFilename);
+      m_listResults.SetItemData(iItem, i);
    }
 
    DlgResize_Init(true);
@@ -87,4 +88,42 @@ LRESULT SaveResultsDlg::OnExit(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/,
 
    EndDialog(wID);
    return 0;
+}
+
+LRESULT SaveResultsDlg::OnDoubleClickedResultsList(int /*idCtrl*/, LPNMHDR pnmh, BOOL& /*bHandled*/)
+{
+   // double-clicked on an item
+   LPNMLISTVIEW lpnmlv = (LPNMLISTVIEW)pnmh;
+
+   if (lpnmlv->iItem != -1)
+   {
+      size_t resultIndex = m_listResults.GetItemData(lpnmlv->iItem);
+
+      const DebuggerResultEntry& entry = m_vecResults[resultIndex];
+
+      OpenFolder(entry.m_cszFilename);
+   }
+
+   return 0;
+}
+
+/// \see http://stackoverflow.com/questions/3010305/programmatically-selecting-file-in-explorer
+void SaveResultsDlg::OpenFolder(const CString& cszFilename)
+{
+   ITEMIDLIST* pidl = ILCreateFromPath(cszFilename);
+   if (pidl != nullptr)
+   {
+      SHOpenFolderAndSelectItems(pidl, 0, nullptr, 0);
+      ILFree(pidl);
+
+      return;
+   }
+
+   // workaround for systems where ILCreateFromPath() fails; opens a new explorer
+   // window each time it is called.
+   CString cszFolderName = cszFilename.Left(cszFilename.ReverseFind(_T('\\')) + 1);
+
+   CString cszArgs;
+   cszArgs.Format(_T("/select, \"%s\""), cszFilename.GetString());
+   ::ShellExecute(m_hWnd, _T("open"), _T("explorer.exe"), cszArgs, cszFolderName, SW_SHOWNORMAL);
 }

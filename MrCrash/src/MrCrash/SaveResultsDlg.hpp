@@ -26,6 +26,7 @@ private:
       MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
       COMMAND_ID_HANDLER(IDOK, OnExit)
       COMMAND_ID_HANDLER(IDCANCEL, OnExit)
+      NOTIFY_HANDLER(IDC_LIST_RESULTS, NM_DBLCLK, OnDoubleClickedResultsList)
    END_MSG_MAP()
 
 // Handler prototypes (uncomment arguments if needed):
@@ -35,6 +36,7 @@ private:
 
    LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
    LRESULT OnExit(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+   LRESULT OnDoubleClickedResultsList(int idCtrl, LPNMHDR pnmh, BOOL& bHandled);
 
    BEGIN_DDX_MAP(SaveResultsDlg)
       DDX_CONTROL_HANDLE(IDC_LIST_RESULTS, m_listResults)
@@ -46,6 +48,10 @@ private:
       DLGRESIZE_CONTROL(IDCANCEL, DLSZ_MOVE_X | DLSZ_MOVE_X)
       DLGRESIZE_CONTROL(IDC_LIST_RESULTS, DLSZ_SIZE_X | DLSZ_SIZE_Y)
    END_DLGRESIZE_MAP()
+
+private:
+   /// opens folder of given filename and selects file
+   void OpenFolder(const CString& cszFilename);
 
 private:
    const std::vector<DebuggerResultEntry>& m_vecResults;
