@@ -12,7 +12,7 @@ determine the reason of the crash.
 
 You can download MrCrash here:
 
-- [MrCrash-1.0.0.zip](https://github.com/vividos/OldStuff/releases/download/mrcrash-1.0.0/MrCrash-1.0.0.zip): MrCrash 32-bit + CrashTestDummy (613 kb)
+- [MrCrash-1.0.1.zip](https://github.com/vividos/OldStuff/releases/download/mrcrash-1.0.1/MrCrash-1.0.1.zip): MrCrash 32-bit + CrashTestDummy (225 kb)
 
 Visit [https://github.com/vividos/OldStuff/releases]() for releases of all OldStuff projects.
 
