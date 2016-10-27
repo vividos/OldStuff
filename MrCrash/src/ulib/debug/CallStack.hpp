@@ -10,7 +10,10 @@
 #ifdef UNICODE
 #define DBGHELP_TRANSLATE_TCHAR
 #endif
+#pragma warning(push)
+#pragma warning(disable: 4091) // 'typedef ': ignored on left of '' when no variable is declared
 #include <dbghelp.h>
+#pragma warning(pop)
 
 namespace Debug
 {

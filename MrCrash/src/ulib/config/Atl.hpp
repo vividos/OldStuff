@@ -27,10 +27,5 @@
 #undef min
 #undef max
 
-// link to static ATL libs
-#ifdef _DEBUG
-   #pragma comment(lib, "atlsd.lib")
-#else
-   #pragma comment(lib, "atls.lib")
-#endif
-#pragma comment(lib, "atlthunk.lib")
+// for _stdcallthunk
+#include <atlstdthunk.h>

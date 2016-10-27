@@ -136,10 +136,10 @@ void SelectDebugTargetDlg::RefreshProcessList()
 {
    // get currently selected pid
    DWORD dwLastSelectedPid = 0;
-   int iItem = m_listProcesses.GetSelectedIndex();
+   int iSelectedItem = m_listProcesses.GetSelectedIndex();
 
-   if (iItem != -1)
-      dwLastSelectedPid = m_listProcesses.GetItemData(iItem);
+   if (iSelectedItem != -1)
+      dwLastSelectedPid = m_listProcesses.GetItemData(iSelectedItem);
 
    m_listProcesses.SetRedraw(false);
 

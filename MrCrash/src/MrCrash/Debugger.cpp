@@ -583,12 +583,12 @@ CString Debugger::FormatLocalSystemTime(SYSTEMTIME& stTime)
 
 void Debugger::RetrieveRemainingInfos()
 {
-   std::set<DWORD>::const_iterator iter = m_setRemainingProcessInfo.begin(),
-      stop = m_setRemainingProcessInfo.end();
+   std::set<DWORD>::const_iterator iterProcessInfo = m_setRemainingProcessInfo.begin(),
+      stopProcessInfo = m_setRemainingProcessInfo.end();
 
-   for (;iter != stop; iter++)
+   for (; iterProcessInfo != stopProcessInfo; iterProcessInfo++)
    {
-      DWORD dwProcessId = *iter;
+      DWORD dwProcessId = *iterProcessInfo;
       ATLASSERT(TRUE == m_debuggeeInfo.IsProcessInfoAvail(dwProcessId));
 
       Debug::ProcessInfo pi = m_debuggeeInfo.GetProcessInfo(dwProcessId);
@@ -612,13 +612,13 @@ void Debugger::RetrieveRemainingInfos()
    m_setRemainingProcessInfo.clear();
 
    {
-      std::set<std::pair<DWORD, LPVOID> >::const_iterator iter = m_setRemainingModuleInfo.begin(),
-         stop = m_setRemainingModuleInfo.end();
+      std::set<std::pair<DWORD, LPVOID> >::const_iterator iterModuleInfo = m_setRemainingModuleInfo.begin(),
+         stopModuleInfo = m_setRemainingModuleInfo.end();
 
-      for (;iter != stop; iter++)
+      for (; iterModuleInfo != stopModuleInfo; iterModuleInfo++)
       {
-         DWORD dwProcessId = iter->first;
-         LPVOID pBaseAddress = iter->second;
+         DWORD dwProcessId = iterModuleInfo->first;
+         LPVOID pBaseAddress = iterModuleInfo->second;
 
          ATLASSERT(TRUE == m_debuggeeInfo.IsProcessInfoAvail(dwProcessId));
 

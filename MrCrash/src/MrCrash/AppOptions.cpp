@@ -75,7 +75,7 @@ bool AppOptions::OnParamStart(const CString& cszStartApp)
    m_enStartMode = smStartProcess;
    m_cszStartApp = cszStartApp;
 
-   _tprintf(_T("starting application: [%s]\n"), m_cszStartApp);
+   _tprintf(_T("starting application: [%s]\n"), m_cszStartApp.GetString());
    return true;
 }
 
@@ -87,7 +87,7 @@ bool AppOptions::OnParamCommandLine(const CString& cszCmdLine)
       _tprintf(_T("you have to specify an application first, using option /s\n"));
    else
    {
-      _tprintf(_T("using command line: [%s]\n"), m_cszCmdLine);
+      _tprintf(_T("using command line: [%s]\n"), m_cszCmdLine.GetString());
    }
    return true;
 }
