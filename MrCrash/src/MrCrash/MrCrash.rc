@@ -43,8 +43,8 @@ END
 //
 LANGUAGE LANG_ENGLISH, SUBLANG_DEFAULT
 1 VERSIONINFO
-    FILEVERSION     1,0,0,1
-    PRODUCTVERSION  1,0,0,1
+    FILEVERSION     1,0,1,0
+    PRODUCTVERSION  1,0,1,0
     FILEOS          VOS__WINDOWS32
     FILETYPE        VFT_DLL
 BEGIN
@@ -53,12 +53,12 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "FileDescription", "MrCrash Module"
-            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "FileVersion", "1.0.1.0"
             VALUE "InternalName", "MrCrash"
-            VALUE "LegalCopyright", "Copyright 2006"
+            VALUE "LegalCopyright", "Copyright 2005-2016 Michael Fink"
             VALUE "OriginalFilename", "MrCrash.exe"
             VALUE "ProductName", "MrCrash Module"
-            VALUE "ProductVersion", "1, 0, 0, 1"
+            VALUE "ProductVersion", "1.0.1.0"
         END
     END
     BLOCK "VarFileInfo"
