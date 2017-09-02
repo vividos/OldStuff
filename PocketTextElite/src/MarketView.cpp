@@ -169,7 +169,7 @@ void MarketView::UpdateView()
 
       PlanetInfo pi = TextElite::GetPlanetInfo(m_uiSelectedPlanet);
 
-      cszTitle.Format(_T("%s Marketplace"), pi.Name());
+      cszTitle.Format(_T("%s Marketplace"), pi.Name().GetString());
       m_scTitle.SetWindowText(cszTitle);
    }
 
@@ -178,7 +178,7 @@ void MarketView::UpdateView()
       CString cszText;
 
       unsigned int uiCash = TextElite::GetCashInTenth();
-      
+
       cszText.Format(_T("Cash: %u.%01u CR - Cargo: %u t free"),
          uiCash / 10, uiCash % 10, TextElite::GetCargoSpace());
       m_scCashCargoInfo.SetWindowText(cszText);

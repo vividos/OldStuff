@@ -20,6 +20,7 @@
 
 #define printf textelite_printf
 #define tolower textelite_tolower
+#define toupper textelite_toupper
 
 #ifdef __cplusplus
 extern "C" {

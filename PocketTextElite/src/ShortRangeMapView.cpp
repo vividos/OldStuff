@@ -39,15 +39,15 @@ LRESULT ShortRangeMapView::OnSelectedPlanet(UINT /*uMsg*/, WPARAM wParam, LPARAM
    PlanetInfo planetSelected = TextElite::GetPlanetInfo(m_uiSelectedPlanet);
 
    CString cszText;
-   cszText.Format(_T("Selected system: %s"), planetSelected.Name());
-   m_mainFrame.ShowResponse(cszText, true);
+   cszText.Format(_T("Selected system: %s"), planetSelected.Name().GetString());
+   m_mainFrame.ShowResponse(cszText.GetString(), true);
 
    // update text
    unsigned int uiLightYearsTenths =
       TextElite::CalcDistance(TextElite::GetCurrentPlanet(), m_uiSelectedPlanet);
 
    cszText.Format(_T("Selected system: %s (%u.%01u Light Years)"),
-      planetSelected.Name(),
+      planetSelected.Name().GetString(),
       uiLightYearsTenths / 10, uiLightYearsTenths % 10);
 
    SetDlgItemText(IDC_STATIC_SELECTED_PLANET, cszText);

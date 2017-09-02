@@ -7,5 +7,3 @@
 
 // includes
 #include "stdafx.h"
-
-#pragma comment(lib, "atlthunk.lib")
