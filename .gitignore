@@ -24,6 +24,8 @@ build/
 
 *_i.c
 *_p.c
+*_h.h
+dlldata.c
 *.ilk
 *.meta
 *.obj
@@ -156,3 +158,5 @@ $RECYCLE.BIN/
 
 # Project specific
 **/stuff/
+.vs/
+packages/
