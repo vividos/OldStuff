@@ -1,0 +1,167 @@
+<html>
+<body style="margin:0px; padding:0px; border:0px; overflow:hidden">
+   <!-- h3>{..$name..}</h3 -->
+   <div style="position:absolute; z-index:-1;">
+      <object id='movie_player' height="344" width="425"
+         style="z-index:-1; position:absolute;"
+         classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
+         <!-- param name="WMode" value="Transparent"/ -->
+         <param name="FlashVars" value=""/>
+         <param name="Movie" value="http://www.youtube.com/v/{..$address..}&amp;border=0&amp;enablejsapi=1&amp;playerapiid=ytplayer"/>
+         <param name="Src" value="http://www.youtube.com/v/{..$address..}&amp;border=0&amp;enablejsapi=1&amp;playerapiid=ytplayer"/>
+         <param name="AllowScriptAccess" value="always"/>
+         <param name="AllowFullScreen" value="true"/>
+      </object>
+   </div>
+
+   <!-- div style="position:absolute; z-index:10000; top:00; left:0; overflow:hidden; width:10000px; height:10000px; -moz-opacity:0.01; opacity:0.01; filter:alpha(opacity=1); background-color:#ff0000">
+   </div -->
+
+   <script type="text/javascript">
+
+function getPlayer()
+{
+   return document.getElementById('movie_player');
+}
+
+function getStateName(state)
+{
+   switch(state)
+   {
+   case -2: return "Initialized";
+   case -1: return "Unstarted";
+   case 0: return "Ended";
+   case 1: return "Playing";
+   case 2: return "Paused";
+   case 3: return "Buffering";
+   case 5: return "VideoCued";
+   }
+   return "???";
+}
+
+function onPlayerStateChange(newState)
+{
+//   var el = document.getElementById('player_status');
+//   el.innerHTML = "state change: " + getStateName(newState);
+   external.state = newState;
+}
+
+function onPlayerError(error)
+{
+   external.error = error;
+}
+
+function onYouTubePlayerReady(playerId)
+{
+   external.state = -2;
+
+   var pl = getPlayer();
+   if (pl.playVideo === undefined)
+   {
+      alert("pl.playVideo() is undefined!");
+      return;
+   }
+
+//   var el = document.getElementById('status1');
+//   el.innerHTML = "onYouTubePlayerReady called";
+
+   pl.addEventListener("onStateChange", "onPlayerStateChange");
+   pl.addEventListener("onError", "onPlayerError");
+}
+
+function play()
+{
+   getPlayer().playVideo();
+}
+
+function pause()
+{
+   getPlayer().pauseVideo();
+}
+
+function stopVideo()
+{
+   getPlayer().stopVideo();
+}
+
+function clearVideo()
+{
+   getPlayer().clearVideo();
+}
+
+function getVideoBytesLoaded()
+{
+   return getPlayer().getVideoBytesLoaded();
+}
+
+function getVideoBytesTotal()
+{
+   return getPlayer().getVideoBytesTotal()
+}
+
+function mute()
+{
+   getPlayer().mute();
+}
+
+function unmute()
+{
+   getPlayer().unmute();
+}
+
+function isMuted()
+{
+   return getPlayer().isMuted();
+}
+
+function setVolume(volume)
+{
+try{
+   getPlayer().setVolume(volume);
+} catch(err) {}
+}
+
+function getVolume()
+{
+   return getPlayer().getVolume();
+}
+
+function seekTo(seconds, allowSeekAhead)
+{
+   getPlayer().seekTo(seconds, allowSeekAhead);
+}
+
+function getPlayerState()
+{
+   var pl = getPlayer();
+   if (pl.getPlayerState == undefined)
+      return -3;
+   return pl.getPlayerState();
+}
+
+function getCurrentTime()
+{
+   return getPlayer().getCurrentTime();
+}
+
+function getDuration()
+{
+   return getPlayer().getDuration();
+}
+
+function setSize(width, height)
+{
+//   getPlayer().setSize(width, height);
+//   var el = document.getElementById('clickprotect');
+//   el.style.width = width;
+//   el.style.height = height;
+
+   var el = document.getElementById('movie_player');
+   el.style.width = width;
+   el.style.height = height;
+}
+
+   </script>
+   </div>
+</body>
+</html>
