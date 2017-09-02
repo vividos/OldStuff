@@ -13,17 +13,18 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3736979A-27E0-4EB7-9D63-6FBA18377229}</ProjectGuid>
     <RootNamespace>MrCrash</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -32,14 +33,10 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Settings-Release.props" />
-    <Import Project="..\wtl91.props" />
-    <Import Project="..\boost.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Settings-Debug.props" />
-    <Import Project="..\wtl91.props" />
-    <Import Project="..\boost.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -80,18 +77,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\ulib\CommandLineParser.cpp" />
-    <ClCompile Include="..\ulib\DateTime.cpp" />
     <ClCompile Include="..\ulib\debug\CallStack.cpp" />
     <ClCompile Include="..\ulib\debug\DebugLoop.cpp" />
     <ClCompile Include="..\ulib\debug\DecoratedName.cpp" />
     <ClCompile Include="..\ulib\debug\ProcessMemory.cpp" />
     <ClCompile Include="..\ulib\debug\SymbolManager.cpp" />
     <ClCompile Include="..\ulib\debug\Toolhelp.cpp" />
-    <ClCompile Include="..\ulib\ISO8601Parser.cpp" />
-    <ClCompile Include="..\ulib\ProgramOptions.cpp" />
-    <ClCompile Include="..\ulib\stream\FileStream.cpp" />
-    <ClCompile Include="..\ulib\stream\TextStreamFilter.cpp" />
     <ClCompile Include="..\ulib\win32\VersionInfoResource.cpp" />
     <ClCompile Include="AppOptions.cpp" />
     <ClCompile Include="Debugger.cpp" />
@@ -108,24 +99,12 @@
     <ClCompile Include="..\ulib\xml\XmlWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\ulib\CommandLineParser.hpp" />
-    <ClInclude Include="..\ulib\DateTime.hpp" />
     <ClInclude Include="..\ulib\debug\CallStack.hpp" />
     <ClInclude Include="..\ulib\debug\DebugLoop.hpp" />
     <ClInclude Include="..\ulib\debug\DecoratedName.hpp" />
     <ClInclude Include="..\ulib\debug\ProcessMemory.hpp" />
     <ClInclude Include="..\ulib\debug\SymbolManager.hpp" />
     <ClInclude Include="..\ulib\debug\Toolhelp.hpp" />
-    <ClInclude Include="..\ulib\Exception.hpp" />
-    <ClInclude Include="..\ulib\ISO8601Parser.hpp" />
-    <ClInclude Include="..\ulib\ProgramOptions.hpp" />
-    <ClInclude Include="..\ulib\stream\FileStream.hpp" />
-    <ClInclude Include="..\ulib\stream\IStream.hpp" />
-    <ClInclude Include="..\ulib\stream\ITextStream.hpp" />
-    <ClInclude Include="..\ulib\stream\StreamException.hpp" />
-    <ClInclude Include="..\ulib\stream\TextFileStream.hpp" />
-    <ClInclude Include="..\ulib\stream\TextStreamFilter.hpp" />
-    <ClInclude Include="..\ulib\win32\ErrorMessage.hpp" />
     <ClInclude Include="..\ulib\win32\PrivilegeManager.hpp" />
     <ClInclude Include="..\ulib\win32\ProcessHandle.hpp" />
     <ClInclude Include="..\ulib\win32\ProcessInfo.hpp" />
@@ -153,7 +132,21 @@
   <ItemGroup>
     <ResourceCompile Include="MrCrash.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\packages\Vividos.UlibCpp.Static.4.0.1\build\native\Vividos.UlibCpp.Static.targets" Condition="Exists('..\..\packages\Vividos.UlibCpp.Static.4.0.1\build\native\Vividos.UlibCpp.Static.targets')" />
+    <Import Project="..\..\packages\wtl.9.1.1\build\native\wtl.targets" Condition="Exists('..\..\packages\wtl.9.1.1\build\native\wtl.targets')" />
+    <Import Project="..\..\packages\boost.1.65.0.0\build\native\boost.targets" Condition="Exists('..\..\packages\boost.1.65.0.0\build\native\boost.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Vividos.UlibCpp.Static.4.0.1\build\native\Vividos.UlibCpp.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Vividos.UlibCpp.Static.4.0.1\build\native\Vividos.UlibCpp.Static.targets'))" />
+    <Error Condition="!Exists('..\..\packages\wtl.9.1.1\build\native\wtl.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\wtl.9.1.1\build\native\wtl.targets'))" />
+    <Error Condition="!Exists('..\..\packages\boost.1.65.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\boost.1.65.0.0\build\native\boost.targets'))" />
+  </Target>
 </Project>

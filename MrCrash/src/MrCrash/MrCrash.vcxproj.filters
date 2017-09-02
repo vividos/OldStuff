@@ -25,9 +25,6 @@
     <Filter Include="Source Files\ulib files\win32 files">
       <UniqueIdentifier>{930c91cf-0839-484e-afe8-d0efdd034501}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ulib files\stream files">
-      <UniqueIdentifier>{f029344b-e881-49cf-a747-f1b4963cf59b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppOptions.cpp">
@@ -60,18 +57,6 @@
     <ClCompile Include="..\ulib\xml\XmlWriter.cpp">
       <Filter>Source Files\ulib files\xml files</Filter>
     </ClCompile>
-    <ClCompile Include="..\ulib\CommandLineParser.cpp">
-      <Filter>Source Files\ulib files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ulib\DateTime.cpp">
-      <Filter>Source Files\ulib files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ulib\ProgramOptions.cpp">
-      <Filter>Source Files\ulib files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ulib\ISO8601Parser.cpp">
-      <Filter>Source Files\ulib files</Filter>
-    </ClCompile>
     <ClCompile Include="..\ulib\win32\VersionInfoResource.cpp">
       <Filter>Source Files\ulib files\win32 files</Filter>
     </ClCompile>
@@ -92,12 +77,6 @@
     </ClCompile>
     <ClCompile Include="..\ulib\debug\Toolhelp.cpp">
       <Filter>Source Files\ulib files\debug files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ulib\stream\FileStream.cpp">
-      <Filter>Source Files\ulib files\stream files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ulib\stream\TextStreamFilter.cpp">
-      <Filter>Source Files\ulib files\stream files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,47 +149,11 @@
     <ClInclude Include="..\ulib\xml\XmlWriter.hpp">
       <Filter>Source Files\ulib files\xml files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ulib\CommandLineParser.hpp">
-      <Filter>Source Files\ulib files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\DateTime.hpp">
-      <Filter>Source Files\ulib files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\ProgramOptions.hpp">
-      <Filter>Source Files\ulib files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\Exception.hpp">
-      <Filter>Source Files\ulib files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\ISO8601Parser.hpp">
-      <Filter>Source Files\ulib files</Filter>
-    </ClInclude>
     <ClInclude Include="..\ulib\win32\ProcessHandle.hpp">
-      <Filter>Source Files\ulib files\win32 files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\win32\ErrorMessage.hpp">
       <Filter>Source Files\ulib files\win32 files</Filter>
     </ClInclude>
     <ClInclude Include="..\ulib\win32\VersionInfoResource.hpp">
       <Filter>Source Files\ulib files\win32 files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\stream\FileStream.hpp">
-      <Filter>Source Files\ulib files\stream files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\stream\IStream.hpp">
-      <Filter>Source Files\ulib files\stream files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\stream\ITextStream.hpp">
-      <Filter>Source Files\ulib files\stream files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\stream\StreamException.hpp">
-      <Filter>Source Files\ulib files\stream files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\stream\TextFileStream.hpp">
-      <Filter>Source Files\ulib files\stream files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\stream\TextStreamFilter.hpp">
-      <Filter>Source Files\ulib files\stream files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Resource Files</Filter>
@@ -225,5 +168,8 @@
     <ResourceCompile Include="MrCrash.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

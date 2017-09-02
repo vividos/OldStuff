@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MrCrash", "src\MrCrash\MrCrash.vcxproj", "{3736979A-27E0-4EB7-9D63-6FBA18377229}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CrashTestDummy", "src\CrashTestDummy\CrashTestDummy.vcxproj", "{F17D0216-50D0-4F23-9C2A-E5F3BD34A777}"

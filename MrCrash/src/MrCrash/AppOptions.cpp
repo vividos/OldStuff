@@ -17,9 +17,9 @@ AppOptions::AppOptions(LPCTSTR pszCommandLine)
 {
    ProgramOptions opt;
 
-   ProgramOptions::T_fnOptionHandlerNoArg fnOnParamInteractive =
+   ProgramOptions::T_fnOptionHandler fnOnParamInteractive =
       std::bind(&AppOptions::OnParamInteractive, this);
-   opt.RegisterOption(_T("i"), _T("interactive"), _T("Interactive mode (default)"), fnOnParamInteractive);
+   opt.RegisterOption(_T("i"), _T("interactive"), _T("Interactive mode (default)"), 0, fnOnParamInteractive);
 
    ProgramOptions::T_fnOptionHandlerSingleArg fnOnParamAttach =
       std::bind(&AppOptions::OnParamAttach, this, std::placeholders::_1);

@@ -48,7 +48,7 @@ SymbolManager::SymbolManager(HANDLE hProcess)
       {
          DWORD dwLastError = GetLastError(); dwLastError;
          ATLTRACE(_T("SymInitialize error 0x%08x: %s\n"),
-            dwLastError, Win32::ErrorMessage(dwLastError).Get());
+            dwLastError, Win32::ErrorMessage(dwLastError).ToString().GetString());
       }
       else
          ATLTRACE(_T("SymInitialize couldn't be started with fInvadeProcess, trying without\n"));
@@ -61,7 +61,7 @@ SymbolManager::~SymbolManager()
    {
       DWORD dwLastError = GetLastError(); dwLastError;
       ATLTRACE(_T("SymCleanup error 0x%08x: %s\n"),
-         dwLastError, Win32::ErrorMessage(dwLastError).Get());
+         dwLastError, Win32::ErrorMessage(dwLastError).ToString().GetString());
    }
 }
 
@@ -73,7 +73,7 @@ void SymbolManager::GetSymFromAddr(DWORD64 dwAddress, Symbol& symbol)
    {
       DWORD dwLastError = GetLastError(); dwLastError;
       ATLTRACE(_T("SymGetSymFromAddr64 error 0x%08x: %s\n"),
-         dwLastError, Win32::ErrorMessage(dwLastError).Get());
+         dwLastError, Win32::ErrorMessage(dwLastError).ToString().GetString());
    }
 }
 
@@ -85,7 +85,7 @@ void SymbolManager::GetLineFromAddr(DWORD64 dwAddress, SymLineInfo& lineInfo)
    {
       DWORD dwLastError = GetLastError(); dwLastError;
       ATLTRACE(_T("SymGetLineFromAddr64 error 0x%08x: %s\n"),
-         dwLastError, Win32::ErrorMessage(dwLastError).Get());
+         dwLastError, Win32::ErrorMessage(dwLastError).ToString().GetString());
    }
 }
 
@@ -97,7 +97,7 @@ void SymbolManager::GetModuleInfo(DWORD64 dwAddress, SymModuleInfo& moduleInfo)
    {
       DWORD dwLastError = GetLastError(); dwLastError;
       ATLTRACE(_T("SymGetModuleInfo64 error 0x%08x: %s\n"),
-         dwLastError, Win32::ErrorMessage(dwLastError).Get());
+         dwLastError, Win32::ErrorMessage(dwLastError).ToString().GetString());
    }
    else
       _asm nop;

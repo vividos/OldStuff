@@ -24,7 +24,7 @@ bool PrivilegeManager::Get(LPCTSTR pszPrivilegeName) const
       &luid ) )        // receives LUID of privilege
    {
       DWORD dwError = GetLastError(); dwError;
-      ATLTRACE(_T("LookupPrivilegeValue error: %u (%s)\n"), dwError, Win32::ErrorMessage(dwError).Get());
+      ATLTRACE(_T("LookupPrivilegeValue error: %u (%s)\n"), dwError, Win32::ErrorMessage(dwError).ToString().GetString());
       return false;
    }
 
@@ -99,8 +99,8 @@ bool PrivilegeManager::Set(LPCTSTR pszPrivilege, bool bEnablePrivilege)
       &luid ) )        // receives LUID of privilege
    {
       DWORD dwError = GetLastError();
-      CString cszText = Win32::ErrorMessage(dwError).Get();
-      ATLTRACE(_T("LookupPrivilegeValue error: %u (%s)\n"), dwError, cszText);
+      CString cszText = Win32::ErrorMessage(dwError).ToString();
+      ATLTRACE(_T("LookupPrivilegeValue error: %u (%s)\n"), dwError, cszText.GetString());
    }
 
    TOKEN_PRIVILEGES tp;
@@ -119,8 +119,8 @@ bool PrivilegeManager::Set(LPCTSTR pszPrivilege, bool bEnablePrivilege)
       (PDWORD) NULL) )
    {
       DWORD dwError = GetLastError();
-      CString cszText = Win32::ErrorMessage(dwError).Get();
-      ATLTRACE(_T("AdjustTokenPrivileges error: %u (%s)\n"), dwError, cszText);
+      CString cszText = Win32::ErrorMessage(dwError).ToString();
+      ATLTRACE(_T("AdjustTokenPrivileges error: %u (%s)\n"), dwError, cszText.GetString());
       return false;
    }
 

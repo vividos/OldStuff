@@ -223,13 +223,13 @@ void CallStack::AddStackFrame(HANDLE hProcess, const STACKFRAME64& stackFrame, D
 
    ATLTRACE(_T("%s(%u): frame %u: ip=%08llx bp=%08llx sp=%08llx name=%s + 0x%llx\n")
       _T("   module=%s, image=%s loadedImage=%s pdb=%s\n"),
-      lineInfo.GetFilename(),
+      lineInfo.GetFilename().GetString(),
       lineInfo.GetLineNumber(),
       m_veCallStack.size(),
       stackFrame.AddrPC.Offset,
       stackFrame.AddrFrame.Offset,
       stackFrame.AddrStack.Offset,
-      symbol.GetName(),
+      symbol.GetName().GetString(),
       symbol.GetDisplacement(),
 
       moduleInfo.ModuleName,

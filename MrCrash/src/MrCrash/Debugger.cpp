@@ -97,7 +97,7 @@ void Debugger::Attach(DWORD dwProcessId, bool bAlwaysWriteReport)
    }
    else
    {
-      ATLTRACE(_T("Attach failed: %s"), Win32::ErrorMessage().Get());
+      ATLTRACE(_T("Attach failed: %s"), Win32::ErrorMessage().ToString().GetString());
    }
 
    if (bAlwaysWriteReport && m_vecResults.empty())
@@ -286,7 +286,7 @@ void Debugger::OnCreateThread(DWORD dwProcessId, DWORD dwThreadId, LPVOID pStart
    // output event
    CString cszText;
    cszText.Format(_T("DEBUG: CreateThread, pid=%08x tid=%08x startproc=%p function=[%s]"),
-      dwProcessId, dwThreadId, pStartProc, cszFunctionName);
+      dwProcessId, dwThreadId, pStartProc, cszFunctionName.GetString());
 
    RecordEvent(cszText);
 }
@@ -473,7 +473,7 @@ void Debugger::OnLoadDll(DWORD dwProcessId, DWORD dwThreadId, LPVOID pBaseAddres
 
    CString cszText;
    cszText.Format(_T("DEBUG: LoadDll, pid=%08x tid=%08x dllbase=%p name=%s version=%s"),
-      dwProcessId, dwThreadId, pBaseAddress, pszDllName, mi.FileVersion());
+      dwProcessId, dwThreadId, pBaseAddress, pszDllName, mi.FileVersion().GetString());
    RecordEvent(cszText);
 }
 
@@ -512,7 +512,7 @@ void Debugger::OnUnloadDll(DWORD dwProcessId, DWORD dwThreadId, LPVOID pBaseAddr
 
    CString cszText;
    cszText.Format(_T("DEBUG: UnloadDll, pid=%08x tid=%08x dllbase=%p name=%s"),
-      dwProcessId, dwThreadId, pBaseAddress, mi.ModuleName(), mi.FileVersion());
+      dwProcessId, dwThreadId, pBaseAddress, mi.ModuleName().GetString(), mi.FileVersion().GetString());
    RecordEvent(cszText);
 }
 
@@ -527,7 +527,7 @@ void Debugger::OnOutputDebugString(DWORD dwProcessId, DWORD dwThreadId, LPCTSTR 
 
    CString cszText;
    cszText.Format(_T("DEBUG: OutputDebugString, pid=%08x tid=%08x text=[%s]"),
-      dwProcessId, dwThreadId, cszOutputText);
+      dwProcessId, dwThreadId, cszOutputText.GetString());
    RecordEvent(cszText);
 }
 
@@ -556,7 +556,7 @@ void Debugger::OnException(DWORD dwProcessId, DWORD dwThreadId, EXCEPTION_DEBUG_
          for (size_t i=0; i<callStack.GetSize(); i++)
          {
             const Debug::FunctionCall& fc = callStack.GetFunctionCall(i);
-            ATLTRACE(_T("frame %u: name = %s\n"), i, fc.GetFunctionName());
+            ATLTRACE(_T("frame %u: name = %s\n"), i, fc.GetFunctionName().GetString());
             fc;
          }
       }
@@ -684,7 +684,7 @@ void Debugger::WriteCrashReport(boost::optional<const Debug::ExceptionInfo&> opt
 
    entry.m_cszTitle.Format(
       optExceptionInfo.is_initialized() ? _T("Crash Report (%s)") : _T("Application Report (%s)"),
-      DateTime::Now().Format(_T("%Y-%m-%d %H:%M:%S")));
+      DateTime::Now().Format(_T("%Y-%m-%d %H:%M:%S")).GetString());
 
    entry.m_cszFilename = cszFilename;
    m_vecResults.push_back(entry);
@@ -725,7 +725,7 @@ void Debugger::WriteMiniDump(DWORD dwProcessId, DWORD dwThreadId)
    // add to results list
    DebuggerResultEntry entry;
    entry.m_cszTitle.Format(_T("Minidump (%s)"),
-      DateTime::Now().Format(_T("%Y-%m-%d %H:%M:%S")));
+      DateTime::Now().Format(_T("%Y-%m-%d %H:%M:%S")).GetString());
    entry.m_cszFilename = cszFilename;
    m_vecResults.push_back(entry);
 }
@@ -746,10 +746,10 @@ CString Debugger::GenerateTempFilename(DWORD dwProcessId, const CString& cszFile
    do
    {
       cszFilename.Format(_T("%s%s-%08x-%s-%04u"),
-         cszTempPath,
-         cszFilenamePart,
+         cszTempPath.GetString(),
+         cszFilenamePart.GetString(),
          dwProcessId,
-         DateTime::Now().Format(_T("%Y%m%d-%H%M%S")),
+         DateTime::Now().Format(_T("%Y%m%d-%H%M%S")).GetString(),
          uiUnique++);
    } while(::GetFileAttributes(cszFilename) != INVALID_FILE_ATTRIBUTES);
 

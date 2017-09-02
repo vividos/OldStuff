@@ -166,7 +166,7 @@ void DebugInfoXmlWriter::WriteFunctionCall(size_t iIndex, const Debug::FunctionC
    if (functionCall.SourceFilename().IsEmpty() && functionCall.SourceLineNumber() == 0)
       cszText = _T("N/A");
    else
-      cszText.Format(_T("%s(%u)"), functionCall.SourceFilename(), functionCall.SourceLineNumber());
+      cszText.Format(_T("%s(%u)"), functionCall.SourceFilename().GetString(), functionCall.SourceLineNumber());
    m_spWriter->WriteAttributeString(_T("sourcecode"), cszText);
 
    //m_spWriter->WriteStartElementEnd();

@@ -57,7 +57,7 @@ void DebugLoop::Run()
          OnCreateProcess();
          break;
 
-      case EXIT_THREAD_DEBUG_EVENT: 
+      case EXIT_THREAD_DEBUG_EVENT:
          // Display the thread's exit code.
          OnExitThread();
          break;
@@ -159,7 +159,7 @@ void DebugLoop::OnCreateProcess()
    {
       DWORD dwLastError = GetLastError(); dwLastError;
       ATLTRACE(_T("SymInitialize error 0x%08x: %s\n"),
-         dwLastError, Win32::ErrorMessage(dwLastError).Get());
+         dwLastError, Win32::ErrorMessage(dwLastError).ToString().GetString());
    }
 
    CString cszImageName;
@@ -269,7 +269,7 @@ void DebugLoop::OnCreateProcess()
       DWORD dwLastError = GetLastError();
       if (ERROR_SUCCESS != dwLastError)
          ATLTRACE(_T("SymLoadModule64 error 0x%08x: %s\n"),
-            dwLastError, Win32::ErrorMessage(dwLastError).Get());
+            dwLastError, Win32::ErrorMessage(dwLastError).ToString().GetString());
    }
 
    std::set<IDebugEventHandler*>::iterator iter = m_setEventHandler.begin(), stop = m_setEventHandler.end();
@@ -351,7 +351,7 @@ void DebugLoop::OnLoadDll()
       DWORD dwLastError = GetLastError();
       if (ERROR_SUCCESS != dwLastError)
          ATLTRACE(_T("SymLoadModule64 error 0x%08x: %s\n"),
-            dwLastError, Win32::ErrorMessage(dwLastError).Get());
+            dwLastError, Win32::ErrorMessage(dwLastError).ToString().GetString());
    }
    CloseHandle(hProcess);
 

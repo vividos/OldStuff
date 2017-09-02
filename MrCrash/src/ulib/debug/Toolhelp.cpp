@@ -25,7 +25,7 @@ Snapshot::Snapshot(DWORD dwFlags, DWORD th32ProcessID)
       // invalid handle value; it is checked later in the functions
       DWORD dwLastError = GetLastError(); dwLastError;
       ATLTRACE(_T("CreateToolhelp32Snapshot error 0x%08x: %s\n"),
-         dwLastError, Win32::ErrorMessage(dwLastError).Get());
+         dwLastError, Win32::ErrorMessage(dwLastError).ToString().GetString());
    }
    else
       m_spSnapshot.reset(hSnapshot,
