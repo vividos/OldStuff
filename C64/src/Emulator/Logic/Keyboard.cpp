@@ -1,6 +1,6 @@
 //
 // Emulator - Simple C64 emulator
-// Copyright (C) 2003-2016 Michael Fink
+// Copyright (C) 2003-2017 Michael Fink
 //
 /// \file Keyboard.cpp C64 keyboard implementation
 //
@@ -8,7 +8,7 @@
 // includes
 #include "StdAfx.h"
 #include "Keyboard.hpp"
-#include <algorithm>
+#include <memory>
 
 using C64::Keyboard;
 

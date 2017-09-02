@@ -8,6 +8,7 @@
 // includes
 #include "stdafx.h"
 #include "PalettedSurface.hpp"
+#include <memory>
 
 PalettedSurface::PalettedSurface(unsigned int xres, unsigned int yres, unsigned int bitsPerPixel_)
    :width(xres),

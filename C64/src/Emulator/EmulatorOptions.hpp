@@ -1,13 +1,13 @@
 //
 // c64emu - C64 Emulator using SDL
-// Copyright (C) 2006-2016 Michael Fink
+// Copyright (C) 2006-2017 Michael Fink
 //
 /// \file EmulatorOptions.hpp Emulator command line options
 //
 #pragma once
 
 // includes
-#include "ProgramOptions.hpp"
+#include <ulib/ProgramOptions.hpp>
 
 /// options for command line application
 class EmulatorOptions : public ProgramOptions

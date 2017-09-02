@@ -1,12 +1,12 @@
 //
 // Emulator - Simple C64 emulator
-// Copyright (C) 2003-2016 Michael Fink
+// Copyright (C) 2003-2017 Michael Fink
 //
 /// \file Logic\stdafx.h Precompiled header support
 //
 #pragma once
 
 // includes
-#include "Atl.hpp"
+#include <ulib/config/Atl.hpp>
 #include <SDL.h>
 #include "Common.hpp"

@@ -15,7 +15,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace UnitTest
 {
    /// test path; adjust this to the unzipped test suite zip contents
-   LPCTSTR c_pszTestPath = _T("D:\\Projekte\\\OldStuff\\C64\\src\\Emulator\\UnitTest\\tsuit214");
+   LPCTSTR c_pszTestPath = _T("D:\\Projekte\\OldStuff\\C64\\src\\Emulator\\UnitTest\\tsuit214");
 
 #define STRINGIFY(x) #x
 
