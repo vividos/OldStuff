@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -14,17 +14,18 @@
     <ProjectGuid>{AC73C289-A98C-4640-921E-7C8DC8B40C02}</ProjectGuid>
     <RootNamespace>ExifShellExt</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -32,16 +33,10 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\atl71-x86.props" />
-    <Import Project="..\wtl81.props" />
-    <Import Project="..\boost.props" />
     <Import Project="..\Settings-Release.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\atl71-x86.props" />
-    <Import Project="..\wtl81.props" />
-    <Import Project="..\boost.props" />
     <Import Project="..\Settings-Debug.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -51,7 +46,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;EXIFSHELLEXT_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -67,6 +65,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;EXIFSHELLEXT_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <AdditionalDependencies>gdi32.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -74,7 +73,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\ulib\stream\FileStream.cpp" />
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="ExifRewriter.cpp" />
     <ClCompile Include="JFIFReader.cpp" />
@@ -101,12 +99,7 @@
     <Midl Include="ExifShellExt.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\ulib\Exception.hpp" />
-    <ClInclude Include="..\ulib\stream\EndianAwareFilter.hpp" />
-    <ClInclude Include="..\ulib\stream\FileStream.hpp" />
-    <ClInclude Include="..\ulib\stream\IStream.hpp" />
-    <ClInclude Include="..\ulib\stream\StreamException.hpp" />
-    <ClInclude Include="..\ulib\win32\Clipboard.hpp" />
+    <ClInclude Include="Clipboard.hpp" />
     <ClInclude Include="ExifReader.hpp" />
     <ClInclude Include="ExifRewriter.hpp" />
     <ClInclude Include="JFIFReader.hpp" />
@@ -119,11 +112,23 @@
   <ItemGroup>
     <None Include="ExifShellExt.def" />
     <None Include="ExifShellExt.rgs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ExifShellExt.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\packages\Vividos.UlibCpp.Static.4.0.1\build\native\Vividos.UlibCpp.Static.targets" Condition="Exists('..\..\packages\Vividos.UlibCpp.Static.4.0.1\build\native\Vividos.UlibCpp.Static.targets')" />
+    <Import Project="..\..\packages\boost.1.65.0.0\build\native\boost.targets" Condition="Exists('..\..\packages\boost.1.65.0.0\build\native\boost.targets')" />
+    <Import Project="..\..\packages\wtl.9.1.1\build\native\wtl.targets" Condition="Exists('..\..\packages\wtl.9.1.1\build\native\wtl.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Vividos.UlibCpp.Static.4.0.1\build\native\Vividos.UlibCpp.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Vividos.UlibCpp.Static.4.0.1\build\native\Vividos.UlibCpp.Static.targets'))" />
+    <Error Condition="!Exists('..\..\packages\boost.1.65.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\boost.1.65.0.0\build\native\boost.targets'))" />
+    <Error Condition="!Exists('..\..\packages\wtl.9.1.1\build\native\wtl.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\wtl.9.1.1\build\native\wtl.targets'))" />
+  </Target>
 </Project>

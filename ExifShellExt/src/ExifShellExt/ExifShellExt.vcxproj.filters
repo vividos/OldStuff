@@ -16,9 +16,6 @@
     <Filter Include="Generated Files">
       <UniqueIdentifier>{b499f849-641e-4b74-8462-cd663051d580}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ulib Files">
-      <UniqueIdentifier>{eb66a642-817c-46b0-8b3a-3c3cd5be285c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JFIFReader.cpp">
@@ -48,9 +45,6 @@
     <ClCompile Include="ExifRewriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\ulib\stream\FileStream.cpp">
-      <Filter>ulib Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="ExifShellExt.idl">
@@ -76,28 +70,13 @@
     <ClInclude Include="ExifReader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ulib\stream\EndianAwareFilter.hpp">
-      <Filter>ulib Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\stream\FileStream.hpp">
-      <Filter>ulib Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\stream\IStream.hpp">
-      <Filter>ulib Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\stream\StreamException.hpp">
-      <Filter>ulib Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\win32\Clipboard.hpp">
-      <Filter>ulib Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\Exception.hpp">
-      <Filter>ulib Files</Filter>
-    </ClInclude>
     <ClInclude Include="JFIFRewriter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="JFIFReader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Clipboard.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -108,6 +87,7 @@
     <None Include="ExifShellExt.rgs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ExifShellExt.rc">

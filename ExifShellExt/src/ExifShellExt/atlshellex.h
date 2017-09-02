@@ -134,10 +134,7 @@ protected:
 
 	static bool WinNT4(void)
 	{
-		OSVERSIONINFO osInfo;
-		osInfo.dwOSVersionInfoSize = sizeof(osInfo);
-		::GetVersionEx(&osInfo);
-		return (osInfo.dwPlatformId >= 2 && osInfo.dwMajorVersion >= 4);
+		return true;
 	}
 
 // Class members

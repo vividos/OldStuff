@@ -1,31 +1,17 @@
 //
 // ExifShellExt - Exif data shell extension
-// Copyright (C) 2008 Michael Fink
+// Copyright (C) 2008,2017 Michael Fink
 //
 /// \file stdafx.h Precompiled header support
 //
 #pragma once
 
-#define WINVER _WIN32_WINNT_WINXP
+#include <SDKDDKVer.h>
 
-// exclude rarely-used stuff from Windows headers
-#define WIN32_LEAN_AND_MEAN
-#define VC_EXTRALEAN
+// temporary fix: don't include atlribbon.h from WTL 9.1, the code is not compatible with Visual Studio 2017
+#define __ATLRIBBON_H__
 
-// no min-max macors, we use std::min / std::max instead
-#define NOMINMAX
-
-// ATL includes
-#include <atlbase.h>
-#include <atlstr.h>
-#define _WTL_NO_CSTRING // don't use WTL CString
-#include <atltypes.h>
-#include <atlwin.h>
-#include <atlcom.h>
-
-// WTL includes
-#include <atlapp.h>
-#include <atlgdi.h>
+#include <ulib/config/Wtl.hpp>
 
 // Win32 includes
 #include <shellapi.h>

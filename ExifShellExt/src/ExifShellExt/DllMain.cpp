@@ -13,7 +13,7 @@
 #include "ExifShellExt_i.c"
 #include "ExifShellExtension.hpp"
 
-CComModule _Module;
+CAppModule _Module;
 
 BEGIN_OBJECT_MAP(ObjectMap)
 OBJECT_ENTRY(CLSID_ExifShellExtension, ExifShellExtension)
@@ -54,16 +54,15 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 
 STDAPI DllRegisterServer()
 {
-   // If we're on NT, add ourselves to the list of approved shell extensions.
+   // Add ourselves to the list of approved shell extensions.
 
    // Note that you should *NEVER* use the overload of CRegKey::SetValue with
-   // 4 parameters.  It lets you set a value in one call, without having to 
+   // 4 parameters.  It lets you set a value in one call, without having to
    // call CRegKey::Open() first.  However, that version of SetValue() has a
    // bug in that it requests KEY_ALL_ACCESS to the key.  That will fail if the
    // user is not an administrator.  (The code should request KEY_WRITE, which
    // is all that's necessary.)
 
-   if (0 == (GetVersion() & 0x80000000UL))
    {
       CRegKey reg;
       LONG    lRet;
@@ -90,11 +89,10 @@ STDAPI DllRegisterServer()
 
 STDAPI DllUnregisterServer()
 {
-   // If we're on NT, remove ourselves from the list of approved shell extensions.
+   // Remove ourselves from the list of approved shell extensions.
    // Note that if we get an error along the way, I don't bail out since I want
    // to do the normal ATL unregistration stuff too.
 
-   if (0 == (GetVersion() & 0x80000000UL))
    {
       CRegKey reg;
       LONG    lRet;

@@ -10,7 +10,7 @@
 #include "resource.h"
 #include "ExifShellExt_h.h"
 #include "ExifShellExtension.hpp"
-#include <ulib/win32/Clipboard.hpp>
+#include "Clipboard.hpp"
 #include <ulib/stream/FileStream.hpp>
 #include "ExifReader.hpp"
 #include "ExifRewriter.hpp"
