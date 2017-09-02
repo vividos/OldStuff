@@ -8,7 +8,7 @@ for 2D games in general.
 
 ## Source Code ##
 
-Just open the C64.sln with Microsoft Visual Studio 2015 and check out the
+Just open the C64.sln with Microsoft Visual Studio and check out the
 projects. There are also some experimental Android projects that use the
 Android C++ project templates. Check out C64.Android.sln.
 
@@ -78,6 +78,10 @@ mode the emulator window gets bigger. The VIC state is visualized with some
 bars in the middle of the screen, right to the C64 screen. And the rest of the
 screen, on the right side, visualizes CPU activity.
 
+#### Visualisation ####
+
+![VIC and CPU visualisation](images/c64_vic_cpu_map.png)
+
 #### VIC visualisation ####
 
 The first column of the visualisations contains a white line when a VIC
@@ -103,7 +107,8 @@ are visible in the respective raster lines.
 #### CPU visualisation ####
 
 The CPU visualisation shows a CPU performance map for the whole C64 memory.
-The following colors are used:
+The performance map after the last raster line is reached, and so visualizes
+what happens during a frame. The following colors are used:
 
 - black: memory location wasn't used
 - green: memory location was read from
