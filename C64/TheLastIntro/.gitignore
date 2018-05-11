@@ -1,0 +1,8 @@
+# TheLastIntro specific
+Standalone/intro.d64
+Standalone/intro-standalone.o
+Standalone/intro.prg
+Standalone/scrolltext.o
+
+tools/cc65/
+tools/winVICE/

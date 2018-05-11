@@ -4,7 +4,12 @@
 
 This folder contains several C64 related projects. Among them are an emulator
 for the 6510 processor, a C64 style intro that uses SDL2 and some useful code
-for 2D games in general.
+for 2D games in general. And there's an actual C64 intro as well!
+
+## The Last Intro ##
+
+The folder [TheLastIntro](TheLastIntro/Readme.md "The Last Intro Readme") contains the (fist and) last intro that I create.
+Just follow the link and check it out!
 
 ## Source Code ##
 
