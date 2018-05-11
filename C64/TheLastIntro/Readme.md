@@ -39,5 +39,7 @@ packages:
 - WinVICE emulator: place the latest version of winVice into the folder
   tools/winVICE, the c1541.exe should be in tools/winVICE/c1541.exe
 
+Note that the "pucrunch" folder already contains the needed pucrunch.exe.
+
 The Build.cmd script in every folder compiles and links the intro sourcecode
 and the payload into a .d64 disk image file.
