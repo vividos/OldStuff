@@ -43,3 +43,18 @@ Note that the "pucrunch" folder already contains the needed pucrunch.exe.
 
 The Build.cmd script in every folder compiles and links the intro sourcecode
 and the payload into a .d64 disk image file.
+
+## Intro art
+
+The intro logo was generated with a "Retro C64 logo creator" web page, and not
+actually with a C64 drawing program. The resulting PNG image looks like this:
+
+![logo_320_200.png](Logo 320x200)
+
+The logo was converted to Koala format (file logo_320_200.kla) using
+Timanthes_3_beta_v2, and then it was imported into Amica paint:
+
+![logo-amica-paint.png](Logo in Amica Paint)
+
+The logo was linearized, so that in each 8x8 char, the same color bit schemes
+are used. With a tool called ""
