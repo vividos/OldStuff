@@ -367,58 +367,16 @@ end_work_stages:
 	; has moved, copies logo to screen again.
 update_logo_scroll_x:
 
-	ldx intro_stage
-	beq update_logo_scroll_x_stage0
-	dex
-	beq update_logo_scroll_x_stage1
+	lda logo_scroll_x_char_value
+	sta last_logo_scroll_x_char_value
 
-update_logo_scroll_x_stage2:
-	; stage 2: add last used x scroll position, which isn't
-	; updated anymore, and add the stage counter to it
-	lda stage_counter
-	eor #$7f
-	asl
-
-	ldx logo_scroll_current_x_index
-	clc
-	adc logo_scroll_x_table, x
-	jmp update_logo_scroll_x_calc_values
-
-update_logo_scroll_x_stage0:
-	; stage 0: stage counter goes from 127 to 0; use it to
-	; scroll in the logo from the left
-	lda stage_counter
-	eor #$7f
-	asl
-	bpl update_logo_scroll_x_calc_values
-
-update_logo_scroll_x_stage1:
-	; increase index into x table
-	inc logo_scroll_current_x_index
-	lda logo_scroll_current_x_index
-	and #$7f
-	sta logo_scroll_current_x_index
-
-	; get new value from table
-	tax
-	lda logo_scroll_x_table,x
+	jsr update_logo_scroll_x_values
 
 update_logo_scroll_x_calc_values:
-	tay       ; save value in y
-	; calculate soft scroll x value
-	and #$07
-	eor #$07
-	sta logo_scroll_x_softscroll_value
-
-	; calc value of whole characters to move
-	tya
-	lsr      ; divide by 8
-	lsr
-	lsr
 
 	; check if it has changed
-	cmp logo_scroll_x_value
-	sta logo_scroll_x_value		; and store; doesn't modify the Z flag
+	lda logo_scroll_x_char_value
+	cmp last_logo_scroll_x_char_value
 
 	beq logo_scroll_x_no_update	; value hasn't changed
 
@@ -427,7 +385,7 @@ update_logo_scroll_x_calc_values:
 	; no char has to be copied
 	lda #0
 	sec
-	sbc logo_scroll_x_value
+	sbc logo_scroll_x_char_value
 	tax
 
 	; y contains the screen column, 0 to 39
@@ -473,6 +431,79 @@ logo_copy_loop_end:
 	bmi logo_char_loop
 
 logo_scroll_x_no_update:
+	rts
+
+; -------------------------------------------------------------
+
+	; routine: updates logo_scroll_x_char_value and
+	; logo_scroll_x_softscroll_value, depending on current
+	; stage
+update_logo_scroll_x_values:	
+
+	ldx intro_stage
+	beq update_logo_scroll_x_stage0
+	dex
+	beq update_logo_scroll_x_stage1
+
+update_logo_scroll_x_stage2:
+	; stage 2: add last used x scroll position, which isn't
+	; updated anymore, and add the stage counter to it
+	lda stage_counter
+	eor #$7f                ; calc (127 - stage_counter)
+	lsr						; / 2, range is now #$00..#$3f
+	tay		; store in y
+
+	; get last scroll_x value
+	ldx logo_scroll_current_x_index
+	lda logo_scroll_x_table, x
+	sta logo_scroll_x_char_value
+
+	; add scroll value from y reg
+	tya
+	clc
+	adc logo_scroll_x_char_value
+	sta logo_scroll_x_char_value
+	rts
+
+update_logo_scroll_x_stage0:
+	; stage 0: stage counter goes from 127 to 0; use it to
+	; scroll in the logo from the left
+	; scroll value starts at -#$20 and ends at #$05, where sinus value starts
+	lda stage_counter
+	eor #$7f			; calc 127 - stage_counter
+	tay
+	lsr					; / 2, now range #$00..#$3f
+	sec
+	sbc #$3a			; subtract, now range -#$3a..#$05
+	
+	sta logo_scroll_x_char_value
+	
+	rts
+
+update_logo_scroll_x_stage1:
+	; increase index into x table, wrapping around after 128 values
+	inc logo_scroll_current_x_index
+	lda logo_scroll_current_x_index
+	and #$7f
+	sta logo_scroll_current_x_index
+	
+	; get new value from table
+	tax
+	lda logo_scroll_x_table,x
+	tay       ; save value in y
+	
+	; calculate soft scroll x value
+	and #$07
+	eor #$07
+	sta logo_scroll_x_softscroll_value
+
+	; calc value of whole characters to move
+	tya		 ; restory value
+	lsr      ; divide by 8
+	lsr
+	lsr
+	
+	sta logo_scroll_x_char_value
 	rts
 
 ; -------------------------------------------------------------
@@ -1108,14 +1139,16 @@ intro_stage:
 	.byte 0
 
 stage_counter:
-	.byte 127
+	.byte 127   	; initial values for stage 0
 
 fld_num_lines:
-	.byte 0   	; number of lines to move down in FLD effect
+	.byte $1f 		; number of lines to move down in FLD effect
 
-logo_scroll_x_value:
+logo_scroll_x_char_value:	; number of chars to scroll; may be negative
 	.byte 0
 logo_scroll_x_softscroll_value:
+	.byte 0
+last_logo_scroll_x_char_value:
 	.byte 0
 
 scroll_speed:
