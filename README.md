@@ -22,6 +22,6 @@ ExifShellExt is an Explorer shell extension that offers Explorer context menu en
 
 PartyVideoDJ is a YouTube crossfading app designed to play music at parties.
 
-## [HotDir](Hotdir/Readme.md "HotDir") ##
+## [HotDir](HotDir/Readme.md "HotDir") ##
 
 HotDir is a colored directory info viewer, much like an improved DOS ´dir´ command.
