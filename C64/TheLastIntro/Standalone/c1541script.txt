@@ -1,3 +1,3 @@
-format c64intro,42 d64 intro.d64
-attach intro.d64
-write intro-pucrunch.prg "intro+vividos"
+format c64intro,42 d64 intro-vividos.d64
+attach intro-vividos.d64
+write intro-standalone-pucrunch.prg "intro+vividos"
