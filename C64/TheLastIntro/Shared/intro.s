@@ -290,12 +290,6 @@ static_text_char_loop:
 	lda #>scroll_text
 	sta SCROLL_POS + 1
 
-	; set first character
-	ldy #$00
-	lda (SCROLL_POS),y
-	and #$3f
-	sta $0400 + 40 * SCREEN_SCROLL_LINE + 39
-
 	; prepare color RAM
 	ldy #39
 	lda #$00
@@ -509,10 +503,9 @@ update_logo_scroll_x_stage1:
 ; -------------------------------------------------------------
 
 	; routine: updates scroll Y position of logo
-	; in stage 0 and 2, the logo is scrolled in from the left,
-	; or scrolled out to the right, and no Y position change
-	; occurs; in stage 1, the logo is moved according to the Y
-	; table
+	; in stage 0, the logo is scrolled in from the left, and no
+	; Y position change occurs; in stage 1 and 2, the logo is
+	; moved according to the Y table
 update_logo_scroll_y:
 
 	ldx intro_stage
@@ -521,13 +514,13 @@ update_logo_scroll_y:
 
 	; stage 1
 	; calc next number of FLD lines
-	inc logo_scroll_current_y
-	lda logo_scroll_current_y
+	inc logo_scroll_current_y_index
+	lda logo_scroll_current_y_index
 	and #$7f
-	sta logo_scroll_current_y
+	sta logo_scroll_current_y_index
 
 	; copy over to fld_num_lines
-	ldx logo_scroll_current_y
+	ldx logo_scroll_current_y_index
 	lda logo_scroll_y_table,x
 	sta fld_num_lines
 
@@ -576,7 +569,7 @@ update_static_text_stage0:
 	lsr
 	lsr
 	lsr
-	lsr
+	lsr			; now range #$00..#$1f
 	tay
 	lda #$00
 update_static_text_stage0_loop:
@@ -811,6 +804,14 @@ scroll_nowait:
 	; sub routine; updates scroll_x, and scroll_pos when a new
 	; character is needed. the scroll speed is dynamic.
 update_scroll_pos:
+
+	; only scroll in stage 1
+	ldx intro_stage
+	dex
+	bpl update_scroll_pos_stage1_and_2
+	rts
+
+update_scroll_pos_stage1_and_2:
 	; update scroll_x, scroll text when necessary
 	lda scroll_x
 	clc
@@ -1197,7 +1198,7 @@ start_game:
 logo_scroll_current_x_index:
 	.byte 0
 
-logo_scroll_current_y:
+logo_scroll_current_y_index:
 	.byte 0
 charset_rest:
 	.incbin "charset.bin", 0, 16
@@ -1205,4 +1206,4 @@ charset_rest:
 	; scroll text must be the last symbol in the file; the linker puts
 	; the scroll text next to this symbol
 scroll_text:
-;	.byte 0
+	.byte $20
