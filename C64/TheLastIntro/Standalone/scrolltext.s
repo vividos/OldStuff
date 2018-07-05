@@ -17,6 +17,6 @@ scroll_text:
 	.byte "hard to do. guess what - they're not, if you have the infos about the effects, which were "
 	.byte "not available at the time when i was first coding in assembler on the c64. "
 	.byte "this intro features some raster bars, this scroller, and of course a wobbling logo. "
-;	.byte "music credits are: "
+	.byte "credits: intro written by vividos; the music piece is 'blizzard' by JCH.    "	
 	.byte "press space to return to c64 basic...   "
 	.byte 0
