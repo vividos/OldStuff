@@ -346,6 +346,7 @@ no_next_stage:
 
 	; update text scroller
 	jsr update_scroll_pos
+	jsr update_scroll_rasterbar
 
 end_work_stages:
 
@@ -865,7 +866,7 @@ scroll_nowait:
 	; character is needed. the scroll speed is dynamic.
 update_scroll_pos:
 
-	; only scroll in stage 1
+	; only scroll in stage 1 and 2
 	ldx intro_stage
 	dex
 	bpl update_scroll_pos_stage1_and_2
@@ -930,24 +931,38 @@ scroll_get_char:
 no_scroller_reset:
 	; store as next character
 	sta $0400 + 40 * SCREEN_SCROLL_LINE + 39
+	rts
+	
+; -------------------------------------------------------------
 
+	; sub routine; updates scroll raster bar.
+
+update_scroll_rasterbar:
 	lda intro_stage
 	cmp #$02
-	bne update_scroll_text_no_fadeout
+	bne update_scroll_rasterbar_done
 
-	; stage 2: fade out scroll text by overwriting color RAM
+	; stage 2: fade out scroll by clearing scroll rasterbar colors
 	lda stage_counter
-	eor #$7f
+	cmp #$40
+	bmi update_scroll_rasterbar_done
+	eor #$7f	; range now #$00..#$3f
 	lsr
+	lsr			; range now #$00..#$0f
 	tay
+	lda #$00
+	sta rasterbar_scroll,y
 
-	lda #$01    ; color white
-update_scroll_text_color_stage2_loop:
-	sta $d800 + 40 * SCREEN_SCROLL_LINE, y
-	dey
-	bpl update_scroll_text_color_stage2_loop
-
-update_scroll_text_no_fadeout:
+	sty update_scroll_sbc+1
+	lda #rasterbar_scroll_end - rasterbar_scroll - 1
+	sec
+update_scroll_sbc:
+	sbc #$00
+	tay
+	lda #$00
+	sta rasterbar_scroll,y
+	
+update_scroll_rasterbar_done:
 	rts
 
 ; -------------------------------------------------------------
