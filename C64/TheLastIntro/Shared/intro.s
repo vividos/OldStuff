@@ -972,6 +972,7 @@ update_scroll_rasterbar_done:
 irq_hyperscreen:
 	inc $d019
 
+.if 0	
 .ifdef DEBUG
 	lda #$0b
 	sta $d020
@@ -997,6 +998,7 @@ wait_rasterline_hyperscreen_end:
 	lda #$0b
 	sta $d020
 	sta $d021
+.endif
 .endif
 
 	; set up next IRQ
