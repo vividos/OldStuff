@@ -277,7 +277,7 @@ logo_colorram_loop:
 	ldy #(static_text_end - static_text - 1)
 static_text_char_loop:
 	lda static_text,y
-	and #$1f
+	and #$3f
 	sta $0400 + STATIC_TEXT_LINE * 40 + STATIC_TEXT_COLUMN, y
 	dey
 	bpl static_text_char_loop
@@ -286,7 +286,7 @@ static_text_char_loop:
 	ldy #(GAME_TEXT_MAX_COUNT - 1)
 game_text_char_loop:
 	lda game_text,y
-	and #$1f
+	and #$3f
 	sta $0400 + GAME_TEXT_LINE * 40 + (40 - GAME_TEXT_MAX_COUNT) / 2, y
 	dey
 	bpl game_text_char_loop
@@ -1192,15 +1192,6 @@ logo_screen:
 
 ; -------------------------------------------------------------
 
-; this segment contains the payload of the intro that is to be
-; started after finishing.
-
-.segment "PAYLOAD"
-
-payload:
-
-; -------------------------------------------------------------
-
 ; this segment contains all the data used in the intro
 
 .segment "DATA"
@@ -1249,10 +1240,6 @@ colors_static_text_end:
 colors_static_text_delay:
 	.byte 0
 
-	; game text under the static "presents" text; must always be 20 chars long
-game_text:
-	.byte "   THE LAST INTRO   "
-
 game_text_color:   ; must be 16 bytes long
 	.byte 0, 6, 4, 14, 3, 7, 1, 1, 1, 1, 7, 10, 8, 2, 9, 0
 
@@ -1282,7 +1269,30 @@ logo_scroll_current_y_index:
 charset_rest:
 	.incbin "charset.bin", 0, 16
 
-	; scroll text must be the last symbol in the file; the linker puts
-	; the scroll text next to this symbol
+; -------------------------------------------------------------
+
+; this segment contains the title of the game or demo to present.
+
+.segment "TITLE"
+
+game_text:
+	; the actual title is stored in another object file
+
+; -------------------------------------------------------------
+
+; this segment contains the scroller text used in the intro.
+
+.segment "SCROLLTEXT"
+
 scroll_text:
 	.byte $20
+	; the actual title is stored in another object file
+
+; -------------------------------------------------------------
+
+; this segment contains the payload of the intro that is to be
+; started after finishing.
+
+.segment "PAYLOAD"
+
+payload:
