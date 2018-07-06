@@ -1,0 +1,5 @@
+format "giana sisters",42 d64 giana-sisters-vividos.d64
+attach giana-sisters-vividos.d64
+write intro-giana-sisters-pucrunch.prg "giana sisters+vividos"
+write giana-sisters-game-pucrunch.prg "1"
+write atg.bin "atg"

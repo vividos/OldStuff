@@ -1,0 +1,18 @@
+format intro-vividos,42 d64 intro-vividos.d64
+attach intro-vividos.d64
+
+write ..\\Standalone\\intro-standalone-pucrunch.prg "intro+vividos"
+
+write ..\\ShaJongg\\intro-shajongg-pucrunch.prg "shajongg+vividos"
+write ..\\ShaJongg\\jongg-farben.prg "jongg-farben"
+bpoke 18 01 69 106 111 110 103 103 45 102 97 114 98 101 110
+
+write ..\\HalBarbaric\\intro-hal-barbaric-pucrunch.prg "hal-barbaric+vividos"
+
+write ..\\UpfrontFreezer\\intro-upfront-freezer-pucrunch.prg "upfront-freezer+vividos"
+
+write ..\\GianaSisters\\intro-giana-sisters-pucrunch.prg "giana sisters+vividos"
+write ..\\GianaSisters\\giana-sisters-game-pucrunch.prg "1"
+write ..\\GianaSisters\\atg.bin "atg"
+
+write ..\\BubbleBobble\\intro-bubble-bobble.prg "bubble-bobble+vividos"
