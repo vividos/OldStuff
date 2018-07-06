@@ -38,6 +38,7 @@ STATIC_TEXT_COLUMN := (40-(static_text_end - static_text)) / 2
 
 GAME_TEXT_LINE := 8
 GAME_TEXT_MAX_COUNT := 20
+
 SCREEN_SCROLL_LINE := 13
 
 	; default delay counter for color rotation of static text
@@ -281,8 +282,14 @@ static_text_char_loop:
 	dey
 	bpl static_text_char_loop
 
-	; TODO create double-sized chars
-
+	; set up game title text
+	ldy #(GAME_TEXT_MAX_COUNT - 1)
+game_text_char_loop:
+	lda game_text,y
+	and #$1f
+	sta $0400 + GAME_TEXT_LINE * 40 + (40 - GAME_TEXT_MAX_COUNT) / 2, y
+	dey
+	bpl game_text_char_loop
 
 	; set up scroll line
 	lda #<scroll_text
@@ -335,6 +342,7 @@ no_next_stage:
 	jsr update_logo_scroll_y
 
 	jsr update_static_text
+	jsr update_game_text
 
 	; update text scroller
 	jsr update_scroll_pos
@@ -597,6 +605,51 @@ static_text_color_rotate_loop:
 	stx colors_static_text
 
 colors_static_text_no_rotate:
+	rts
+
+; -------------------------------------------------------------
+
+	; routine: updates game text color RAM
+
+update_game_text:
+	ldx intro_stage
+	beq update_game_text_stage0
+	cpx #$02
+	bne update_game_text_end
+
+update_game_text_stage2:
+	; stage 2: fade out text, in the first quarter
+	lda stage_counter    ; range #$7f..#$00
+	ldy #$0f    ; color index after fade out
+	cmp #$60
+	bmi update_game_text_colorram
+	eor #$7f    ; now range #$00..#$1f
+	lsr			; now range #$00..#$0f
+	lsr			; now range #$00..#$07
+	ora #$08    ; now range #$08..#$0f
+	tay
+	bne update_game_text_colorram
+
+update_game_text_stage0:
+	; stage 0: fade in text, in the last quarter
+	lda stage_counter    ; range #$7f..#$00
+	ldy #$00    ; color index before fade in
+	cmp #$20
+	bpl update_game_text_colorram
+	eor #$1f    ; now range #$00..#$1f
+	lsr			; now range #$00..#$0f
+	lsr			; now range #$00..#$07
+	tay
+
+update_game_text_colorram:
+	lda game_text_color,y
+	ldy #(GAME_TEXT_MAX_COUNT - 1)
+update_game_text_colorram_loop:
+	sta $d800 + GAME_TEXT_LINE * 40 + (40 - GAME_TEXT_MAX_COUNT) / 2, y
+	dey
+	bpl update_game_text_colorram_loop
+
+update_game_text_end:
 	rts
 
 ; -------------------------------------------------------------
@@ -1174,8 +1227,10 @@ colors_static_text_delay:
 
 	; game text under the static "presents" text; must always be 20 chars long
 game_text:
-	.byte "GIANA SISTERS"
-	.byte 0, 0, 0, 0, 0, 0, 0
+	.byte "   THE LAST INTRO   "
+
+game_text_color:   ; must be 16 bytes long
+	.byte 0, 6, 4, 14, 3, 7, 1, 1, 1, 1, 7, 10, 8, 2, 9, 0
 
 rasterbar_scroll:
 	.byte 0, 6, 4, 14, 13, 7           ; black, blue, purple, l.blue, l.green, yellow
