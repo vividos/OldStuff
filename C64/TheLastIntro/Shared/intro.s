@@ -557,12 +557,14 @@ static_text_color_loop:
 update_static_text_stage2:
 	; stage 2: overwrite first characters, based on the stage counter
 	lda stage_counter
-	eor #$7f
+	ldy #(static_text_end - static_text)		; start char to delete on end
+	cmp #$60
+	bmi update_static_text_stage2_start
+	eor #$7f	; now range #$00..#$1f
 	lsr
-	lsr
-	lsr
-	lsr
+	lsr			; now range #$00..#$07
 	tay
+update_static_text_stage2_start:
 	lda #$00
 update_static_text_stage2_loop:
 	sta $d800 + STATIC_TEXT_LINE * 40 + STATIC_TEXT_COLUMN, y
@@ -573,12 +575,17 @@ update_static_text_stage2_loop:
 update_static_text_stage0:
 	; stage 0: overwrite last characters, based on the stage counter
 	lda stage_counter
-	eor #$7f
+	ldy #00		; start char to delete on begin
+	cmp #$40
+	bpl update_static_text_stage0_start
+	cmp #$20
+	bmi update_static_text_check_rotate
+	and #$1f	; now range #$1f..#$00
+	eor #$1f
 	lsr
-	lsr
-	lsr
-	lsr			; now range #$00..#$1f
+	lsr			; now range #$00..#$07
 	tay
+update_static_text_stage0_start:
 	lda #$00
 update_static_text_stage0_loop:
 	sta $d800 + STATIC_TEXT_LINE * 40 + STATIC_TEXT_COLUMN, y
