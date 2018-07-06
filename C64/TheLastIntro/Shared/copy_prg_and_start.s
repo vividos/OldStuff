@@ -21,6 +21,20 @@ copy_prg_and_start:
 	lda #$00
 	sta $d011   ; switch off screen
 
+	; clear color ram, in case some decruncher puts data on the screen
+	ldx #$00
+	txa
+clear_colorram_loop:
+	sta $d800, x
+	sta $d900, x
+	sta $da00, x
+	sta $db00, x
+	dex
+	bne clear_colorram_loop
+	
+	lda #$38
+	sta $01
+	
 	ldx #(copy_end-copy_code)
 copy_copy_code:
 	lda copy_code,x
@@ -48,12 +62,19 @@ stack_copy_loop:
 	sta ($fd),y
 	dey
 	bne stack_copy_loop
+	
+	; show color bars
+	dec $01
 	dec $d020
+	inc $01
 	
 	inc $fc
 	inc $fe
 	dex
 	bne stack_copy_loop
+
+	lda #$37
+	sta $01
 
 	lda #$00
 	sta $d020
