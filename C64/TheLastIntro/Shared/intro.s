@@ -200,6 +200,10 @@ wait_stage_3:
 	lda #$15
 	sta $d018
 
+	; reset music
+	lda #$00
+	jsr music_init
+
 .ifdef EXIT_ACTION_SOFT_RESET
 soft_reset:
 	jmp $fce2
