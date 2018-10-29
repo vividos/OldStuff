@@ -1,5 +1,5 @@
-format intro-vividos,42 d64 intro-vividos.d64
-attach intro-vividos.d64
+format commondisk-vividos,42 d64 commondisk-vividos.d64
+attach commondisk-vividos.d64
 
 write ..\\Standalone\\intro-standalone-pucrunch.prg "intro+vividos"
 

@@ -2,6 +2,8 @@
 *-pucrunch.prg
 *.o
 
+CommonDisk/commondisk-vividos.d64
+
 Standalone/intro.d64
 Standalone/intro.prg
 
