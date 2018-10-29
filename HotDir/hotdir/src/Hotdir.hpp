@@ -34,9 +34,6 @@ private:
    /// Shows directory entries
    void ShowDirectory();
 
-   /// Shows infos fir a single drive letter
-   void ShowDriveInfos(char driveLetter);
-
    /// Shows directory tree
    void ShowTree();
 

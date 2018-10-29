@@ -86,10 +86,6 @@ void Hotdir::ShowDirectory()
    statsViewer.Show();
 }
 
-void Hotdir::ShowDriveInfos(char driveLetter)
-{
-}
-
 void Hotdir::ShowTree()
 {
    for (auto path : m_options.m_pathList)
