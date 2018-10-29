@@ -1,6 +1,7 @@
 # TheLastIntro specific
 *-pucrunch.prg
 *.o
+x64.lnk
 
 CommonDisk/commondisk-vividos.d64
 
