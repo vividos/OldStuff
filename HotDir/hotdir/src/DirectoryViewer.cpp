@@ -15,6 +15,8 @@
 #include <time.h>
 #include <array>
 
+#undef min
+
 DirectoryViewer::DirectoryViewer(Console& console, const std::string& path)
    :m_console(console),
    m_path(path)
@@ -76,20 +78,35 @@ void DirectoryViewer::ShowColumnOrdered(const ConfigFile& configFile, unsigned i
 
    std::vector<std::vector<FileList::FileEntry>::const_iterator> fileIterators(numColumns);
    for (unsigned columnIndex = 0; columnIndex < numColumns; columnIndex++)
-      fileIterators[columnIndex] = m_fileList.Files().begin() + columnStep * columnIndex;
+   {
+      auto iter = m_fileList.Files().begin();
+      std::advance(iter, std::min(columnStep * columnIndex, numFiles));
+      fileIterators[columnIndex] = iter;
+   }
 
    for (size_t lineNumber = 0; lineNumber < columnStep; lineNumber++)
+   {
+      bool endIteratorAppeared = false;
       for (size_t columnNumber = 0; columnNumber < numColumns; columnNumber++)
       {
          auto& iter = fileIterators[columnNumber];
 
          if (iter == m_fileList.Files().end())
+         {
+            if (!endIteratorAppeared)
+            {
+               m_console.Printf("\n");
+               endIteratorAppeared = true;
+            }
+
             continue;
+         }
 
          ShowEntry(*iter, configFile, static_cast<unsigned int>(columnNumber), numColumns);
 
          iter++;
       }
+   }
 
    if (numFiles % numColumns != 0)
       m_console.Printf("^7\n");
@@ -102,66 +119,61 @@ void DirectoryViewer::ShowEntry(const FileList::FileEntry& fileEntry, const Conf
 
    unsigned int columnWidth = m_console.Width() / numColumns;
 
-   if (columnWidth <= 13)
+   if (columnWidth > 89)
+   {
+      m_console.Printf("^4³"); // 1
+      ShowDate(fileEntry.m_time, false); // 11
+      ShowTime(fileEntry.m_time, false); // 9
+      ShowAttributes(fileEntry.m_attributes); // 6
+      m_console.Printf(" "); // 1
+      ShowSize(fileEntry.m_size, fileEntry.m_attributes, false); // 16
+
+      int remainingSpace = columnWidth - 1 - 11 - 9 - 6 - 1 - 16 - 1;
+      m_console.Printf("^%c%-*s^7", color, remainingSpace, fileEntry.m_name.c_str());
+   }
+   else if (columnWidth > 80)
+   {
+      m_console.Printf("^4³"); // 1
+      ShowDate(fileEntry.m_time, false); // 11
+      ShowTime(fileEntry.m_time, false); // 9
+      ShowAttributes(fileEntry.m_attributes); // 6
+      m_console.Printf(" "); // 1
+      ShowSize(fileEntry.m_size, fileEntry.m_attributes, true); // 7
+      m_console.Printf("^%c%-44.44s^7", color, fileEntry.m_name.c_str()); // 44
+   }
+   else if (columnWidth > 40)
+   {
+      m_console.Printf("^4³"); // 1
+      ShowDate(fileEntry.m_time, true); // 9
+      ShowTime(fileEntry.m_time, true); // 6
+      ShowSize(fileEntry.m_size, fileEntry.m_attributes, true); // 7
+      m_console.Printf("^%c%-17.17s^7", color, fileEntry.m_name.c_str()); // 17
+   }
+   else if (columnWidth > 26)
+   {
+      m_console.Printf("^4³"); // 1
+      ShowAttributes(fileEntry.m_attributes); // 6
+      ShowSize(fileEntry.m_size, fileEntry.m_attributes, true); // 7
+      m_console.Printf("^%c%-12.12s", color, fileEntry.m_name.c_str()); // 12
+      if (columnNumber + 1 == numColumns)
+         m_console.Printf("^4³"); // 1
+   }
+   else if (columnWidth > 20)
+   {
+      m_console.Printf("^4³"); // 1
+      ShowSize(fileEntry.m_size, fileEntry.m_attributes, true); // 7
+      m_console.Printf("^%c%-12.12s", color, fileEntry.m_name.c_str()); // 12
+   }
+   else if (columnWidth > 16)
+   {
+      m_console.Printf("^4³^%c%-15.15s", color, fileEntry.m_name.c_str());
+   }
+   else if (columnWidth > 13)
    {
       m_console.Printf("^4³^%c%-12.12s^7", color, fileEntry.m_name.c_str());
       if (columnNumber + 1 == numColumns)
          m_console.Printf("^4³");
    }
-   else
-      if (columnWidth <= 16)
-      {
-         m_console.Printf("^4³^%c%-15.15s", color, fileEntry.m_name.c_str());
-      }
-      else
-         if (columnWidth <= 20)
-         {
-            m_console.Printf("^4³"); // 1
-            ShowSize(fileEntry.m_size, fileEntry.m_attributes, true); // 7
-            m_console.Printf("^%c%-12.12s", color, fileEntry.m_name.c_str()); // 12
-         }
-         else
-            if (columnWidth <= 26)
-            {
-               m_console.Printf("^4³"); // 1
-               ShowAttributes(fileEntry.m_attributes); // 6
-               ShowSize(fileEntry.m_size, fileEntry.m_attributes, true); // 7
-               m_console.Printf("^%c%-12.12s", color, fileEntry.m_name.c_str()); // 12
-               if (columnNumber + 1 == numColumns)
-                  m_console.Printf("^4³"); // 1
-            }
-            else
-               if (columnWidth <= 40)
-               {
-                  m_console.Printf("^4³"); // 1
-                  ShowDate(fileEntry.m_time, true); // 9
-                  ShowTime(fileEntry.m_time, true); // 6
-                  ShowSize(fileEntry.m_size, fileEntry.m_attributes, true); // 7
-                  m_console.Printf("^%c%-17.17s^7", color, fileEntry.m_name.c_str()); // 17
-               }
-               else
-                  if (columnWidth <= 80)
-                  {
-                     m_console.Printf("^4³"); // 1
-                     ShowDate(fileEntry.m_time, false); // 11
-                     ShowTime(fileEntry.m_time, false); // 9
-                     ShowAttributes(fileEntry.m_attributes); // 6
-                     m_console.Printf(" "); // 1
-                     ShowSize(fileEntry.m_size, fileEntry.m_attributes, true); // 7
-                     m_console.Printf("^%c%-44.44s^7", color, fileEntry.m_name.c_str()); // 44
-                  }
-                  else
-                  {
-                     m_console.Printf("^4³"); // 1
-                     ShowDate(fileEntry.m_time, false); // 11
-                     ShowTime(fileEntry.m_time, false); // 9
-                     ShowAttributes(fileEntry.m_attributes); // 6
-                     m_console.Printf(" "); // 1
-                     ShowSize(fileEntry.m_size, fileEntry.m_attributes, false); // 16
-
-                     int remainingSpace = columnWidth - 1 - 11 - 9 - 6 - 1 - 16 - 1;
-                     m_console.Printf("^%c%-*s^7", color, remainingSpace, fileEntry.m_name.c_str());
-                  }
 
    if (columnNumber + 1 == numColumns)
       m_console.Printf("\n");
