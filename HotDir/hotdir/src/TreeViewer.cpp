@@ -1,4 +1,4 @@
-//
+ï»¿//
 // HotDir - Colored directory tool
 // Copyright (C) 1999-2018 Michael Fink
 //
@@ -28,9 +28,9 @@ void TreeViewer::Show()
       m_console.Printf("^9");
       unsigned int level;
       for (level = 0; level < entry.m_level; level++)
-         m_console.Printf("%c", FindNextLevel(level, entryIndex) ? '³' : ' ');
+         m_console.Printf("%c", FindNextLevel(level, entryIndex) ? 'Â³' : ' ');
 
-      m_console.Printf("%c^7%s", FindNextLevel(level, entryIndex) ? 'Ã' : 'À', entry.m_name.c_str());
+      m_console.Printf("%c^7%s", FindNextLevel(level, entryIndex) ? 'Ãƒ' : 'Ã€', entry.m_name.c_str());
 
       size_t length = entry.m_name.size() + level;
 

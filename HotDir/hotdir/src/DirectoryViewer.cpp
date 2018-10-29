@@ -1,4 +1,4 @@
-//
+ï»¿//
 // HotDir - Colored directory tool
 // Copyright (C) 1999-2018 Michael Fink
 //
@@ -104,36 +104,36 @@ void DirectoryViewer::ShowEntry(const FileList::FileEntry& fileEntry, const Conf
 
    if (columnWidth <= 13)
    {
-      m_console.Printf("^4³^%c%-12.12s^7", color, fileEntry.m_name.c_str());
+      m_console.Printf("^4Â³^%c%-12.12s^7", color, fileEntry.m_name.c_str());
       if (columnNumber + 1 == numColumns)
-         m_console.Printf("^4³");
+         m_console.Printf("^4Â³");
    }
    else
       if (columnWidth <= 16)
       {
-         m_console.Printf("^4³^%c%-15.15s", color, fileEntry.m_name.c_str());
+         m_console.Printf("^4Â³^%c%-15.15s", color, fileEntry.m_name.c_str());
       }
       else
          if (columnWidth <= 20)
          {
-            m_console.Printf("^4³"); // 1
+            m_console.Printf("^4Â³"); // 1
             ShowSize(fileEntry.m_size, fileEntry.m_attributes, true); // 7
             m_console.Printf("^%c%-12.12s", color, fileEntry.m_name.c_str()); // 12
          }
          else
             if (columnWidth <= 26)
             {
-               m_console.Printf("^4³"); // 1
+               m_console.Printf("^4Â³"); // 1
                ShowAttributes(fileEntry.m_attributes); // 6
                ShowSize(fileEntry.m_size, fileEntry.m_attributes, true); // 7
                m_console.Printf("^%c%-12.12s", color, fileEntry.m_name.c_str()); // 12
                if (columnNumber + 1 == numColumns)
-                  m_console.Printf("^4³"); // 1
+                  m_console.Printf("^4Â³"); // 1
             }
             else
                if (columnWidth <= 40)
                {
-                  m_console.Printf("^4³"); // 1
+                  m_console.Printf("^4Â³"); // 1
                   ShowDate(fileEntry.m_time, true); // 9
                   ShowTime(fileEntry.m_time, true); // 6
                   ShowSize(fileEntry.m_size, fileEntry.m_attributes, true); // 7
@@ -142,7 +142,7 @@ void DirectoryViewer::ShowEntry(const FileList::FileEntry& fileEntry, const Conf
                else
                   if (columnWidth <= 80)
                   {
-                     m_console.Printf("^4³"); // 1
+                     m_console.Printf("^4Â³"); // 1
                      ShowDate(fileEntry.m_time, false); // 11
                      ShowTime(fileEntry.m_time, false); // 9
                      ShowAttributes(fileEntry.m_attributes); // 6
@@ -152,7 +152,7 @@ void DirectoryViewer::ShowEntry(const FileList::FileEntry& fileEntry, const Conf
                   }
                   else
                   {
-                     m_console.Printf("^4³"); // 1
+                     m_console.Printf("^4Â³"); // 1
                      ShowDate(fileEntry.m_time, false); // 11
                      ShowTime(fileEntry.m_time, false); // 9
                      ShowAttributes(fileEntry.m_attributes); // 6
