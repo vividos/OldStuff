@@ -8,13 +8,34 @@ similar tool (called di.com) and after getting Turbo C++ 3.1. The tool was
 re-written several times, in order to improve executable size or number of
 displayable files, or to support long filenames.
 
+## HotDir 7.0 ##
+
+The subfolder `hotdir` contains a reimplementation of HotDir in C++17. This
+version works on Win32 and can be compiled for x86 or x64 processor targets.
+There is a binary package of the compiled version of HotDir in the "Releases"
+section of this github repository.
+
+### Images ###
+
+HotDir showing a directory:
+
+![HotDir showing directory](image-hotdir-7.0-directory.png)
+
+HotDir showing command line help:
+
+![HotDir help](image-hotdir-7.0-help.png)
+
+HotDir showing a directory tree and the disk usage:
+
+![HotDir tree view and disk usage](image-hotdir-7.0-tree-disk-usage.png)
+
 ## HotDir 6.0 ##
 
 The subfolder `hd60` contains the version HotDir 6.0. This version should be
 compilable with Turbo C++ 3.1. There is a binary package of the compiled
 version of HotDir in the "Releases" section of this github repository.
 
-## Images ##
+### Images ###
 
 HotDir showing a directory:
 
