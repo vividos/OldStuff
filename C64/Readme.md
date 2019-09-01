@@ -6,6 +6,9 @@ This folder contains several C64 related projects. Among them are an emulator
 for the 6510 processor, a C64 style intro that uses SDL2 and some useful code
 for 2D games in general. And there's an actual C64 intro as well!
 
+Relevant Links:
+- https://github.com/mist64/c64rom
+
 ## The Last Intro ##
 
 The folder [TheLastIntro](TheLastIntro/Readme.md "The Last Intro Readme") contains the (fist and) last intro that I create.
@@ -20,7 +23,7 @@ Android C++ project templates. Check out C64.Android.sln.
 ### SDL2 for Android ###
 
 See the subfolder [SDL2](src/ThirdParty/SDL2/Readme.md "SDL2 Readme") for
-instructions on how to compile SDL2 for Android using Visual Studio 2015.
+instructions on how to compile SDL2 for Android using Visual Studio 2019.
 
 ### d64view ###
 
@@ -45,28 +48,28 @@ machine.
 
 The application opens a window and tries to start the first SYS command. See
 
-   Emulator.exe --help
+    Emulator.exe --help
 
 for command line options:
 
-   C64 Emulator
+    C64 Emulator
 
-   Syntax: Emulator <params> <args>
-   Options:
-    -h -? --help
-      Shows help
-    -l --load
-      loads specified tape (.t64) or program file (.p00)
-    -e --entry
-      specifies an entry number when loading a tape (.t64) file; specify * to load all entries from a tape image
-    -f --fullscreen
-      shows the emulator in fullscreen on start (toggle with Alt+Enter)
-    -j --joystick
-      enables port 2 joystick emulation via NumPad and Right-Ctrl keys
-    -s --sys
-      sets start program counter, in decimal (e.g. 2064) or hex ($0820, 0x0820)
-    -d --debug
-      runs emulator in debug mode, showing VIC and CPU status infos
+    Syntax: Emulator <params> <args>
+    Options:
+     -h -? --help
+       Shows help
+     -l --load
+       loads specified tape (.t64) or program file (.p00)
+     -e --entry
+       specifies an entry number when loading a tape (.t64) file; specify * to load all entries from a tape image
+     -f --fullscreen
+       shows the emulator in fullscreen on start (toggle with Alt+Enter)
+     -j --joystick
+       enables port 2 joystick emulation via NumPad and Right-Ctrl keys
+     -s --sys
+       sets start program counter, in decimal (e.g. 2064) or hex ($0820, 0x0820)
+     -d --debug
+       runs emulator in debug mode, showing VIC and CPU status infos
 
 During running emulator you have the following keyboard commands:
 
@@ -80,8 +83,8 @@ All other keys as mapped to a C64 keyboard.
 So basically you load a tape or program file, specify a start program counter
 (or let it detect the first SYS command in the file) and let it run. In debug
 mode the emulator window gets bigger. The VIC state is visualized with some
-bars in the middle of the screen, right to the C64 screen. And the rest of the
-screen, on the right side, visualizes CPU activity.
+bars in the middle of the screen, to the right of the C64 screen. And the rest
+of the screen, on the right side, visualizes CPU activity.
 
 #### Visualisation ####
 

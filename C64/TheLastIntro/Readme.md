@@ -9,7 +9,7 @@ these games on the Raspberry Pi with RetroPie and the VICE C64 emulator.
 
 ## Intro contents
 
-TODO insert image
+![Intro in WinVICE](the-last-intro.png)
 
 Logo: A scrolling logo, moving in X direction (soft scroll) and Y direction
 (FLD effect).
@@ -49,12 +49,25 @@ and the payload into a .d64 disk image file.
 The intro logo was generated with a "Retro C64 logo creator" web page, and not
 actually with a C64 drawing program. The resulting PNG image looks like this:
 
-![logo_320_200.png](Logo 320x200)
+![Logo 320x200](logo_320_200.png)
 
 The logo was converted to Koala format (file logo_320_200.kla) using
 Timanthes_3_beta_v2, and then it was imported into Amica paint:
 
-![logo-amica-paint.png](Logo in Amica Paint)
+![Logo in Amica Paint](logo-amica-paint.png)
 
 The logo was linearized, so that in each 8x8 char, the same color bit schemes
-are used. With a tool called ""
+are used.
+
+## Memory layout
+
+This is the memory layout of the intro:
+
+    $0801 - $0810 startup BASIC code - will get overwritten by intro
+    $0800 - $0a00 charset
+    $0a00 - $0b90 logo charset
+    $0b90 - $0fff code
+    $1000 - $1b00 music
+    $1b00 - $1c7f logo data (scroll-x and scroll-y table, screen bytes)
+    $1c80 - $1fff data, scroller text
+    $2000 -       payload, e.g. game to start
