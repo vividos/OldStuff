@@ -331,10 +331,10 @@ public:
 			// 2. We'll try to figure out if the mouse is in the client area,
 			//    but under the last item
 
-			LVHITTESTINFO hti = {0};
-			hti.pt.x = 0;
-			hti.pt.y = ptCursor.y;
-			int nIndexToLeft = pT->HitTest(&hti);
+			LVHITTESTINFO hti2 = {0};
+			hti2.pt.x = 0;
+			hti2.pt.y = ptCursor.y;
+			int nIndexToLeft = pT->HitTest(&hti2);
 			if(nIndexToLeft >= 0)
 			{
 				m_nNewIndex = nIndexToLeft;
