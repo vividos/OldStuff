@@ -135,7 +135,6 @@
     <ClCompile Include="TemporaryPlaylistProvider.cpp" />
     <ClCompile Include="VideoPlaybackManager.cpp" />
     <ClCompile Include="VideoSearchView.cpp" />
-    <ClCompile Include="Win7Taskbar.cpp" />
     <ClCompile Include="YouTubeWebPageView.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,7 +158,6 @@
     <ClInclude Include="VideoSearchView.hpp" />
     <ClInclude Include="WebPageWindow.hpp" />
     <ClInclude Include="WebPageWindowEx.hpp" />
-    <ClInclude Include="Win7Taskbar.hpp" />
     <ClInclude Include="YouTubeWebPageView.hpp" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

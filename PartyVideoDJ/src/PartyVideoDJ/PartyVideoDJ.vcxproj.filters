@@ -45,9 +45,6 @@
     <ClCompile Include="VideoSearchView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Win7Taskbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="YouTubeWebPageView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -111,9 +108,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WebPageWindowEx.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Win7Taskbar.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="YouTubeWebPageView.hpp">

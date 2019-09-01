@@ -15,7 +15,7 @@
 #include "Screensaver.hpp"
 #include "PlaylistCtrl.hpp"
 #include "FullscreenHelper.hpp"
-#include "Win7Taskbar.hpp"
+#include <ulib/win32/Win7Taskbar.hpp>
 #include "LogFile.hpp"
 
 class MainFrame :
@@ -142,8 +142,8 @@ private:
    /// screensaver control
    Screensaver m_screensaverState;
 
-   std::unique_ptr<Win7::Taskbar> m_scpTaskbar;
-   std::unique_ptr<Win7::TaskbarProgressBar> m_scpTaskbarProgressBar;
+   std::unique_ptr<Win32::Taskbar> m_scpTaskbar;
+   std::unique_ptr<Win32::TaskbarProgressBar> m_scpTaskbarProgressBar;
 
    bool m_bViewSearch;
    bool m_bViewPlaylist;

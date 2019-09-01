@@ -152,7 +152,7 @@ LRESULT MainFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/,
    pLoop->AddIdleHandler(this);
 
    // create taskbar object
-   m_scpTaskbar.reset(new Win7::Taskbar(m_hWnd));
+   m_scpTaskbar.reset(new Win32::Taskbar(m_hWnd));
 
    return 0;
 }
@@ -198,7 +198,7 @@ LRESULT MainFrame::OnTimer(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL
 
          if (m_scpTaskbarProgressBar != NULL)
             m_scpTaskbarProgressBar->SetState(bPlaying ?
-               Win7::TaskbarProgressBar::TBPF_NORMAL : Win7::TaskbarProgressBar::TBPF_PAUSED);
+               Win32::TaskbarProgressBar::TBPF_NORMAL : Win32::TaskbarProgressBar::TBPF_PAUSED);
       }
 
       m_lastPlaybackState = m_videoPlaybackManager.GetPlaybackState();
@@ -215,9 +215,9 @@ LRESULT MainFrame::OnTimer(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL
             m_scpTaskbarProgressBar->SetPos(unsigned(dCurrent), unsigned(dDuration));
 
          m_scpTaskbarProgressBar->SetState(bPlaying ?
-            Win7::TaskbarProgressBar::TBPF_NORMAL : Win7::TaskbarProgressBar::TBPF_PAUSED);
+            Win32::TaskbarProgressBar::TBPF_NORMAL : Win32::TaskbarProgressBar::TBPF_PAUSED);
 
-         //ATLTRACE(_T("Win7 taskbar: pos=%u/%u playing=%u\n"),
+         //ATLTRACE(_T("Win32 taskbar: pos=%u/%u playing=%u\n"),
          //   unsigned(dCurrent), unsigned(dDuration), bPlaying ? 1 : 0);
       }
    }
@@ -276,8 +276,8 @@ LRESULT MainFrame::OnPlayStartPause(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*h
 
       if (m_scpTaskbar->IsAvailable())
       {
-         m_scpTaskbarProgressBar.reset(new Win7::TaskbarProgressBar(m_scpTaskbar->OpenProgressBar()));
-         m_scpTaskbarProgressBar->SetState(Win7::TaskbarProgressBar::TBPF_NORMAL);
+         m_scpTaskbarProgressBar.reset(new Win32::TaskbarProgressBar(m_scpTaskbar->OpenProgressBar()));
+         m_scpTaskbarProgressBar->SetState(Win32::TaskbarProgressBar::TBPF_NORMAL);
          m_scpTaskbarProgressBar->SetPos(0, 100);
       }
    }
@@ -290,7 +290,7 @@ LRESULT MainFrame::OnPlayStartPause(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*h
          m_controlBar.SetStartPauseButton(true);
 
          if (m_scpTaskbarProgressBar != NULL)
-            m_scpTaskbarProgressBar->SetState(Win7::TaskbarProgressBar::TBPF_PAUSED);
+            m_scpTaskbarProgressBar->SetState(Win32::TaskbarProgressBar::TBPF_PAUSED);
       }
       else
       {
@@ -298,7 +298,7 @@ LRESULT MainFrame::OnPlayStartPause(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*h
          m_controlBar.SetStartPauseButton(false);
 
          if (m_scpTaskbarProgressBar != NULL)
-            m_scpTaskbarProgressBar->SetState(Win7::TaskbarProgressBar::TBPF_NORMAL);
+            m_scpTaskbarProgressBar->SetState(Win32::TaskbarProgressBar::TBPF_NORMAL);
       }
    }
 
