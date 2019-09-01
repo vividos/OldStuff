@@ -6,7 +6,7 @@ linking on x86 and x64 platforms.
 ## Android ##
 
 Additionally it contains the Solution and Project files for Microsoft Visual
-Studio 2015 to compile the library using the Android C++ project type. For an
+Studio 2019 to compile the library using the Android C++ project type. For an
 example how to use the compiled library, see the "Intro.Android" and
 "Emulator.Android" projects some subfolders above this folder.
 
