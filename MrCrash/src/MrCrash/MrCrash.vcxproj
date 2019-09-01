@@ -83,7 +83,6 @@
     <ClCompile Include="..\ulib\debug\ProcessMemory.cpp" />
     <ClCompile Include="..\ulib\debug\SymbolManager.cpp" />
     <ClCompile Include="..\ulib\debug\Toolhelp.cpp" />
-    <ClCompile Include="..\ulib\win32\VersionInfoResource.cpp" />
     <ClCompile Include="AppOptions.cpp" />
     <ClCompile Include="Debugger.cpp" />
     <ClCompile Include="DebugInfoXmlWriter.cpp" />
@@ -109,7 +108,6 @@
     <ClInclude Include="..\ulib\win32\ProcessHandle.hpp" />
     <ClInclude Include="..\ulib\win32\ProcessInfo.hpp" />
     <ClInclude Include="..\ulib\win32\SystemTime.hpp" />
-    <ClInclude Include="..\ulib\win32\VersionInfoResource.hpp" />
     <ClInclude Include="..\ulib\xml\Xml.hpp" />
     <ClInclude Include="..\ulib\xml\XmlWriter.hpp" />
     <ClInclude Include="AppOptions.hpp" />

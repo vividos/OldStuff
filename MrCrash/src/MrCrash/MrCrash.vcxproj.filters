@@ -57,9 +57,6 @@
     <ClCompile Include="..\ulib\xml\XmlWriter.cpp">
       <Filter>Source Files\ulib files\xml files</Filter>
     </ClCompile>
-    <ClCompile Include="..\ulib\win32\VersionInfoResource.cpp">
-      <Filter>Source Files\ulib files\win32 files</Filter>
-    </ClCompile>
     <ClCompile Include="..\ulib\debug\CallStack.cpp">
       <Filter>Source Files\ulib files\debug files</Filter>
     </ClCompile>
@@ -150,9 +147,6 @@
       <Filter>Source Files\ulib files\xml files</Filter>
     </ClInclude>
     <ClInclude Include="..\ulib\win32\ProcessHandle.hpp">
-      <Filter>Source Files\ulib files\win32 files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ulib\win32\VersionInfoResource.hpp">
       <Filter>Source Files\ulib files\win32 files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
