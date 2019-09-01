@@ -25,3 +25,7 @@ PartyVideoDJ is a YouTube crossfading app designed to play music at parties.
 ## [HotDir](HotDir/Readme.md "HotDir") ##
 
 HotDir is a colored directory info viewer, much like an improved DOS ´dir´ command.
+
+## [Recorder](Recorder/Readme.md "Recorder")
+
+Recorder is a Windows Mobile app that records GPS tracks.
