@@ -1,5 +1,9 @@
-// stdafx.cpp : source file that includes just the standard includes
-//	Recorder.pch will be the pre-compiled header
-//	stdafx.obj will contain the pre-compiled type information
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file stdafx.cpp Precompiled header support
+//
+#pragma once
 
 #include "stdafx.h"

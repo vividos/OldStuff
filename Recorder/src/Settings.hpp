@@ -1,3 +1,9 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file Settings.hpp Settings class
+//
 #pragma once
 
 namespace Settings
@@ -41,8 +47,7 @@ public:
          // every 60 seconds
          return 60;
       }
-      else
-      if (cszName == Settings::ReceiverBaudrate)
+      else if (cszName == Settings::ReceiverBaudrate)
       {
          return 38400;
       }

@@ -1,7 +1,13 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file Application.hpp Application object
+//
 #pragma once
 
 #include "Settings.hpp"
-#include <ulib/log/Logger.hpp>
+#include "Logger.hpp"
 #include "Receiver.hpp"
 #include "BatteryManager.hpp"
 #include "DisplayOffManager.hpp"

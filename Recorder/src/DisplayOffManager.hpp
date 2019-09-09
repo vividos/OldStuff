@@ -1,7 +1,12 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file DisplayOffManager.hpp Display off manager
+//
 #pragma once
 
-// includes
-#include <ulib/wince/HardwareKeyManager.hpp>
+#include "HardwareKeyManager.hpp""
 #include <boost/function.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <map>
@@ -15,21 +20,20 @@ typedef boost::function<void(UINT)> T_fnOnHardwareKey;
 
 class CVideoPowerManager;
 
-/// display off manager
-/*! The display off manager lets users assign a hardware key that is later used to
-    switch on the display when switched off. The AssignKey() and SwitchOff() methods
-    accept an optional function pointer that is called when either the hardware key
-    was pressed that is assigned or when the display is switched back on.
-
-    Usage is normally to let the user assign a key by pressing a button; call
-    AssignKey() for that. If the user wants to cancel the assigning, call
-    CancelAssign(). When the user wants to switch off the display, call SwitchOff().
-    The SwitchOn() is called automatically when the assigned key is pressed. You can
-    call the function at program exit, to ensure switching back on the display. The
-    passed callback functions serve to let the user interface enable or disable
-    buttons or to update UI elements.
-*/
-class CDisplayOffManager: public IHardwareKeyCallback
+/// \brief display off manager
+/// The display off manager lets users assign a hardware key that is later used to
+/// switch on the display when switched off. The AssignKey() and SwitchOff() methods
+/// accept an optional function pointer that is called when either the hardware key
+/// was pressed that is assigned or when the display is switched back on.
+///
+/// Usage is normally to let the user assign a key by pressing a button; call
+/// AssignKey() for that. If the user wants to cancel the assigning, call
+/// CancelAssign(). When the user wants to switch off the display, call SwitchOff().
+/// The SwitchOn() is called automatically when the assigned key is pressed. You can
+/// call the function at program exit, to ensure switching back on the display. The
+/// passed callback functions serve to let the user interface enable or disable
+/// buttons or to update UI elements.
+class CDisplayOffManager : public IHardwareKeyCallback
 {
 public:
    /// ctor

@@ -1,5 +1,11 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file BluetoothActivator.cpp Bluetooth activator implementation
+//
 #include "stdafx.h"
-#include <ulib/wince/BluetoothActivator.hpp>
+#include "BluetoothActivator.hpp"
 
 /* TODO support Broadcom stack
 btcoreif.dll -> widcomm stack

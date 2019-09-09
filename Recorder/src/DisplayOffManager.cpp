@@ -1,7 +1,13 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file DisplayOffManager.cpp Display off manager
+//
 #include "StdAfx.h"
 #include "DisplayOffManager.hpp"
-#include <ulib/wince/VideoPowerManager.hpp>
-#include <ulib/log/Logger.hpp>
+#include "VideoPowerManager.hpp"
+#include "Logger.hpp""
 
 // note: these are defined in <winuserm.h>
 struct VKeyToNameMap
@@ -44,17 +50,16 @@ struct VKeyToNameMap
 LPCTSTR g_pszDispOffMgr = _T("app.dispoffmgr");
 
 CDisplayOffManager::CDisplayOffManager()
-//:m_uiAssignedKey(0),
-:m_uiAssignedKey(VK_TSOFT1),
- m_bAssignKey(false),
- m_bSwitchedOff(false),
- m_bWaitForKeyUp(false),
- m_dwKeyPressedMinTimespan(4*1000),
- m_keyManager(CHardwareKeyManager::GetInstance())
+   :m_uiAssignedKey(VK_TSOFT1),
+   m_bAssignKey(false),
+   m_bSwitchedOff(false),
+   m_bWaitForKeyUp(false),
+   m_dwKeyPressedMinTimespan(4 * 1000),
+   m_keyManager(CHardwareKeyManager::GetInstance())
 {
    LOG_INFO(_T("display off manager ctor"), g_pszDispOffMgr);
 
-   for (unsigned int i=0; i<sizeof(g_aKeys)/sizeof(*g_aKeys); i++)
+   for (unsigned int i = 0; i < sizeof(g_aKeys) / sizeof(*g_aKeys); i++)
       m_mapVKeyToName.insert(std::make_pair<UINT, LPCTSTR>(g_aKeys[i].uiVKey, g_aKeys[i].pszName));
 
    m_keyManager.SetCallback(this);
@@ -112,7 +117,7 @@ void CDisplayOffManager::SwitchOff(T_fnOnHardwareKey fnOnHardwareKey)
    m_keyManager.ResetHotkeys();
    // note: we don't set the hotkey here, since we want to get notifications from
    // other keys, too, so that we can switch off the screen when it's the wrong key
-//   m_keyManager.AddHotkey(m_uiAssignedKey);
+   //m_keyManager.AddHotkey(m_uiAssignedKey);
 
    m_keyManager.Start(ModuleHelper::GetModuleInstance(), GetActiveWindow());
 
@@ -157,8 +162,7 @@ bool CDisplayOffManager::OnHardwareKey(UINT uVKCode, bool bKeyDown, bool bSysKey
 
       m_bAssignKey = false;
    }
-   else
-   if (m_bSwitchedOff)
+   else if (m_bSwitchedOff)
    {
       // key down event, and not yet waiting for key up?
       if (bKeyDown && !m_bWaitForKeyUp)

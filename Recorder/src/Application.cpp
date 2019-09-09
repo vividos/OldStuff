@@ -1,37 +1,14 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file Application.cpp Application object
+//
 #include "stdafx.h"
 #include "Application.hpp"
-#include <ulib/log/Layout.hpp>
-#include <ulib/log/Appender.hpp>
-#include <ulib/log/TextStreamAppender.hpp>
-#include <ulib/stream/TextFileStream.hpp>
 
 CApplication::CApplication() throw()
 {
-   // create appender
-   Log::AppenderPtr spAppender1 = Log::AppenderPtr(new Log::OutputDebugStringAppender);
-
-   boost::shared_ptr<Stream::CTextFileStream> spTextStream(new Stream::CTextFileStream(_T("\\Recorder.txt"),
-         Stream::CFileStream::modeOpenOrCreate,
-         Stream::CFileStream::accessWrite,
-         Stream::CFileStream::shareRead,
-         Stream::ITextStream::textEncodingAnsi,
-         Stream::ITextStream::lineEndingCRLF));
-
-   spTextStream->Seek(0LL, Stream::IStream::seekEnd);
-
-   boost::shared_ptr<Stream::ITextStream> spLogStream = spTextStream;
-
-   Log::AppenderPtr spAppender2 = Log::AppenderPtr(new Log::TextStreamAppender(spLogStream));
-
-   // add layout to appender
-   Log::LayoutPtr spLayout = Log::LayoutPtr(new Log::PatternLayout(_T("[%d] %p (%c) - %m")));
-   spAppender1->Layout(spLayout);
-   spAppender2->Layout(spLayout);
-
-   // set as appender for root logger
-   Log::Logger::GetRootLogger()->AddAppender(spAppender1);
-   Log::Logger::GetRootLogger()->AddAppender(spAppender2);
-
    LOG_INFO(_T("*** Recorder application started"), Logging::App);
 }
 

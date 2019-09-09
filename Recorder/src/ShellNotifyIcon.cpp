@@ -1,6 +1,11 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file ShellNotifyIcon.cpp Shell notify icon implementation
+//
 #include "stdafx.h"
-#include <ulib/config/atl.hpp>
-#include <ulib/ui/ShellNotifyIcon.hpp>
+#include "ShellNotifyIcon.hpp"
 
 #ifndef _WIN32_WCE
 #  pragma comment(lib, "shell32.lib")
@@ -9,9 +14,9 @@
 UINT CShellNotifyIcon::s_uiTaskbarCreated = ::RegisterWindowMessage(_T("TaskbarCreated"));
 
 CShellNotifyIcon::CShellNotifyIcon()
-:m_bIconShown(false),
- m_pCallback(NULL),
- m_bInHandler(false)
+   :m_bIconShown(false),
+   m_pCallback(NULL),
+   m_bInHandler(false)
 {
    ZeroMemory(&m_nid, sizeof(m_nid));
    m_nid.cbSize = sizeof(NOTIFYICONDATA);
@@ -62,24 +67,23 @@ void CShellNotifyIcon::SetTooltipText(LPCTSTR pszText)
 
    m_nid.uFlags = NIF_TIP;
 
-   unsigned int uiMax = sizeof(m_nid.szTip)/sizeof(*m_nid.szTip);
-   _tcsncpy(m_nid.szTip, pszText, uiMax-1);
-   m_nid.szTip[uiMax-1] = 0;
+   unsigned int uiMax = sizeof(m_nid.szTip) / sizeof(*m_nid.szTip);
+   _tcsncpy(m_nid.szTip, pszText, uiMax - 1);
+   m_nid.szTip[uiMax - 1] = 0;
 
    Shell_NotifyIcon(NIM_MODIFY, &m_nid);
 }
 
 #ifndef _WIN32_WCE
-/*! Shows balloon tooltip that points to the shell notify icon.
-    \param pszText text for the balloon tooltip
-    \param pszCaption caption text for the tooltip; when set to NULL, caption is not shown
-    \param dwInfoFlags flags for the balloon tooltip. Currently the following flags can be passed:
-           - NIIF_NONE: don't show icon in balloon
-           - NIIF_INFO, NIIF_WARNING or NIIF_ERROR: set either one of these to set the appropriate icon
-           - NIIF_USER: show notify icon as balloon icon
-           - NIIF_NOSOUND: don't play sound normally played when balloon is shown
-    \param uTimeout timeout in seconds; use a value between 10 and 30 (the system ensures this range anyway).
-*/
+/// Shows balloon tooltip that points to the shell notify icon.
+/// \param pszText text for the balloon tooltip
+/// \param pszCaption caption text for the tooltip; when set to NULL, caption is not shown
+/// \param dwInfoFlags flags for the balloon tooltip. Currently the following flags can be passed:
+///        - NIIF_NONE: don't show icon in balloon
+///        - NIIF_INFO, NIIF_WARNING or NIIF_ERROR: set either one of these to set the appropriate icon
+///        - NIIF_USER: show notify icon as balloon icon
+///        - NIIF_NOSOUND: don't play sound normally played when balloon is shown
+/// \param uTimeout timeout in seconds; use a value between 10 and 30 (the system ensures this range anyway).
 void CShellNotifyIcon::ShowBalloonTooltip(LPCTSTR pszText, LPCTSTR pszCaption, DWORD dwInfoFlags, UINT uTimeout)
 {
    ATLASSERT(pszText != NULL);
@@ -88,22 +92,22 @@ void CShellNotifyIcon::ShowBalloonTooltip(LPCTSTR pszText, LPCTSTR pszCaption, D
 
    m_nid.uFlags = NIF_INFO;
 
-   m_nid.uTimeout = uTimeout*1000;
+   m_nid.uTimeout = uTimeout * 1000;
    m_nid.dwInfoFlags = dwInfoFlags;
 
    // balloon text
-   unsigned int uiMax = sizeof(m_nid.szInfo)/sizeof(*m_nid.szInfo);
-   _tcsncpy(m_nid.szInfo, pszText, uiMax-1);
-   m_nid.szInfo[uiMax-1] = 0;
+   unsigned int uiMax = sizeof(m_nid.szInfo) / sizeof(*m_nid.szInfo);
+   _tcsncpy(m_nid.szInfo, pszText, uiMax - 1);
+   m_nid.szInfo[uiMax - 1] = 0;
 
    // balloon title
    if (pszCaption == NULL)
       m_nid.szInfoTitle[0] = 0;
    else
    {
-      uiMax = sizeof(m_nid.szInfoTitle)/sizeof(*m_nid.szInfoTitle);
-      _tcsncpy(m_nid.szInfoTitle, pszCaption, uiMax-1);
-      m_nid.szInfoTitle[uiMax-1] = 0;
+      uiMax = sizeof(m_nid.szInfoTitle) / sizeof(*m_nid.szInfoTitle);
+      _tcsncpy(m_nid.szInfoTitle, pszCaption, uiMax - 1);
+      m_nid.szInfoTitle[uiMax - 1] = 0;
    }
 
    Shell_NotifyIcon(NIM_MODIFY, &m_nid);
@@ -111,7 +115,7 @@ void CShellNotifyIcon::ShowBalloonTooltip(LPCTSTR pszText, LPCTSTR pszCaption, D
    // set to 0 again to prevent reusing the text in later calls
    m_nid.szInfo[0] = 0;
 }
-#endif // _WIN32_WCE
+#endif // !_WIN32_WCE
 
 void CShellNotifyIcon::ShowContextMenu(HMENU hMenu)
 {
@@ -139,7 +143,7 @@ void CShellNotifyIcon::ShowContextMenu(HMENU hMenu)
 
    ::TrackPopupMenuEx(hSubMenu, dwFlags, ptPos.x, ptPos.y, m_nid.hWnd, NULL);
 
-   // see Microsoft KB article 135788 for more 
+   // see Microsoft KB article 135788 for more
    PostMessage(m_nid.hWnd, WM_NULL, 0, 0);
 }
 

@@ -1,6 +1,11 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file ShellNotifyIcon.hpp Shell notify icon for Win32 and WinCE
+//
 #pragma once
 
-// includes
 #include <shellapi.h>
 
 /// callback interface for shell notify icon
@@ -28,7 +33,7 @@ public:
    virtual ~CShellNotifyIcon();
 
    /// sets callback
-   void SetCallback(IShellNotifyIconCallback* pCallback){ m_pCallback = pCallback; }
+   void SetCallback(IShellNotifyIconCallback* pCallback) { m_pCallback = pCallback; }
 
    /// initialize shell notify icon
    void Create(HWND hWndParent, UINT uTrayIconID, UINT uTaskbarCallbackMessage = WM_APP + 1);
@@ -70,18 +75,18 @@ public:
 
 protected:
    // message map for ATL/WTL usage
-#ifdef __ATLWIN_H__
+#ifdef _ATL_VER
    BEGIN_MSG_MAP(CShellNotifyIcon)
       MESSAGE_HANDLER(s_uiTaskbarCreated, OnTaskbarCreated)
       MESSAGE_HANDLER(m_nid.uCallbackMessage, OnTaskbarCallback)
       MESSAGE_HANDLER(WM_CONTEXTMENU, OnTaskbarContextMenu)
    END_MSG_MAP()
-#endif // __ATLWIN_H__
+#endif // _ATL_VER
 
 protected:
-   LRESULT OnTaskbarCreated(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
-   LRESULT OnTaskbarCallback(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
-   LRESULT OnTaskbarContextMenu(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
+   LRESULT OnTaskbarCreated(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+   LRESULT OnTaskbarCallback(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+   LRESULT OnTaskbarContextMenu(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
 private:
    NOTIFYICONDATA m_nid;

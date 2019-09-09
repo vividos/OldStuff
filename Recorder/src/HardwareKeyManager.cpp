@@ -1,15 +1,21 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file HardwareKeyManager.cpp Hardware key manager implementation
+//
 #include "stdafx.h"
-#include <ulib/wince/HardwareKeyManager.hpp>
+#include "HardwareKeyManager.hpp"
 #include <algorithm>
 
-std::auto_ptr<CHardwareKeyManager> CHardwareKeyManager::s_apHardwareManager;
+std::unique_ptr<CHardwareKeyManager> CHardwareKeyManager::s_scpHardwareManager;
 
 #define HC_ACTION 0
 #define WH_KEYBOARD_LL 20
 
 CHardwareKeyManager::CHardwareKeyManager()
-:m_pCallback(NULL),
- m_hHook(NULL)
+   :m_pCallback(NULL),
+   m_hHook(NULL)
 {
    // assume coredll.dll is already loaded and just get a module address
    HMODULE hModuleCoredll = ::GetModuleHandle(_T("coredll.dll"));
@@ -35,10 +41,10 @@ CHardwareKeyManager::~CHardwareKeyManager()
 
 CHardwareKeyManager& CHardwareKeyManager::GetInstance()
 {
-   if (s_apHardwareManager.get() == NULL)
-      s_apHardwareManager = std::auto_ptr<CHardwareKeyManager>(new CHardwareKeyManager);
+   if (s_scpHardwareManager.get() == NULL)
+      s_scpHardwareManager = boost::scoped_ptr<CHardwareKeyManager>(new CHardwareKeyManager);
 
-   return *s_apHardwareManager.get();
+   return *s_scpHardwareManager.get();
 }
 
 void CHardwareKeyManager::AddHotkey(UINT uiVKHotkey)
@@ -112,11 +118,11 @@ typedef struct
    DWORD flags;      ///< flags
    DWORD time;       ///< time point
    ULONG_PTR dwExtraInfo;  ///< extra info
-} KBDLLHOOKSTRUCT, *PKBDLLHOOKSTRUCT;
+} KBDLLHOOKSTRUCT, * PKBDLLHOOKSTRUCT;
 
 LRESULT CHardwareKeyManager::HookProc(int iCode, WPARAM wParam, LPARAM lParam)
 {
-   ATLASSERT(s_apHardwareManager.get() != NULL);
+   ATLASSERT(s_scpHardwareManager.get() != NULL);
 
    ATLTRACE(_T("hookproc: code=%04x, wparam=%04x, lparam=%p"), iCode, wParam, lParam);
 
@@ -135,7 +141,7 @@ LRESULT CHardwareKeyManager::HookProc(int iCode, WPARAM wParam, LPARAM lParam)
       if (wParam == WM_KEYDOWN || wParam == WM_KEYUP ||
          wParam == WM_SYSKEYDOWN || wParam == WM_SYSKEYUP)
       {
-         bool bRet = s_apHardwareManager->HookCallback(
+         bool bRet = s_scpHardwareManager->HookCallback(
             pDllHook->vkCode,
             wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN,
             wParam == WM_SYSKEYDOWN || wParam == WM_SYSKEYUP);
@@ -151,7 +157,7 @@ LRESULT CHardwareKeyManager::HookProc(int iCode, WPARAM wParam, LPARAM lParam)
    else
    {
       // call next hook in chain
-      return s_apHardwareManager->m_fnCallNextHookEx(
-         s_apHardwareManager->m_hHook, iCode, wParam, lParam);
+      return s_scpHardwareManager->m_fnCallNextHookEx(
+         s_scpHardwareManager->m_hHook, iCode, wParam, lParam);
    }
 }

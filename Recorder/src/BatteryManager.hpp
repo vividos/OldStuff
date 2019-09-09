@@ -1,9 +1,14 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file BatteryManager.hpp Battery manager
+//
 #pragma once
 
-#include <ulib/DateTime.hpp>
 #include <vector>
 
-class SystemPowerStatusEx: public SYSTEM_POWER_STATUS_EX
+class SystemPowerStatusEx : public SYSTEM_POWER_STATUS_EX
 {
 public:
    SystemPowerStatusEx(bool bUseCachedValues = false) throw();
@@ -24,9 +29,9 @@ public:
    void Tick() throw();
 
    /// returns estimated remaining time
-   TimeSpan RemainingTime() const throw();
+   COleDateTimeSpan RemainingTime() const throw();
 
 private:
-   std::vector<std::pair<DateTime, BYTE> > m_vecTimeAndBatteryStatus;
+   std::vector<std::pair<COleDateTime, BYTE> > m_vecTimeAndBatteryStatus;
    BYTE m_bLastBatteryLifePercent;
 };

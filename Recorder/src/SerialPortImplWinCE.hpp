@@ -1,3 +1,9 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file SerialPortImplWinCE.hpp Serial port implementation for WinCE
+//
 #pragma once
 
 #include "WaitEventThread.hpp"
@@ -7,55 +13,53 @@ class CWaitEventThread;
 namespace Serial
 {
 
-/*! \class Serial::CSerialPortImpl SerialPortImplWinCE.hpp
-    windows CE serial port implementation
-*/
-class CSerialPortImpl
-{
-public:
-   CSerialPortImpl(HANDLE& hPort)
-      :m_hPort(hPort)
+   /// windows CE serial port implementation
+   class CSerialPortImpl
    {
-   }
+   public:
+      CSerialPortImpl(HANDLE& hPort)
+         :m_hPort(hPort)
+      {
+      }
 
-   ~CSerialPortImpl()
-   {
-      m_spWaitEventThread.reset();
-   }
+      ~CSerialPortImpl()
+      {
+         m_spWaitEventThread.reset();
+      }
 
-   void Open()
-   {
-      // start background wait thread, when not already running
-      if (m_spWaitEventThread.get() == NULL)
-         m_spWaitEventThread = boost::shared_ptr<CWaitEventThread>(new CWaitEventThread(m_hPort));
-      else
-         // already running, so just set new port
-         m_spWaitEventThread->SetPort(m_hPort);
-   }
+      void Open()
+      {
+         // start background wait thread, when not already running
+         if (m_spWaitEventThread.get() == NULL)
+            m_spWaitEventThread = boost::shared_ptr<CWaitEventThread>(new CWaitEventThread(m_hPort));
+         else
+            // already running, so just set new port
+            m_spWaitEventThread->SetPort(m_hPort);
+      }
 
-   void Close()
-   {
-      // note: don't end wait thread here, since user could reopen port
-   }
+      void Close()
+      {
+         // note: don't end wait thread here, since user could reopen port
+      }
 
-   void SetMask(DWORD dwEventMask)
-   {
-      // also tell wait thread about new mask
-      ATLASSERT(m_spWaitEventThread.get() != NULL);
-      m_spWaitEventThread->SetMask(dwEventMask);
-   }
+      void SetMask(DWORD dwEventMask)
+      {
+         // also tell wait thread about new mask
+         ATLASSERT(m_spWaitEventThread.get() != NULL);
+         m_spWaitEventThread->SetMask(dwEventMask);
+      }
 
-   bool WaitEvent(DWORD dwTimeout, DWORD dwEventMask, DWORD& dwEventResult, DWORD& dwLastError);
+      bool WaitEvent(DWORD dwTimeout, DWORD dwEventMask, DWORD& dwEventResult, DWORD& dwLastError);
 
-   static bool IsOverlappedSupported(){ return false; }
+      static bool IsOverlappedSupported() { return false; }
 
-private:
-   //! ref to port handle
-   HANDLE& m_hPort;
+   private:
+      //! ref to port handle
+      HANDLE& m_hPort;
 
-   // no overlapped support on Windows CE
-   boost::shared_ptr<CWaitEventThread> m_spWaitEventThread;
-};
+      // no overlapped support on Windows CE
+      boost::shared_ptr<CWaitEventThread> m_spWaitEventThread;
+   };
 
 } // namespace Serial
 
@@ -107,12 +111,12 @@ bool Serial::CSerialPortImpl::WaitEvent(DWORD dwTimeout, DWORD dwEventMask, DWOR
       dwEventResult = m_spWaitEventThread->GetEventResult() & dwEventMask;
       bWaitStatus = dwEventResult != 0;
 
-//      //ATLTRACE(_T("T1: resetting wait event\n"));
-//      ResetEvent(hEventWait);
-//      //ATLTRACE(_T("T1: resetting wait event done\n"));
+      ////ATLTRACE(_T("T1: resetting wait event\n"));
+      //ResetEvent(hEventWait);
+      ////ATLTRACE(_T("T1: resetting wait event done\n"));
 
       // must be reset
-//      ATLASSERT(WAIT_TIMEOUT == ::WaitForSingleObject(hEventWait, 0));
+      //ATLASSERT(WAIT_TIMEOUT == ::WaitForSingleObject(hEventWait, 0));
 
       dwLastError = 0;
       break;

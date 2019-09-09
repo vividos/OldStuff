@@ -1,11 +1,12 @@
-// RecorderFrame.cpp : implementation of the CRecorderFrame class
 //
-/////////////////////////////////////////////////////////////////////////////
-
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file RecorderFrame.cpp Recorder frame implementation
+//
 #include "stdafx.h"
 #include "resourceppc.h"
-
-#include "aboutdlg.h"
+#include "AboutDlg.h"
 #include "RecorderView.h"
 #include "RecorderFrame.h"
 
@@ -13,77 +14,77 @@
 #define IDR_SHELL_NOTIFY_ICON IDR_MAINFRAME
 
 
-BOOL CRecorderFrame::PreTranslateMessage(MSG* pMsg)
+BOOL CRecorderFrame::PreTranslateMessage(MSG * pMsg)
 {
-	if(CFrameWindowImpl<CRecorderFrame>::PreTranslateMessage(pMsg))
-		return TRUE; 
+   if (CFrameWindowImpl<CRecorderFrame>::PreTranslateMessage(pMsg))
+      return TRUE;
 
-	return m_view.IsWindow() ? m_view.PreTranslateMessage(pMsg) : FALSE;
+   return m_view.IsWindow() ? m_view.PreTranslateMessage(pMsg) : FALSE;
 }
 
-bool CRecorderFrame::AppHibernate( bool bHibernate)
+bool CRecorderFrame::AppHibernate(bool bHibernate)
 {
-	// Insert your code here or delete member if not relevant
-	return bHibernate;
+   // Insert your code here or delete member if not relevant
+   return bHibernate;
 }
 
-bool CRecorderFrame::AppNewInstance( LPCTSTR lpstrCmdLine)
+bool CRecorderFrame::AppNewInstance(LPCTSTR lpstrCmdLine)
 {
-	// Insert your code here or delete member if not relevant
-	return false;
+   // Insert your code here or delete member if not relevant
+   return false;
 }
 
 void CRecorderFrame::AppSave()
 {
-	CAppInfo info;
-	bool bStatus = (UIGetState(ID_VIEW_STATUS_BAR) & UPDUI_CHECKED) == UPDUI_CHECKED;
-	info.Save(bStatus, L"Status");
-	// Insert your code here
+   CAppInfo info;
+   bool bStatus = (UIGetState(ID_VIEW_STATUS_BAR) & UPDUI_CHECKED) == UPDUI_CHECKED;
+   info.Save(bStatus, L"Status");
+   // Insert your code here
 }
 
 BOOL CRecorderFrame::OnIdle()
 {
-	UIUpdateToolBar();
-	UIUpdateStatusBar();
-	return FALSE;
+   UIUpdateToolBar();
+   UIUpdateStatusBar();
+   return FALSE;
 }
 
 LRESULT CRecorderFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
-	CAppInfo info;
+   CAppInfo info;
 
    // menu bar
-	OSVERSIONINFO osvi;
-	GetVersionEx(&osvi);
-/*
-	if (osvi.dwMajorVersion >= 5)
-	   CreateSimpleCEMenuBar();
+   OSVERSIONINFO osvi;
+   GetVersionEx(&osvi);
+   /*
+   if (osvi.dwMajorVersion >= 5)
+      CreateSimpleCEMenuBar();
    else
-*/
+   */
    {
-   	CreateSimpleCEMenuBar(IDR_MAINFRAME, 0, IDR_MAINFRAME, 7);
+      CreateSimpleCEMenuBar(IDR_MAINFRAME, 0, IDR_MAINFRAME, 7);
       //CreateSimpleCEMenuBar(IDR_MAINFRAME, SHCMBF_EMPTYBAR);
    }
-	UIAddToolBar(m_hWndCECommandBar);
+   UIAddToolBar(m_hWndCECommandBar);
 
-	// StatusBar state restoration 
-	bool bVisible = true;
-	info.Restore(bVisible, L"Status");
-	DWORD dwStyle = WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
-	if (bVisible)
-		dwStyle |= WS_VISIBLE;
-	// StatusBar creation 
-	CreateSimpleStatusBar(ATL_IDS_IDLEMESSAGE, dwStyle);
-	UIAddStatusBar(m_hWndStatusBar);
-	UISetCheck(ID_VIEW_STATUS_BAR, bVisible);
+   // StatusBar state restoration
+   bool bVisible = true;
+   info.Restore(bVisible, L"Status");
+   DWORD dwStyle = WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+   if (bVisible)
+      dwStyle |= WS_VISIBLE;
+   // StatusBar creation
+   CreateSimpleStatusBar(ATL_IDS_IDLEMESSAGE, dwStyle);
+   UIAddStatusBar(m_hWndStatusBar);
+   UISetCheck(ID_VIEW_STATUS_BAR, bVisible);
 
-	m_hWndClient = m_view.Create(m_hWnd);
+   m_hWndClient = m_view.Create(m_hWnd);
 
-	// register object for message filtering and idle updates
-	CMessageLoop* pLoop = _Module.GetMessageLoop();
-	ATLASSERT(pLoop != NULL);
-	pLoop->AddMessageFilter(this);
-	pLoop->AddIdleHandler(this);
+   // register object for message filtering and idle updates
+   CMessageLoop* pLoop = _Module.GetMessageLoop();
+   ATLASSERT(pLoop != NULL);
+   pLoop->AddMessageFilter(this);
+   pLoop->AddIdleHandler(this);
 
    // shell notify icon
    m_notifyIcon.SetCallback(this);
@@ -161,29 +162,29 @@ LRESULT CRecorderFrame::OnFileNew(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 {
    // TODO: add code to initialize document
 
-	return 0;
+   return 0;
 }
 
 LRESULT CRecorderFrame::OnViewStatusBar(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
-	BOOL bVisible = !::IsWindowVisible(m_hWndStatusBar);
-	::ShowWindow(m_hWndStatusBar, bVisible ? SW_SHOWNOACTIVATE : SW_HIDE);
-	UISetCheck(ID_VIEW_STATUS_BAR, bVisible);
-	UpdateLayout();
-	return 0;
+   BOOL bVisible = !::IsWindowVisible(m_hWndStatusBar);
+   ::ShowWindow(m_hWndStatusBar, bVisible ? SW_SHOWNOACTIVATE : SW_HIDE);
+   UISetCheck(ID_VIEW_STATUS_BAR, bVisible);
+   UpdateLayout();
+   return 0;
 }
 
 LRESULT CRecorderFrame::OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
-	CAboutDlg dlg;
-	dlg.DoModal();
-	return 0;
+   CAboutDlg dlg;
+   dlg.DoModal();
+   return 0;
 }
 
 void CRecorderFrame::OnActivateApplication()
 {
    ATLTRACE(_T("OnActivateApplication\n"));
-//   m_shellNotifyIcon.HideIcon();
+   //m_shellNotifyIcon.HideIcon();
    ShowWindow(SW_RESTORE);
    SetForegroundWindow(m_hWnd);
 }

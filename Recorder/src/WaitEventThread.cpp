@@ -1,7 +1,13 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file WaitEventThread.cpp WaitEvent() thread implementation
+//
 #include "stdafx.h"
 #include "WaitEventThread.hpp"
 
-/*! note: called from wait thread */
+/// note: called from wait thread
 bool CWaitEventThread::WaitComm()
 {
    // wait handle must not be set
@@ -47,7 +53,7 @@ int CWaitEventThread::Run()
       HANDLE hWaitHandles[2] = { m_hEventContinue, m_hEventStop };
       DWORD dwRet = WaitForMultipleObjects(2, hWaitHandles, FALSE, INFINITE);
 
-      switch(dwRet)
+      switch (dwRet)
       {
       case WAIT_OBJECT_0: // continue event
          //ATLTRACE(_T("T2: got continue event\n"));
@@ -70,9 +76,9 @@ int CWaitEventThread::Run()
       // reset continue event
       ResetEvent(m_hEventContinue);
 
-//      //ATLTRACE(_T("T2: resetting wait event\n"));
-//      ResetEvent(m_hEventWait);
-//      //ATLTRACE(_T("T2: resetting wait event done\n"));
+      ////ATLTRACE(_T("T2: resetting wait event\n"));
+      //ResetEvent(m_hEventWait);
+      ////ATLTRACE(_T("T2: resetting wait event done\n"));
 
       // must be reset
       ATLASSERT(WAIT_TIMEOUT == ::WaitForSingleObject(m_hEventWait, 0));

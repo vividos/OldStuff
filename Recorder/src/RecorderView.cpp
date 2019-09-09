@@ -1,6 +1,10 @@
-// RecorderView.cpp : implementation of the CRecorderView class
 //
-/////////////////////////////////////////////////////////////////////////////
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file RecorderView.h Recorder view class implementation
+//
+#pragma once
 
 #include "stdafx.h"
 #include "resourceppc.h"
@@ -18,7 +22,7 @@ CRecorderView::~CRecorderView() throw()
 
 BOOL CRecorderView::PreTranslateMessage(MSG* pMsg)
 {
-	return IsDialogMessage(pMsg);
+   return IsDialogMessage(pMsg);
 }
 
 LRESULT CRecorderView::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
@@ -29,7 +33,7 @@ LRESULT CRecorderView::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*l
 
    m_editLogFilename.SetWindowText(_T("\\testlog.txt"));
 
-	return 1;
+   return 1;
 }
 
 LRESULT CRecorderView::OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
@@ -138,7 +142,7 @@ void CRecorderView::OnAssignedHardwareKey(UINT uiKey)
 
 void CRecorderView::OnSwitchOnHardwareKey(UINT uiKey)
 {
-/*
+   /*
    // If we would stop the hardware key manager at this point, it would
    // somehow pass on the key up to the OS, and the default action for the
    // key would be carried out. So simulate a click on the "cancel" button
@@ -146,7 +150,7 @@ void CRecorderView::OnSwitchOnHardwareKey(UINT uiKey)
    PostMessage(WM_COMMAND,
       MAKEWPARAM(IDC_BUTTON_CANCEL, BN_CLICKED),
       (LPARAM)m_hWnd);
-*/
+   */
 }
 
 LRESULT CRecorderView::OnBtnClickedSwitchOff(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)

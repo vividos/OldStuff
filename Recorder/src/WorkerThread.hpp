@@ -1,13 +1,11 @@
 //
-// ulib - a collection of useful classes
-// Copyright (C) 2006,2007,2008 Michael Fink
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
 //
 /// \file WorkerThread.hpp worker thread class
 //
 #pragma once
 
-// includes
-#include <ulib/Event.hpp>
 #include <boost/function.hpp>
 
 #ifdef WIN32
@@ -39,8 +37,8 @@ public:
    /// ctor
    WorkerThread(T_fnThread fnThread)
       :m_fnThread(fnThread),
-       m_dwThreadId(0),
-       m_evtStarted(true, false) // manual-reset event
+      m_dwThreadId(0),
+      m_evtStarted(true, false) // manual-reset event
    {
       HANDLE hThread = ::CreateThread(NULL, 0, ThreadProc, this, 0, &m_dwThreadId);
       if (hThread == NULL)
@@ -67,9 +65,9 @@ public:
 
       __try
       {
-         RaiseException(MS_VC_EXCEPTION, 0, sizeof(info)/sizeof(ULONG_PTR), (ULONG_PTR*)&info);
+         RaiseException(MS_VC_EXCEPTION, 0, sizeof(info) / sizeof(ULONG_PTR), (ULONG_PTR*)& info);
       }
-      __except(EXCEPTION_EXECUTE_HANDLER)
+      __except (EXCEPTION_EXECUTE_HANDLER)
       {
       }
 #endif // WIN32
@@ -105,7 +103,7 @@ private:
    /// ctor for already running thread
    WorkerThread(DWORD dwThreadId)
       :m_dwThreadId(dwThreadId),
-       m_evtStarted(true, false) // manual-reset event
+      m_evtStarted(true, false) // manual-reset event
    {
       m_evtStarted.Set();
    }
@@ -121,5 +119,5 @@ private:
    DWORD m_dwThreadId;
 
    /// event that gets signaled when thread has started
-   Event m_evtStarted;
+   CEvent m_evtStarted;
 };

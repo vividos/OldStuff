@@ -1,19 +1,16 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file Receiver.hpp GPS receiver
+//
 #pragma once
 
 #include <boost/function.hpp>
 #include <ulib/stream/ITextStream.hpp>
-#include <ulib/mt/CriticalSection.hpp>
 #include <boost/shared_ptr.hpp>
 
-#if _ATL_VER >= 0x800
-#  include <atlsync.h>
-#endif
-
-#if defined(_WIN32_WCE) && _MSC_VER < 1300
-typedef boost::function1<void, const CString&> T_fnInputCheck;
-#else
 typedef boost::function<void(const CString&)> T_fnInputCheck;
-#endif
 
 /// GPS receiver
 class CReceiver
@@ -50,9 +47,13 @@ private:
    boost::shared_ptr<Stream::ITextStream> m_spRawOutputStream;
 
    /// serial port for the "serial port" input type
-//   boost::shared_ptr<Serial::CSerialPort> m_spSerialPort;
+   boost::shared_ptr<Serial::CSerialPort> m_spSerialPort;
 
    boost::shared_ptr<class CSerialPortReceiverThread> m_spReceiverThread;
+
+#ifdef _WIN32_WCE
+   boost::scoped_ptr<class CBluetoothActivator> m_scpBluetoothActivator;
+#endif
 
    ATL::CMutex m_mtx;
 

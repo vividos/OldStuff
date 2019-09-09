@@ -1,11 +1,17 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file VideoPowerManager.cpp Video power manager
+//
 #include "stdafx.h"
-#include <ulib/wince/VideoPowerManager.hpp>
+#include "VideoPowerManager.hpp"
 
 // from MSDN, http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnppcgen/html/ppc_layoff.asp
 
 // GDI Escapes for ExtEscape()
 #define QUERYESCSUPPORT    8
- 
+
 // The following are unique to CE
 #define GETVFRAMEPHYSICAL   6144
 #define GETVFRAMELEN    6145
@@ -20,17 +26,17 @@ typedef enum _VIDEO_POWER_STATE
    VideoPowerStandBy,
    VideoPowerSuspend,
    VideoPowerOff
-} VIDEO_POWER_STATE, *PVIDEO_POWER_STATE;
+} VIDEO_POWER_STATE, * PVIDEO_POWER_STATE;
 
 typedef struct _VIDEO_POWER_MANAGEMENT
 {
    ULONG Length;        ///< length of this struct
    ULONG DPMSVersion;   ///< DPMS version (alway set to 1)
    ULONG PowerState;    ///< power state value from enum VIDEO_POWER_STATE
-} VIDEO_POWER_MANAGEMENT, *PVIDEO_POWER_MANAGEMENT;
+} VIDEO_POWER_MANAGEMENT, * PVIDEO_POWER_MANAGEMENT;
 
 CVideoPowerManager::CVideoPowerManager()
-:m_bDisplayOff(false)
+   :m_bDisplayOff(false)
 {
 }
 

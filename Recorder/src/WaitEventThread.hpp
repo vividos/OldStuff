@@ -1,12 +1,18 @@
+//
+// Recorder - a GPS logger app for Windows Mobile
+// Copyright (C) 2006-2019 Michael Fink
+//
+/// \file WaitEventThread.hpp WaitEvent() thread
+//
 #pragma once
 
-#include <ulib/mt/WorkerThread.hpp>
+#include "WorkerThread.hpp"
 
 /// \brief class that implements a worker thread that waits on a serial port for read/write events
 /// the class is mainly written for Windows CE when no overlapped support is available; waiting
 /// for events is simulated using calling WaitCommEvent() in another thread waiting for an event
 /// that gets set when the call returns.
-class CWaitEventThread: public CWorkerThread<CWaitEventThread>
+class CWaitEventThread : public CWorkerThread<CWaitEventThread>
 {
 public:
    /// ctor
@@ -100,15 +106,15 @@ private:
    DWORD m_dwEventResult;
    HANDLE m_hPort;
 
-   //! when event is set, the wait thread is ready to do a next "wait" task
+   /// when event is set, the wait thread is ready to do a next "wait" task
    HANDLE m_hEventReady;
 
-   //! when event is set, the WaitCommEvent call returned successfully
+   /// when event is set, the WaitCommEvent call returned successfully
    HANDLE m_hEventWait;
 
-   //! when event is set, the wait thread is allowed to continue with a WaitCommEvent call
+   /// when event is set, the wait thread is allowed to continue with a WaitCommEvent call
    HANDLE m_hEventContinue;
 
-   //! when event is set, the wait thread should exit
+   /// when event is set, the wait thread should exit
    HANDLE m_hEventStop;
 };
