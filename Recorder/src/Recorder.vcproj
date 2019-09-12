@@ -14,6 +14,9 @@
 		<Platform
 			Name="Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
 		/>
+		<Platform
+			Name="Windows Mobile 6 Professional SDK (ARMV4I)"
+		/>
 	</Platforms>
 	<ToolFiles>
 	</ToolFiles>
@@ -23,6 +26,7 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)\intermediate"
 			ConfigurationType="1"
+			InheritedPropertySheets=".\wtl9.vsprops;.\boost.vsprops"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -117,6 +121,7 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)\intermediate"
 			ConfigurationType="1"
+			InheritedPropertySheets=".\wtl9.vsprops;.\boost.vsprops"
 			UseOfATL="1"
 			CharacterSet="1"
 			>
@@ -199,10 +204,100 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Debug|Windows Mobile 6 Professional SDK (ARMV4I)"
+			OutputDirectory="Windows Mobile 6 Professional SDK (ARMV4I)\$(ConfigurationName)"
+			IntermediateDirectory="Windows Mobile 6 Professional SDK (ARMV4I)\$(ConfigurationName)"
+			ConfigurationType="1"
+			InheritedPropertySheets=".\wtl9.vsprops;.\boost.vsprops"
+			UseOfATL="1"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;$(ARCHFAM);$(_ARCHFAM_);STANDARDSHELL_UI_MODEL;_DEBUG;DEBUG"
+				TargetEnvironment="1"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				ExecutionBucket="7"
+				Optimization="0"
+				AdditionalIncludeDirectories="ulib"
+				PreprocessorDefinitions="_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;$(ARCHFAM);$(_ARCHFAM_);STANDARDSHELL_UI_MODEL;_DEBUG;DEBUG;_STLP_NO_IOSTREAMS"
+				MinimalRebuild="true"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="2"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;$(ARCHFAM);$(_ARCHFAM_);STANDARDSHELL_UI_MODEL;_DEBUG;DEBUG"
+				Culture="1033"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/subsystem:windowsce,5.01"
+				LinkIncremental="2"
+				GenerateDebugInformation="true"
+				StackReserveSize="65536"
+				StackCommitSize="4096"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCCodeSignTool"
+				AuthenticodeSignature="false"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+			<DeploymentTool
+				ForceDirty="-1"
+				RemoteDirectory=""
+				RegisterOutput="0"
+				AdditionalFiles=""
+			/>
+			<DebuggerTool
+			/>
+		</Configuration>
+		<Configuration
 			Name="Release|Pocket PC 2003 (ARMV4)"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)\intermediate"
 			ConfigurationType="1"
+			InheritedPropertySheets=".\wtl9.vsprops;.\boost.vsprops"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -298,6 +393,7 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)\intermediate"
 			ConfigurationType="1"
+			InheritedPropertySheets=".\wtl9.vsprops;.\boost.vsprops"
 			UseOfATL="1"
 			CharacterSet="1"
 			>
@@ -381,6 +477,97 @@
 			<DebuggerTool
 			/>
 		</Configuration>
+		<Configuration
+			Name="Release|Windows Mobile 6 Professional SDK (ARMV4I)"
+			OutputDirectory="Windows Mobile 6 Professional SDK (ARMV4I)\$(ConfigurationName)"
+			IntermediateDirectory="Windows Mobile 6 Professional SDK (ARMV4I)\$(ConfigurationName)"
+			ConfigurationType="1"
+			InheritedPropertySheets=".\wtl9.vsprops;.\boost.vsprops"
+			UseOfATL="1"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;$(ARCHFAM);$(_ARCHFAM_);STANDARDSHELL_UI_MODELNDEBUG"
+				TargetEnvironment="1"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				ExecutionBucket="7"
+				Optimization="2"
+				FavorSizeOrSpeed="2"
+				AdditionalIncludeDirectories="ulib"
+				PreprocessorDefinitions="_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;$(ARCHFAM);$(_ARCHFAM_);STANDARDSHELL_UI_MODELNDEBUG"
+				MinimalRebuild="false"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="2"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;$(ARCHFAM);$(_ARCHFAM_);STANDARDSHELL_UI_MODELNDEBUG"
+				Culture="1033"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/subsystem:windowsce,5.01"
+				LinkIncremental="1"
+				GenerateDebugInformation="true"
+				StackReserveSize="65536"
+				StackCommitSize="4096"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCCodeSignTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+			<DeploymentTool
+				ForceDirty="-1"
+				RemoteDirectory=""
+				RegisterOutput="0"
+				AdditionalFiles=""
+			/>
+			<DebuggerTool
+			/>
+		</Configuration>
 	</Configurations>
 	<References>
 	</References>
@@ -406,11 +593,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\BluetoothActivator.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DisplayOffManager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\ulib\src\wince\HardwareKeyManager.cpp"
+				RelativePath=".\HardwareKeyManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Logger.cpp"
 				>
 			</File>
 			<File
@@ -427,6 +622,10 @@
 			</File>
 			<File
 				RelativePath=".\RecorderView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ShellNotifyIcon.cpp"
 				>
 			</File>
 			<File
@@ -449,6 +648,14 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
+					Name="Debug|Windows Mobile 6 Professional SDK (ARMV4I)"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Release|Pocket PC 2003 (ARMV4)"
 					>
 					<Tool
@@ -464,6 +671,22 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Windows Mobile 6 Professional SDK (ARMV4I)"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\VideoPowerManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WaitEventThread.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
@@ -487,7 +710,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\BluetoothActivator.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DisplayOffManager.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ErrorMessage.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\HardwareKeyManager.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Logger.hpp"
 				>
 			</File>
 			<File
@@ -507,11 +746,35 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SerialPort.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SerialPortImplWinCE.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Settings.hpp"
 				>
 			</File>
 			<File
+				RelativePath=".\ShellNotifyIcon.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VideoPowerManager.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WaitEventThread.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WorkerThread.hpp"
 				>
 			</File>
 		</Filter>
@@ -535,10 +798,6 @@
 				RelativePath=".\res\toolbar.bmp"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="ulib"
-			>
 		</Filter>
 	</Files>
 	<Globals>

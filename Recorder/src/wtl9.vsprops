@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="wtl9"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="packages\wtl.9.1.1\lib\native\include"
+	/>
+	<Tool
+		Name="VCResourceCompilerTool"
+		AdditionalIncludeDirectories="packages\wtl.9.1.1\lib\native\include"
+	/>
+</VisualStudioPropertySheet>
