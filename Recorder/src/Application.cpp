@@ -19,21 +19,12 @@ CApplication::~CApplication() throw()
 
 void CApplication::AppendNMEALog(const CString& cszFilename)
 {
-   // open or create output file
-   boost::shared_ptr<Stream::CTextFileStream> spTextStream(
-      new Stream::CTextFileStream(cszFilename,
-         Stream::CFileStream::modeOpenOrCreate,
-         Stream::CFileStream::accessWrite,
-         Stream::CFileStream::shareRead,
-         Stream::ITextStream::textEncodingAnsi,
-         Stream::ITextStream::lineEndingCRLF));
+   m_outputStream = _wfopen(cszFilename, _T("wb"));
 
    // seek to end
-   spTextStream->Seek(0LL, Stream::IStream::seekEnd);
+   fseek(m_outputStream, 0, SEEK_END);
 
-   m_spNMEALogTextStream = spTextStream;
-
-   Receiver().SetRawOutputStream(m_spNMEALogTextStream);
+   Receiver().SetRawOutputStream(m_outputStream);
 }
 
 void CApplication::CloseNMEALog()
@@ -42,6 +33,6 @@ void CApplication::CloseNMEALog()
    Receiver().SetRawOutputStream();
 
    // close log file
-   m_spNMEALogTextStream->Flush();
-   m_spNMEALogTextStream.reset();
+   fclose(m_outputStream);
+   m_outputStream = NULL;
 }

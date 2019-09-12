@@ -43,5 +43,5 @@ private:
 
    CReceiver m_receiver;
 
-   boost::shared_ptr<Stream::ITextStream> m_spNMEALogTextStream;
+   FILE* m_outputStream;
 };

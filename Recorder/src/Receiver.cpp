@@ -234,11 +234,10 @@ void CReceiver::OnNewRawNMEAData(const CString& cszData)
 {
    ATL::CMutexLock lock(m_mtx);
 
-   if (m_spRawOutputStream != NULL)
+   if (m_outputStream != NULL)
    {
-      Stream::ITextStream& stream = *m_spRawOutputStream;
-      ATLASSERT(stream.CanWrite());
-      stream.Write(cszData);
+      CStringA text(cszData);
+      fwrite(text.GetString(), sizeof(TCHAR), text.GetLength(), m_outputStream);
    }
 
    if (m_fnCallback != NULL)

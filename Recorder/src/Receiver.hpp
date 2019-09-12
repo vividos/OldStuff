@@ -7,7 +7,6 @@
 #pragma once
 
 #include <boost/function.hpp>
-#include <ulib/stream/ITextStream.hpp>
 #include <boost/shared_ptr.hpp>
 
 namespace Serial
@@ -36,11 +35,10 @@ public:
    }
 
    /// sets text stream pointer for raw nmea output
-   void SetRawOutputStream(boost::shared_ptr<Stream::ITextStream> spRawOutputStream =
-      boost::shared_ptr<Stream::ITextStream>()) throw()
+   void SetRawOutputStream(FILE* outputStream = NULL)
    {
       ATL::CMutexLock lock(m_mtx);
-      m_spRawOutputStream = spRawOutputStream;
+      m_outputStream = outputStream;
    }
 
 private:
@@ -48,8 +46,8 @@ private:
    void OnNewRawNMEAData(const CString& cszData);
 
 private:
-   /// text stream pointer for raw output (e.g. for logging)
-   boost::shared_ptr<Stream::ITextStream> m_spRawOutputStream;
+   /// file for raw output (e.g. for logging)
+   FILE* m_outputStream;
 
    /// serial port for the "serial port" input type
    boost::shared_ptr<Serial::CSerialPort> m_spSerialPort;
