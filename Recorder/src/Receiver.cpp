@@ -9,6 +9,7 @@
 #include "SerialPort.hpp"
 #include "WorkerThread.hpp"
 #include <boost/bind.hpp>
+#include <boost/scoped_ptr.hpp>
 
 #ifdef _WIN32_WCE
 #include "BluetoothActivator.hpp"
@@ -23,7 +24,8 @@ public:
       m_uiBits(7),
       m_uiParity(PARITY_EVEN),
       m_uiStopBits(STOPBITS_10),
-      m_enHandshakeMode(Serial::CSerialPort::handshakeOff)
+      m_enHandshakeMode(Serial::CSerialPort::handshakeOff),
+      m_bActivateBluetooth(false)
    {
    }
 
@@ -34,6 +36,7 @@ public:
    unsigned int m_uiParity;
    unsigned int m_uiStopBits;
    Serial::CSerialPort::EHandshakeMode m_enHandshakeMode;
+   bool m_bActivateBluetooth;
 };
 
 class CSerialPortReceiverThread

@@ -15,7 +15,7 @@
 
 namespace Logging
 {
-   static const TCHAR* App = _T("app");
+   static LPCTSTR App = _T("app");
 }
 
 

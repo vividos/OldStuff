@@ -4,8 +4,6 @@
 //
 /// \file RecorderView.h Recorder view class implementation
 //
-#pragma once
-
 #include "stdafx.h"
 #include "resourceppc.h"
 #include "RecorderView.h"
