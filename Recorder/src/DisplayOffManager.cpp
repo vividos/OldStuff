@@ -7,7 +7,7 @@
 #include "StdAfx.h"
 #include "DisplayOffManager.hpp"
 #include "VideoPowerManager.hpp"
-#include "Logger.hpp""
+#include "Logger.hpp"
 
 // note: these are defined in <winuserm.h>
 struct VKeyToNameMap
@@ -16,6 +16,7 @@ struct VKeyToNameMap
    LPCTSTR pszName;
 } g_aKeys[] =
 {
+#ifdef _WIN32_WCE
    { VK_APP1         , _T("App key 1") },
    { VK_APP2         , _T("App key 2") },
    { VK_APP3         , _T("App key 3") },
@@ -45,12 +46,19 @@ struct VKeyToNameMap
    { VK_TDOWN        , _T("Down") },
    { VK_TLEFT        , _T("Left") },
    { VK_TRIGHT       , _T("Right") },
+#else
+   { VK_RETURN       , _T("Return") },
+#endif
 };
 
 LPCTSTR g_pszDispOffMgr = _T("app.dispoffmgr");
 
 CDisplayOffManager::CDisplayOffManager()
+#ifdef _WIN32_WCE
    :m_uiAssignedKey(VK_TSOFT1),
+#else
+   : m_uiAssignedKey(VK_RETURN),
+#endif
    m_bAssignKey(false),
    m_bSwitchedOff(false),
    m_bWaitForKeyUp(false),
@@ -60,7 +68,7 @@ CDisplayOffManager::CDisplayOffManager()
    LOG_INFO(_T("display off manager ctor"), g_pszDispOffMgr);
 
    for (unsigned int i = 0; i < sizeof(g_aKeys) / sizeof(*g_aKeys); i++)
-      m_mapVKeyToName.insert(std::make_pair<UINT, LPCTSTR>(g_aKeys[i].uiVKey, g_aKeys[i].pszName));
+      m_mapVKeyToName[g_aKeys[i].uiVKey] = g_aKeys[i].pszName;
 
    m_keyManager.SetCallback(this);
 }

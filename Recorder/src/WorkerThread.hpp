@@ -7,6 +7,7 @@
 #pragma once
 
 #include <boost/function.hpp>
+#include <stdexcept>
 
 #ifdef WIN32
 
@@ -42,19 +43,19 @@ public:
    {
       HANDLE hThread = ::CreateThread(NULL, 0, ThreadProc, this, 0, &m_dwThreadId);
       if (hThread == NULL)
-         throw SystemException(_T("failed to create thread"), GetLastError(), __FILE__, __LINE__);
+         throw std::runtime_error("failed to create thread");
 
       m_spThread.reset(hThread, ::CloseHandle);
 
       // wait for thread start
-      m_evtStarted.Wait();
+      WaitForSingleObject(m_evtStarted, INFINITE);
    }
 
    /// sets thread name
    /// \note from http://msdn.microsoft.com/en-us/library/xcb2z8hs.aspx
    void SetName(LPCTSTR pszThreadName)
    {
-#ifdef WIN32
+#if defined(_WIN32) && !defined(_WIN32_WCE)
       USES_CONVERSION;
 
       THREADNAME_INFO info;
@@ -80,7 +81,7 @@ public:
       DWORD dwRet = ::WaitForSingleObject(m_spThread.get(), INFINITE);
       if (dwRet == WAIT_OBJECT_0)
          return;
-      throw SystemException(_T("failed to join worker thread"), GetLastError(), __FILE__, __LINE__);
+      throw std::runtime_error("failed to join worker thread");
    }
 
    /// returns id

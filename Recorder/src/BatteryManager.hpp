@@ -8,11 +8,13 @@
 
 #include <vector>
 
+#ifdef _WIN32_WCE
 class SystemPowerStatusEx : public SYSTEM_POWER_STATUS_EX
 {
 public:
    SystemPowerStatusEx(bool bUseCachedValues = false) throw();
 };
+#endif
 
 class CBatteryManager
 {

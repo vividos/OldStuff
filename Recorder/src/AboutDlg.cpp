@@ -10,7 +10,9 @@
 
 LRESULT CAboutDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 {
+#ifdef _WIN32_WCE
    AtlCreateEmptyMenuBar(m_hWnd);
+#endif
 
    return bHandled = FALSE;
 }

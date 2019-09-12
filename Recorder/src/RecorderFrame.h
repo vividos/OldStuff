@@ -18,7 +18,7 @@ class CRecorderFrame :
    public IShellNotifyIconCallback
 {
 public:
-   DECLARE_APP_FRAME_CLASS(NULL, IDR_MAINFRAME, L"Software\\WTL\\Recorder")
+   DECLARE_APP_FRAME_CLASS(NULL, IDR_MAINFRAME, _T("Software\\WTL\\Recorder"))
 
 public:
    CRecorderFrame() throw() :m_view(m_app) {}

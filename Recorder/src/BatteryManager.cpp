@@ -8,6 +8,7 @@
 #include "BatteryManager.hpp"
 #include "Logger.hpp"
 
+#ifdef _WIN32_WCE
 SystemPowerStatusEx::SystemPowerStatusEx(bool bUseCachedValues) throw()
 {
    ZeroMemory(this, sizeof(*this));
@@ -16,14 +17,20 @@ SystemPowerStatusEx::SystemPowerStatusEx(bool bUseCachedValues) throw()
    if (bRet == FALSE)
       ATLTRACE(_T("GetSystemPowerStatusEx failed: %x\n"), GetLastError());
 }
+#endif
 
 BYTE CBatteryManager::BatteryCapacity() throw()
 {
+#ifdef _WIN32_WCE
    return SystemPowerStatusEx().BatteryLifePercent;
+#else
+   return 100;
+#endif
 }
 
 void CBatteryManager::Tick() throw()
 {
+#ifdef _WIN32_WCE
    SystemPowerStatusEx systemPowerStatus;
 
    // check battery flag
@@ -67,6 +74,7 @@ void CBatteryManager::Tick() throw()
       m_vecTimeAndBatteryStatus.erase(m_vecTimeAndBatteryStatus.begin(),
          m_vecTimeAndBatteryStatus.begin() + m_vecTimeAndBatteryStatus.size() - 50);
    }
+#endif
 }
 
 COleDateTimeSpan CBatteryManager::RemainingTime() const throw()

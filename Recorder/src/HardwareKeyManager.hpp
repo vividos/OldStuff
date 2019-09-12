@@ -9,6 +9,7 @@
 #include <memory>
 #include <map>
 #include <set>
+#include <boost/scoped_ptr.hpp>
 
 /// callback interface for hardware key events
 class IHardwareKeyCallback

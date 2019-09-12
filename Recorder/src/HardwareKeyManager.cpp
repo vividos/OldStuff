@@ -8,10 +8,26 @@
 #include "HardwareKeyManager.hpp"
 #include <algorithm>
 
-std::unique_ptr<CHardwareKeyManager> CHardwareKeyManager::s_scpHardwareManager;
+boost::scoped_ptr<CHardwareKeyManager> CHardwareKeyManager::s_scpHardwareManager;
 
+#ifndef HC_ACTION
 #define HC_ACTION 0
+#endif
+
+#ifndef WH_KEYBOARD_LL
 #define WH_KEYBOARD_LL 20
+#endif
+
+template <typename T>
+T GetFunc(HMODULE module, LPCTSTR funcName)
+{
+#ifdef _WIN32_WCE
+   return reinterpret_cast<T>(::GetProcAddress(module, funcName));
+#else
+   CStringA funcNameA(funcName);
+   return reinterpret_cast<T>(::GetProcAddress(module, funcNameA));
+#endif
+}
 
 CHardwareKeyManager::CHardwareKeyManager()
    :m_pCallback(NULL),
@@ -22,15 +38,15 @@ CHardwareKeyManager::CHardwareKeyManager()
    ATLASSERT(hModuleCoredll != NULL);
 
    m_fnSetWindowsHookExW =
-      reinterpret_cast<T_fnSetWindowsHookExW>(::GetProcAddress(hModuleCoredll, _T("SetWindowsHookExW")));
+      GetFunc<T_fnSetWindowsHookExW>(hModuleCoredll, _T("SetWindowsHookExW"));
    m_fnCallNextHookEx =
-      reinterpret_cast<T_fnCallNextHookEx>(::GetProcAddress(hModuleCoredll, _T("CallNextHookEx")));
+      GetFunc<T_fnCallNextHookEx>(hModuleCoredll, _T("CallNextHookEx"));
    m_fnUnhookWindowsHookEx =
-      reinterpret_cast<T_fnUnhookWindowsHookEx>(::GetProcAddress(hModuleCoredll, _T("UnhookWindowsHookEx")));
+      GetFunc<T_fnUnhookWindowsHookEx>(hModuleCoredll, _T("UnhookWindowsHookEx"));
    m_fnRegisterHotKey =
-      reinterpret_cast<T_fnRegisterHotKey>(::GetProcAddress(hModuleCoredll, _T("RegisterHotKey")));
+      GetFunc<T_fnRegisterHotKey>(hModuleCoredll, _T("RegisterHotKey"));
    m_fnUnregisterFunc1 =
-      reinterpret_cast<T_fnUnregisterFunc1>(::GetProcAddress(hModuleCoredll, _T("UnregisterFunc1")));
+      GetFunc<T_fnUnregisterFunc1>(hModuleCoredll, _T("UnregisterFunc1"));
 }
 
 CHardwareKeyManager::~CHardwareKeyManager()
@@ -42,7 +58,7 @@ CHardwareKeyManager::~CHardwareKeyManager()
 CHardwareKeyManager& CHardwareKeyManager::GetInstance()
 {
    if (s_scpHardwareManager.get() == NULL)
-      s_scpHardwareManager = boost::scoped_ptr<CHardwareKeyManager>(new CHardwareKeyManager);
+      s_scpHardwareManager.reset(new CHardwareKeyManager);
 
    return *s_scpHardwareManager.get();
 }
@@ -110,6 +126,7 @@ bool CHardwareKeyManager::HookCallback(UINT uVKcode, bool bKeyDown, bool bSysKey
    return m_pCallback->OnHardwareKey(uVKcode, bKeyDown, bSysKey);
 }
 
+#ifdef _WIN32_WCE
 /// \internal data struct used in the HookProc function
 typedef struct
 {
@@ -119,6 +136,7 @@ typedef struct
    DWORD time;       ///< time point
    ULONG_PTR dwExtraInfo;  ///< extra info
 } KBDLLHOOKSTRUCT, * PKBDLLHOOKSTRUCT;
+#endif
 
 LRESULT CHardwareKeyManager::HookProc(int iCode, WPARAM wParam, LPARAM lParam)
 {

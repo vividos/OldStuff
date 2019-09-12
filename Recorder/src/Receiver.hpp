@@ -10,6 +10,11 @@
 #include <ulib/stream/ITextStream.hpp>
 #include <boost/shared_ptr.hpp>
 
+namespace Serial
+{
+   class CSerialPort;
+}
+
 typedef boost::function<void(const CString&)> T_fnInputCheck;
 
 /// GPS receiver
@@ -50,10 +55,6 @@ private:
    boost::shared_ptr<Serial::CSerialPort> m_spSerialPort;
 
    boost::shared_ptr<class CSerialPortReceiverThread> m_spReceiverThread;
-
-#ifdef _WIN32_WCE
-   boost::scoped_ptr<class CBluetoothActivator> m_scpBluetoothActivator;
-#endif
 
    ATL::CMutex m_mtx;
 

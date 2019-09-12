@@ -38,7 +38,7 @@ void CRecorderFrame::AppSave()
 {
    CAppInfo info;
    bool bStatus = (UIGetState(ID_VIEW_STATUS_BAR) & UPDUI_CHECKED) == UPDUI_CHECKED;
-   info.Save(bStatus, L"Status");
+   info.Save(bStatus, _T("Status"));
    // Insert your code here
 }
 
@@ -69,7 +69,7 @@ LRESULT CRecorderFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lPar
 
    // StatusBar state restoration
    bool bVisible = true;
-   info.Restore(bVisible, L"Status");
+   info.Restore(bVisible, _T("Status"));
    DWORD dwStyle = WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
    if (bVisible)
       dwStyle |= WS_VISIBLE;
@@ -121,7 +121,7 @@ LRESULT CRecorderFrame::OnTimer(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/,
       // update values on form
       m_view.UpdateBatteryStatus(
          App().BatteryManager().BatteryCapacity(),
-         static_cast<DWORD>(App().BatteryManager().RemainingTime().TotalSeconds()));
+         static_cast<DWORD>(App().BatteryManager().RemainingTime().GetTotalSeconds()));
 
       ::SystemIdleTimerReset();
    }

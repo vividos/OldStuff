@@ -6,7 +6,7 @@
 //
 #pragma once
 
-#include "HardwareKeyManager.hpp""
+#include "HardwareKeyManager.hpp"
 #include <boost/function.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <map>

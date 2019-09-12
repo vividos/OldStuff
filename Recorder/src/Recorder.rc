@@ -1,0 +1,224 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "atlres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""atlres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "Show status bar",             ID_VIEW_STATUS_BAR
+        MENUITEM "New",                         ID_FILE_NEW
+        MENUITEM "Open",                        ID_FILE_OPEN
+        MENUITEM "Save",                        ID_FILE_SAVE
+        MENUITEM "Save As",                     ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        POPUP "Edit"
+        BEGIN
+            MENUITEM "Undo",                        ID_EDIT_UNDO
+            MENUITEM SEPARATOR
+            MENUITEM "Cut",                         ID_EDIT_CUT
+            MENUITEM "Copy",                        ID_EDIT_COPY
+            MENUITEM "Paste",                       ID_EDIT_PASTE
+        END
+        MENUITEM "About Recorder",              ID_APP_ABOUT
+        MENUITEM "Exit",                        ID_APP_EXIT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\RecorderWTL10.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG 0, 0, 187, 102
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Recorder"
+FONT 9, "Segoe UI"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,130,81,50,14
+    CTEXT           "Recorder v1.0\n\n(c) Copyright 2007",IDC_STATIC,25,57,78,32
+    ICON            IDR_MAINFRAME,IDC_STATIC,55,26,18,20
+    GROUPBOX        "",IDC_STATIC,7,7,115,88
+END
+
+IDD_RECORDER_FORM DIALOG 0, 0, 156, 154
+STYLE DS_SETFONT | WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU
+CAPTION "Recorder"
+FONT 9, "Segoe UI"
+BEGIN
+    LTEXT           "No key assigned",IDC_STATIC_ASSIGNED_KEY,7,105,148,8
+    PUSHBUTTON      "Assign key",IDC_BUTTON_ASSIGN_KEY,7,88,50,14
+    PUSHBUTTON      "Switch off",IDC_BUTTON_SWITCH_OFF,62,88,50,14
+    LTEXT           "Battery Percent",IDC_STATIC,7,122,81,8
+    EDITTEXT        IDC_EDIT_BATTERY_PERCENT,89,118,61,12,ES_AUTOHSCROLL
+    LTEXT           "Battery Remaining",IDC_STATIC,7,137,81,8
+    EDITTEXT        IDC_EDIT_BATTERY_REMAINING,89,133,61,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_LOG_FILENAME,7,17,120,12,ES_AUTOHSCROLL
+    LTEXT           "Log-Filename",IDC_STATIC,7,7,148,8
+    PUSHBUTTON      "...",IDC_BUTTON_BROWSE_FILENAME,131,16,19,14
+    PUSHBUTTON      "Start",IDC_BUTTON_START_STOP,7,32,50,14
+    EDITTEXT        IDC_EDIT_TEST_OUTPUT,59,30,91,16,ES_MULTILINE | ES_READONLY | NOT WS_BORDER
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 95
+    END
+
+    IDD_RECORDER_FORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        VERTGUIDE, 89
+        VERTGUIDE, 150
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 145
+        HORZGUIDE, 130
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    "Q",            ID_APP_EXIT,            VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription", "Recorder Module"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "Recorder"
+            VALUE "LegalCopyright", "Copyright 2007"
+            VALUE "OriginalFilename", "Recorder.exe"
+            VALUE "ProductName", "Recorder Module"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDR_MAINFRAME           "Recorder"
+END
+
+STRINGTABLE
+BEGIN
+    ID_APP_ABOUT            "Program information"
+    ID_APP_EXIT             "Quit"
+END
+
+STRINGTABLE
+BEGIN
+    ATL_IDS_IDLEMESSAGE     "Ready"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+

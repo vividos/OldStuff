@@ -6,10 +6,13 @@
 //
 #include "StdAfx.h"
 #include "Receiver.hpp"
-#include "SerialPort.hpp""
-#include "BluetoothActivator.hpp"
+#include "SerialPort.hpp"
 #include "WorkerThread.hpp"
 #include <boost/bind.hpp>
+
+#ifdef _WIN32_WCE
+#include "BluetoothActivator.hpp"
+#endif
 
 class CSerialPortSettings
 {
@@ -61,6 +64,10 @@ private:
    boost::scoped_ptr<Serial::CSerialPort> m_spSerialPort;
 
    CSerialPortSettings m_settings;
+
+#ifdef _WIN32_WCE
+   boost::scoped_ptr<class CBluetoothActivator> m_scpBluetoothActivator;
+#endif
 };
 
 int CSerialPortReceiverThread::Run()
@@ -82,7 +89,7 @@ int CSerialPortReceiverThread::Run()
    // activate bluetooth when selected, and when current connection is off
 #ifdef _WIN32_WCE
    if (m_settings.m_bActivateBluetooth && CBluetoothActivator::GetCurrentMode() == BTH_POWER_OFF)
-      m_scpBluetoothActivator = boost::scoped_ptr<CBluetoothActivator>(new CBluetoothActivator);
+      m_scpBluetoothActivator.reset(new CBluetoothActivator);
 #endif
 
    m_spSerialPort.reset(new Serial::CSerialPort(m_settings.m_cszSerialPortDeviceName));

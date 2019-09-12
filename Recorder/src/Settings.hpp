@@ -6,6 +6,8 @@
 //
 #pragma once
 
+#include <stdexcept>
+
 namespace Settings
 {
    static const TCHAR* TimerBatteryManager = _T("Settings.BatteryManager.Timer");
@@ -27,7 +29,7 @@ public:
          return true;
       }
 
-      throw Exception::CException(_T("unknown settings name: ") + cszName, __FILE__, __LINE__);
+      ThrowUnknownSettingsException(cszName);
    }
 
    CString GetString(const CString& cszName)
@@ -37,7 +39,7 @@ public:
          return _T("COM4:");
       }
 
-      throw Exception::CException(_T("unknown settings name: ") + cszName, __FILE__, __LINE__);
+      ThrowUnknownSettingsException(cszName);
    }
 
    unsigned int GetUInt(const CString& cszName)
@@ -52,6 +54,14 @@ public:
          return 38400;
       }
 
-      throw Exception::CException(_T("unknown settings name: ") + cszName, __FILE__, __LINE__);
+      ThrowUnknownSettingsException(cszName);
+   }
+
+private:
+   __declspec(noreturn) void ThrowUnknownSettingsException(const CString& cszName)
+   {
+      std::string msg("unknown settings name: ");
+      msg += CStringA(cszName);
+      throw std::runtime_error(msg);
    }
 };
