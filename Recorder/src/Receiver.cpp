@@ -36,12 +36,13 @@ public:
    Serial::CSerialPort::EHandshakeMode m_enHandshakeMode;
 };
 
-class CSerialPortReceiverThread : public CWorkerThread<CSerialPortReceiverThread>
+class CSerialPortReceiverThread
 {
 public:
    CSerialPortReceiverThread(boost::function<void(const CString&)> fnOnRawData)
       :m_fnOnRawData(fnOnRawData),
-      m_evtStop(TRUE, FALSE)
+      m_evtStop(TRUE, FALSE),
+      m_workerThread(boost::bind(&CSerialPortReceiverThread::Run, this))
    {
    }
    ~CSerialPortReceiverThread()
@@ -52,7 +53,7 @@ public:
    void Stop()
    {
       m_evtStop.Set();
-      Join();
+      m_workerThread.Join();
    }
 
    int Run();
@@ -64,6 +65,9 @@ private:
    boost::scoped_ptr<Serial::CSerialPort> m_spSerialPort;
 
    CSerialPortSettings m_settings;
+
+   /// worker thread for receiver
+   WorkerThread m_workerThread;
 
 #ifdef _WIN32_WCE
    boost::scoped_ptr<class CBluetoothActivator> m_scpBluetoothActivator;
@@ -207,7 +211,6 @@ void CReceiver::Start()
 
    m_spReceiverThread.reset(new CSerialPortReceiverThread(
       boost::bind(&CReceiver::OnNewRawNMEAData, this, _1)));
-   m_spReceiverThread->Start();
 }
 
 void CReceiver::Stop()
@@ -221,7 +224,6 @@ void CReceiver::Stop()
    }
 
    spReceiverThread->Stop();
-   spReceiverThread->Join();
    spReceiverThread.reset();
 }
 

@@ -7,12 +7,13 @@
 #pragma once
 
 #include "WorkerThread.hpp"
+#include <boost/bind.hpp>
 
 /// \brief class that implements a worker thread that waits on a serial port for read/write events
 /// the class is mainly written for Windows CE when no overlapped support is available; waiting
 /// for events is simulated using calling WaitCommEvent() in another thread waiting for an event
 /// that gets set when the call returns.
-class CWaitEventThread : public CWorkerThread<CWaitEventThread>
+class CWaitEventThread
 {
 public:
    /// ctor
@@ -21,16 +22,16 @@ public:
       m_hEventReady(::CreateEvent(NULL, TRUE, FALSE, NULL)), // manual-reset
       m_hEventWait(::CreateEvent(NULL, TRUE, FALSE, NULL)), // manual-reset
       m_hEventContinue(::CreateEvent(NULL, TRUE, FALSE, NULL)), // manual-reset
-      m_hEventStop(::CreateEvent(NULL, TRUE, FALSE, NULL)) // manual-reset
+      m_hEventStop(::CreateEvent(NULL, TRUE, FALSE, NULL)), // manual-reset
+      m_workerThread(boost::bind(&CWaitEventThread::Run, this))
    {
-      Start();
    }
 
    ~CWaitEventThread()
    {
       // stop background thread
       StopThread();
-      ::WaitForSingleObject(m_hThread, INFINITE);
+      m_workerThread.Join();
 
       CloseHandle(m_hEventReady);
       CloseHandle(m_hEventWait);
@@ -117,4 +118,7 @@ private:
 
    /// when event is set, the wait thread should exit
    HANDLE m_hEventStop;
+
+   /// worker thread
+   WorkerThread m_workerThread;
 };
