@@ -90,7 +90,7 @@ bool CHardwareKeyManager::Start(HINSTANCE hInstance, HWND hWnd)
    // establish keyboard hook
    m_hHook = m_fnSetWindowsHookExW(WH_KEYBOARD_LL, &HookProc, hInstance, 0);
    if (m_hHook == NULL)
-      ATLTRACE(_T("CHardwareKeyManager: failed to hook keyboard"));
+      ATLTRACE(_T("CHardwareKeyManager: failed to hook keyboard\n"));
 
    return m_hHook != NULL;
 }
