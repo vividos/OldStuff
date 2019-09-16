@@ -12,10 +12,6 @@
 #define WINVER 0x0420
 
 // WinCE
-#if _WIN32_WCE >= 0x420
-#  include <tpcshell.h>
-#endif
-
 #include <aygshell.h>
 #pragma comment(lib, "aygshell.lib")
 
