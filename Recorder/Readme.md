@@ -13,7 +13,7 @@ Visit [https://github.com/vividos/OldStuff/releases]() for releases of all OldSt
 
 ## Screenshots ##
 
-No screenshots yet.
+![Recorder in WM6 Emulator](recorder-wm6-emulator.png)
 
 ## Technical Background ##
 
@@ -25,3 +25,18 @@ Studio 2008 with the PocketPC 2003 SDK or the Windows Mobile 6 SDK installed.
 The application most probably won't compile at this point, as there are some
 files missing. The project also uses an early version of Boost and an early
 version of UlibCpp that has some WinCE specific classes.
+
+### How to compile ###
+
+You need to download WTL and install the application wizard for Windows CE:
+https://sourceforge.net/projects/wtl/
+Download "WTL 9.1.5321 Final"; WTL 10 won't work, as it removed the WinCE
+support.
+
+Extract the zip archive somewhere and open the wtl9.vsprops file. Adjust the
+path to the "include" folder of the extracted zip archive. Optionally, if you
+want the application wizard, go to the AppWizCE folder. There, you can
+double-click the setup90.js and the script installs the application wizard.
+
+You also need a version of Boost; the library doesn't need to be compiled.
+Edit the boost.vsprops file and change the path to the Boost root folder.
