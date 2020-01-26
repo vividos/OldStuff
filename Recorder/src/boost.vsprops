@@ -6,6 +6,6 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories="packages\boost.1.70.0.0\lib\native\include"
+		AdditionalIncludeDirectories="packages\boost.1.71.0.0\lib\native\include"
 	/>
 </VisualStudioPropertySheet>
