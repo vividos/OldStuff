@@ -57,7 +57,6 @@
       <Optimization>Disabled</Optimization>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
-      <MinimalRebuild>true</MinimalRebuild>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <AdditionalIncludeDirectories>$(ProjectDir)packages\MingwWxWidgets.3.0.2\includes;$(ProjectDir)packages\MingwWxWidgets.3.0.2\includes\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;__WXDEBUG__;WXDEBUG=1;WIN32;_WINDOWS;__WINDOWS__;__WXMSW__;WINVER=0x0400;STRICT;%(PreprocessorDefinitions)</PreprocessorDefinitions>

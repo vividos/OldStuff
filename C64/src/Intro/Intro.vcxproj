@@ -51,7 +51,6 @@
     <ClCompile>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <Optimization>Disabled</Optimization>
-      <MinimalRebuild>true</MinimalRebuild>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <AdditionalIncludeDirectories>$(SolutionDir)GameClient2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
