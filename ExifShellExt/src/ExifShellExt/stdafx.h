@@ -1,15 +1,12 @@
 //
 // ExifShellExt - Exif data shell extension
-// Copyright (C) 2008,2017 Michael Fink
+// Copyright (C) 2008,2017,2020 Michael Fink
 //
 /// \file stdafx.h Precompiled header support
 //
 #pragma once
 
 #include <SDKDDKVer.h>
-
-// temporary fix: don't include atlribbon.h from WTL 9.1, the code is not compatible with Visual Studio 2017
-#define __ATLRIBBON_H__
 
 #include <ulib/config/Wtl.hpp>
 
