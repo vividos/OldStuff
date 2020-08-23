@@ -29,3 +29,7 @@ HotDir is a colored directory info viewer, much like an improved DOS ´dir´ com
 ## [Recorder](Recorder/Readme.md "Recorder")
 
 Recorder is a Windows Mobile app that records GPS tracks.
+
+## [Turbo C++ projects](TurboCpp/Readme.md "Turbo C++ projects")
+
+Several ancient Turbo C++ projects.
