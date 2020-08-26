@@ -14,6 +14,10 @@ available:
 - obj: Contains compiled .obj files
 - bin: Contains the compiled output files
 
+The following projects are available:
+
+- xmode: static library implementing VGA Mode X
+
 ## Turbo C++ 1.01 setup
 
 In order to install and run Turbo C++ you need Doxbox, which you can get here:
