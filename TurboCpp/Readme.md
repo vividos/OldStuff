@@ -6,6 +6,14 @@ All projects target 16-bit MS-DOS.
 Note that this folder can be mounted in Dosbox as the C: drive and the
 absolute paths used in the projects match perfectly.
 
+All projects can be found in the `proj` folder. The following subfolders are
+available:
+
+- shared: Contains some commonly used source files and unit tests
+- lib: Contains pre-built static libraries to be linked to projects
+- obj: Contains compiled .obj files
+- bin: Contains the compiled output files
+
 ## Turbo C++ 1.01 setup
 
 In order to install and run Turbo C++ you need Doxbox, which you can get here:
