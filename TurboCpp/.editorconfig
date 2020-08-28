@@ -1,0 +1,11 @@
+# Turbo C++ Editorconfig
+
+# C++ files
+[*.{cpp|h)]
+
+indent_size = 2
+indent_style = space
+tab_width = 2
+
+end_of_line = crlf
+insert_final_newline = true
