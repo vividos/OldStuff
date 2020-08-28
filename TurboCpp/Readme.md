@@ -16,7 +16,7 @@ available:
 
 The following projects are available:
 
-- [fractal](fractal/Readme.md): Mandelbrot fractal drawing application
+- [fractal](proj/fractal/Readme.md): Mandelbrot fractal drawing application
 - xmode: static library implementing VGA Mode X
 
 ## Turbo C++ 1.01 setup
