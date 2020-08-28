@@ -34,8 +34,8 @@ folder as the C: drive, e.g. with this command:
 
     "C:\...\DOSBOX\dosbox.exe" -c "mount c ." -c "C:"
 
-You can also use the `run_tcpp.cmd` file provided here. You probably have to
-adjust the dosbox path.
+You can also use the `Run_TurboCpp.cmd` file provided here. You have to
+adjust the dosbox path in the .cmd file.
 
 Change into the `tcpp101` folder (`cd tcpp101`) and start the install
 program.
