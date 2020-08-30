@@ -45,7 +45,8 @@ public:
   void add(const char* str) { strcopy(str, length()); }; // fgt 'str' hinten an
   void operator += (const char* str) { add(str); }; // addiert einen 'char*'
   void operator += (const string& str) { add(str.getstr()); }; // einen 'string&'
-  void operator += (char c) { // oder einen einzelnen 'char'
+  void operator += (char c) // oder einen einzelnen 'char'
+  {
     word l = length();
     if (l < size)
       put(c, l++), put(0, l);
@@ -72,6 +73,9 @@ public:
   // Konvertierung in lower-/uppercase-Strings
   void uppercase();
   void lowercase();
+
+  // fills string with number of chars
+  void fill(char ch, int length);
 
 private:
   void strcopy(const char* from, int nach = 0);

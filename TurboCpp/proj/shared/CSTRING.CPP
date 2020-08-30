@@ -136,3 +136,10 @@ void string::lowercase() {
   for (register int i = 0; sptr[i] != 0; i++)
     sptr[i] = ::lowcase(sptr[i]);
 };
+
+void string::fill(char ch, int length)
+{
+  if (length + 1 >= size)
+    length = size - 1;
+  memset(sptr, ch, length);
+}
