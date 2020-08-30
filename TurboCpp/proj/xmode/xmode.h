@@ -19,6 +19,9 @@ public:
   void on();
   void off();
 
+  word getxres() const { return 320; }
+  word getyres() const { return 200; }
+
   void setpix(word x, word y, byte farbe);
   byte getpix(word x, word y);
 
