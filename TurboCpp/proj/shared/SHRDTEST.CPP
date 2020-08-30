@@ -8,12 +8,14 @@
 #include <conio.h>
 
 // d'oh! this doesn't work in Turbo C++...
-#define STRINGIFY(x) #x
+#define STRINGIFY2(x) #x
+#define STRINGIFY(x) STRINGIFY2(x)
 
 #define Assert(condition, text) \
   if (!(condition)) \
   { \
-    printf("Assert! Error in condition: %s\n%s", \
+    printf("%s(%i): Assert! Error in condition: %s\nMessage: %s", \
+      __FILE__, __LINE__, \
       STRINGIFY(x), text); \
       getch(); \
       exit(-1); \
@@ -41,10 +43,31 @@ void TestLinearMapping()
   Assert(m2.float2long(1.0) == 200L, "mapped long value must be 200");
 }
 
+#include "cstring.h"
+
+// this tests adding to a string with a fixed buffer size; since
+// the buffer is not automatically resized, only a part of the
+// added text appears in the string.
+void TestStringAdd()
+{
+  string n("test1", 7);
+  n.add("test2");
+  Assert(n == "test1t", "string must be added partially");
+}
+
+void TestStringFormat()
+{
+  string s(5); // note that initial buffer is too small
+  s.format("%i + %3.1f = %s", 42, 64.f, "106");
+  Assert(s == "42 + 64.0 = 106__", "formatted text must match");
+}
+
 void main()
 {
   clrscr();
   TestLinearMapping();
+  TestStringAdd();
+  TestStringFormat();
 
   printf("All tests OK!");
   getch();
