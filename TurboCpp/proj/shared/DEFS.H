@@ -23,6 +23,10 @@ typedef unsigned long dword;  // see ulong
   #define NULL 0L
 #endif
 
+// creates a far pointer from given segment and offset values
+#define farpointer(seg, ofs) \
+  (void far*)(((ulong)(seg) << 16) | (ofs))
+
 // definition of the class object
 class object
 {
