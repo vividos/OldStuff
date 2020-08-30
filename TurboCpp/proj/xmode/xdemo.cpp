@@ -23,6 +23,8 @@ void main()
   for (int i = 0; i < 100; i++)
     x.setline(i, i, array, 16);
 
+  x.print(32, 100, YELLOW, RED, "Hello Mode X World!");
+
   getch();
 
   x.off();

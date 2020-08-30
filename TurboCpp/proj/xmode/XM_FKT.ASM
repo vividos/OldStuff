@@ -78,6 +78,7 @@ public    _clearpage              ;l”scht angegebene page
 public    _pagemove               ;moved page # auf aktuelle _vio_seg
 
 public    _line_copy              ;kopiert ein byte-array auf den screen
+public    _blockmove              ;bewegt bl”cke
 
 
 ;-- INIT320200: initialisiert den 320*200 Punkte-Modus -----------------
@@ -549,6 +550,108 @@ ARG plane:WORD,source:DWORD,offs:WORD,bsize:WORD       ;,clear:word
 
 	  pop  bp
 	  retf
+endp
+
+
+;-----------------------------------------------------------------------
+;-- BLOCKMOVE: verschiebt eine Gruppe von Pixeln im Video-RAM
+;-- Aufruf von TC: blockmove( int vp,vx,vy;
+;--                           int np,nx,ny;
+;--                           int breite, hoehe; );
+_blockmove proc far
+
+sframe4    struc                  ;Struktur zum Zugriff auf den Stack
+bp4        dw ?                   ;nimmt BP auf
+ret_adr4   dw ?                   ;Rcksprungadresse zum Aufrufer
+hoehe      dw ?                   ;H”he
+breite     dw ?                   ;Breite
+nachy      dw ?                   ;nach Y-Ordinate
+nachx      dw ?                   ;nach X-Ordinate
+nachpage   dw ?                   ;nach Seite
+vony       dw ?                   ;von Y-Ordinate
+vonx       dw ?                   ;von X-Ordinate
+vonpage    dw ?                   ;von Seite
+sframe4    ends                   ;Ende der Struktur
+
+frame      equ [ bp - bp4 ]       ;adressiert die Elemente der Struktur
+
+  push  bp               ;Adressierung der Parameter ber
+  mov   bp,sp            ;das BP-Register vorbereiten
+
+  push  ds
+  cld                    ;bei Stringbefehlen aufw„rts
+
+  mov   dx,GC_INDEX      ;aktuellen Write-Mode holen und
+  mov   al,GC_GRAPH_MODE ;Write-Mode 1 einstellen
+  out   dx,al
+  inc   dx
+  in    al,dx
+  push  ax               ;aktuellen Modus auf Stack merken
+  and   al,not 3
+  or    al,1
+  out   dx,al
+
+  mov   al,4             ;DS auf Anfang der VON-Seite
+  mov   cl,byte ptr frame.vonpage
+  mul   cl
+  or    al,0A0h
+  xchg  ah,al
+  mov   ds,ax
+
+  mov   al,4             ;ES auf Anfang der NACH-Seite
+  mov   cl,byte ptr frame.nachpage
+  mul   cl
+  or    al,0A0h
+  xchg  ah,al
+  mov   es,ax
+
+  mov   ax,PIXX / 4      ;SI auf Startposition VON
+  mul   frame.vony
+  mov   si,frame.vonx
+  shr   si,2
+  add   si,ax
+
+  mov   ax,PIXX / 4      ;DI auf Zielposition NACH
+  mul   frame.nachy
+  mov   di,frame.nachx
+  shr   di,2
+  add   di,ax
+
+  mov   dh,byte ptr frame.hoehe   ;DH = Zeilen
+  mov   dl,byte ptr frame.breite  ;DL = Bytes
+  shr dl,2
+
+  mov   bx,PIXX / 4      ;BX als Offset zur n„chsten Zeile
+  sub   bl,dl
+  xor   ch,ch            ;Hi-Byte des Counters ist immer 0
+
+  push  dx               ;DX auf dem Stack sichern
+  mov   dx,SC_INDEX      ;Zugriff auf alle Bit-Planes sichern
+  mov   ah,0Fh
+  mov   al,SC_MAP_MASK
+  out   dx,ax
+  pop   dx               ;DX zurckholen
+
+mt1:
+  mov   cl,dl            ;Anzahl Bytes nach CL
+
+  rep   movsb            ;Zeile kopieren
+  add   di,bx            ;DI in n„chste Zeile
+  add   si,bx            ;und auch SI
+  dec   dh               ;noch eine Zeile?
+  jne   mt1              ;Ja ---> weiter
+
+mtend:
+  mov   dx,GC_INDEX      ;wieder den alten Write-Mode ein-
+  pop   ax               ;stellen
+  mov   ah,al
+  mov   al,GC_GRAPH_MODE
+  out   dx,ax
+
+  pop   ds
+  pop   bp
+
+  retf
 endp
 
 

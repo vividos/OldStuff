@@ -1,19 +1,20 @@
 Publics by module
 
-XMODE        size = 352
+XMODE        size = 693
 	xmode::xmode()                    xmode::~xmode()
 	xmode::activepage()               xmode::clearpage(unsigned char)
 	xmode::getpix(unsigned short,unsigned short)  xmode::off()
 	xmode::on()                       xmode::pagemove(unsigned char)
+	xmode::print(unsigned short,unsigned short,unsigned char,unsigned char,const char far*)  xmode::printchar(char,unsigned short,unsigned short,unsigned char,unsigned char)
 	xmode::setline(unsigned short,unsigned short,unsigned char far*,unsigned short)  xmode::setpage(unsigned char)
 	xmode::setpix(unsigned short,unsigned short,unsigned char)  xmode::showpage(unsigned char)
 	xmode::switchpage()             
 
-XM_FKT       size = 470
-	_clearpage                        _exitvideo
-	_getfontptr                       _getpix
-	_init320200                       _line_copy
-	_pagemove                         _setpage
-	_setpix                           _showpage
-	_switchpage                       _vio_seg
-	_wait_retrace                   
+XM_FKT       size = 593
+	_blockmove                        _clearpage
+	_exitvideo                        _getfontptr
+	_getpix                           _init320200
+	_line_copy                        _pagemove
+	_setpage                          _setpix
+	_showpage                         _switchpage
+	_vio_seg                          _wait_retrace
