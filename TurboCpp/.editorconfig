@@ -1,7 +1,7 @@
 # Turbo C++ Editorconfig
 
 # C++ files
-[*.{cpp|h)]
+[*.{cpp,h}]
 
 indent_size = 2
 indent_style = space
