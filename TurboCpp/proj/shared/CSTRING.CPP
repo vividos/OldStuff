@@ -1,11 +1,13 @@
 // cstring.cpp - Wrapper-Klasse fuer Strings
-//(c) 1998,2020 Michael Fink
+// (c) 1998,2020 Michael Fink
+// https://github.com/vividos/OldStuff/
 
 #include "cstring.h"
 #include <mem.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <assert.h>
 
 // gibt Groá- oder Kleinbuchstaben zurck
 char upcase(char a)
@@ -98,18 +100,14 @@ void string::format(const char* fmt, ...)
   va_list args;
 
   va_start(args, fmt);
-  int length = vsprintf(NULL, fmt, args);
+  int length = vsprintf(sptr, fmt, args);
   va_end(args);
 
   if (length + 1 > size)
   {
-    delete sptr;
-    sptr = new char[size = (word)(length + 1)];
+    // buffer size was too small! buffer was overwritten!
+    assert(false);
   }
-
-  va_start(args, fmt);
-  vsprintf(sptr, fmt, args);
-  va_end(args);
 }
 
 long string::get_long() const

@@ -57,8 +57,7 @@ public:
     else strcopy(sptr + wo + wieviele, wo);
   };
 
-  // formats text using format string and variable arguments, resizing
-  // the string buffer when necessary
+  // formats text using format string and variable arguments
   void format(const char* fmt, ...);
 
   // parses long integer from string
