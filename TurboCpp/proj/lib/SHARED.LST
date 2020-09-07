@@ -1,0 +1,35 @@
+Publics by module
+
+APP          size = 338
+	app::app()                        app::arg_option(const string far&)
+	app::handle_key(keycode)          app::idle()
+	app::init()                       app::run(int,char far*far*)
+	app::run()                        app::show_screen()
+
+CSTRING      size = 1260
+	lowcase(char)                     string::string(const string far&)
+	string::string(const char far*)   string::string(const char far*,unsigned short)
+	string::string(unsigned short)    string::~string()
+	string::countchar(char) const     string::fill(char,int)
+	string::firstpos(char,unsigned char) const  string::format(const char far*,...)
+	string::get_long() const          string::lowercase()
+	string::strcopy(const char far*,int)  string::uppercase()
+	stringcompare(const char far*,const char far*,unsigned short)  stringlength(const char far*)
+	upcase(char)                    
+
+KEYBOARD     size = 245
+	keyboard::getbreak()              keyboard::is_special_key(specialKeys)
+	keyboard::key_pressed()           keyboard::set_typem(unsigned char,unsigned char)
+	keyboard::setbreak(unsigned char)  keyboard::upcase(keycode)
+	keyboard::wait_key()              send_kb()
+	set_typm(unsigned char)           waitk()
+
+SCREEN       size = 355
+	screen::screen()                  screen::~screen()
+	screen::openwindow(point,point)   screen::restore()
+	screen::setcursortype(cursortype)  screen::store()
+
+WINDOW       size = 259
+	textwindow::textwindow()          textwindow::~textwindow()
+	textwindow::clear()               textwindow::gotoxy(int,int)
+	textwindow::outstr(const string far&)  textwindow::setattr(color,color,unsigned char)
