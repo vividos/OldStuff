@@ -62,12 +62,59 @@ void TestStringFormat()
   Assert(s == "42 + 64.0 = 106__", "formatted text must match");
 }
 
+#include "app.h"
+#include "keyboard.h"
+
+class testapp: public app
+{
+  int count;
+public:
+  virtual void init()
+  {
+    count = 0;
+  }
+  virtual void show_screen();
+  virtual void handle_key(keycode kc)
+  {
+    if (kc == kbF1 &&
+        keyboard::is_special_key(skAlt))
+      count++;
+  }
+};
+
+void testapp::show_screen()
+{
+  point min = {20, 5}, max = {40, 55};
+  textwindow* wnd = sc.openwindow(min, max);
+  wnd->setattr(white, blue);
+  wnd->clear();
+
+  wnd->gotoxy(2, 2);
+  wnd->outstr("Hello World!");
+  wnd->gotoxy(4, 6);
+
+  string text(40);
+  text.format("Count is: %i", count);
+  wnd->outstr(text);
+
+  wnd->setattr(white, blue, true);
+  wnd->gotoxy(6, 10);
+  wnd->outstr("Increase count by pressing Alt+F1!");
+}
+
+void TestApp()
+{
+  testapp app;
+  app.run();
+}
+
 void main()
 {
   clrscr();
   TestLinearMapping();
   TestStringAdd();
   TestStringFormat();
+  TestApp();
 
   printf("All tests OK!");
   getch();
