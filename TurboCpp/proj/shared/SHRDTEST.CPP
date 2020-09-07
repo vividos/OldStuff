@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <conio.h>
 
-// d'oh! this doesn't work in Turbo C++...
 #define STRINGIFY2(x) #x
 #define STRINGIFY(x) STRINGIFY2(x)
 
@@ -16,7 +15,7 @@
   { \
     printf("%s(%i): Assert! Error in condition: %s\nMessage: %s", \
       __FILE__, __LINE__, \
-      STRINGIFY(x), text); \
+      STRINGIFY(condition), text); \
       getch(); \
       exit(-1); \
   }
@@ -57,9 +56,9 @@ void TestStringAdd()
 
 void TestStringFormat()
 {
-  string s(5); // note that initial buffer is too small
+  string s(32); // note that initial buffer is large enough
   s.format("%i + %3.1f = %s", 42, 64.f, "106");
-  Assert(s == "42 + 64.0 = 106__", "formatted text must match");
+  Assert(s == "42 + 64.0 = 106", "formatted text must match");
 }
 
 #include "app.h"
