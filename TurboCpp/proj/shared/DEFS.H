@@ -13,7 +13,7 @@ typedef short unsigned word;  // 16 bit ohne Vorz.
 typedef unsigned long ulong;  // 32 bit ohne Vorz.
 typedef unsigned long dword;  // see ulong
 
-#ifndef __BORLANDC__
+#if !defined(__BORLANDC__) && !defined (_MSC_VER)
   typedef unsigned char bool; // bool for Turbo C++ < v4.x
   #define false 0
   #define true 1
@@ -22,6 +22,10 @@ typedef unsigned long dword;  // see ulong
 #ifndef NULL
   #define NULL 0L
 #endif
+
+// determines if given value is in a range, including the range borders
+#define in_range(value, minvalue, maxvalue) \
+  (bool)((value) >= (minvalue) && (value) <= (maxvalue))
 
 // creates a far pointer from given segment and offset values
 #define farpointer(seg, ofs) \

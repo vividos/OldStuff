@@ -7,6 +7,7 @@
 
 #include "keycode.h"
 
+// access to various keyboard states
 class keyboard
 {
 public:
