@@ -19,7 +19,7 @@ The following projects are available:
 - [antchaos](proj/antchaos/Readme.md): Ant chaos application
 - [feldlini](proj/feldlini/Readme.md): Feldlinien application
 - [fractal](proj/fractal/Readme.md): Mandelbrot fractal drawing application
-- xmode: static library implementing VGA Mode X
+- [xmode](proj/xmode/Readme.md): static library implementing VGA Mode X
 
 ## Turbo C++ 1.01 setup
 
