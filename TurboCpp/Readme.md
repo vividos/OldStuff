@@ -9,7 +9,7 @@ absolute paths used in the projects match perfectly.
 All projects can be found in the `proj` folder. The following subfolders are
 available:
 
-- shared: Contains some commonly used source files and unit tests
+- [shared](proj/shared/Readme.md): Contains some commonly used source files and unit tests
 - lib: Contains pre-built static libraries to be linked to projects
 - obj: Contains compiled .obj files
 - bin: Contains the compiled output files
