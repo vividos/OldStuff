@@ -8,5 +8,6 @@ mkdir proj\obj
 
 dosbox.exe ^
    -c "mount c %CD%" ^
+   -c "mount d d:\ -t cdrom " ^
    -c "C:" ^
    -c "set PATH=C:\TC\BIN"

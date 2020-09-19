@@ -17,6 +17,7 @@ available:
 The following projects are available:
 
 - [antchaos](proj/antchaos/Readme.md): Ant chaos application
+- [cdp](proj/cdp/Readme.md): CD player application
 - [feldlini](proj/feldlini/Readme.md): Feldlinien application
 - [fractal](proj/fractal/Readme.md): Mandelbrot fractal drawing application
 - [imgview](proj/imgview/Readme.md): Image viewer application
