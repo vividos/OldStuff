@@ -23,7 +23,7 @@ CC= tcc
 
 # You may need to adjust these cc options:
 !if $d(DOS)
-CFLAGS= -O2 -ml -w-par -w-stu -w-ccc -w-rch
+CFLAGS= -O2 -ml -a- -b- -w-par -w-stu -w-ccc -w-rch
 !else
 CFLAGS= -O1 -w-par -w-stu -w-ccc -w-rch
 !endif
