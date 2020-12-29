@@ -367,17 +367,29 @@ byte far* vesa_mode::get_framebuffer_ptr(word x, word y)
   return start + y * xres + x * (bits_per_pixel >> 3);
 }
 
-#pragma argsused
 void vesa_mode::getpix(word x, word y, byte* pixel)
 {
-  // none of the VESA modes have getpix() implemented
-  assert(false);
+  memcpy(pixel, get_buffer_pos(x, y),
+    bits_per_pixel >> 3);
 }
 
 #pragma argsused
 void vesa_mode::set_palette(const palette256 palette)
 {
   assert(false); // invalid mode that doesn't use a palette!
+}
+
+void vesa_mode::setpix(word x, word y, const byte* pixel)
+{
+  memcpy(get_buffer_pos(x, y), pixel,
+    bits_per_pixel >> 3);
+}
+
+void vesa_mode::setline(word x, word y,
+  word length_in_bytes, const byte* line)
+{
+  memcpy(get_buffer_pos(x, y), line,
+    (bits_per_pixel >> 3) * length_in_bytes);
 }
 
 void vesa_mode::save_mode()
@@ -417,21 +429,20 @@ void vesa_mode::restore_mode()
   saved_state_buffer = NULL;
 }
 
-word vesa_mode::calc_offset(word x, word y)
+byte far* vesa_mode::get_buffer_pos(word x, word y)
 {
-  ulong offset = (ulong)y * bytes_per_line + x;
-
   if (has_linear_framebuffer)
   {
-    return offset;
+    return get_framebuffer_ptr(x, y);
   }
   else
   {
+    ulong offset = (ulong)y * bytes_per_line + x * (bits_per_pixel >> 3);
     word page = (word)(offset / granularity_kb);
     set_page(page);
-    return (word)(offset % granularity_kb);
+    return start + (offset % granularity_kb);
   }
-};
+}
 
 void vesa_mode::set_page(word page)
 {
@@ -451,114 +462,21 @@ void vesa_mode::set_page(word page)
   }
 }
 
-void vesa_mode_8bit::setpix(word x, word y, const byte* pixel)
-{
-  word _offset = calc_offset(x, y);
-  _AX = segment;
-  asm {
-    mov es,ax
-    mov di, _offset
-    push ds
-    lds si, pixel
-    movsb
-    pop ds
-  };
-}
-
-void vesa_mode_8bit::setline(word x, word y, word length, const byte* line)
-{
-  memcpy(
-    farpointer(segment, calc_offset(x, y)),
-    line,
-    length);
-}
-
 void vesa_mode_8bit::set_palette(const palette256 palette)
 {
   set_vga_palette(palette);
 }
 
-void vesa_mode_24bit::setpix(word x, word y, const byte* pixel)
-{
-  word _offset = calc_offset((x << 1) + x, y);
-  _AX = segment;
-  asm {
-    mov es, ax
-    mov di, _offset
-    push ds
-    lds si, pixel
-    mov cx, 3
-    rep movsb
-    pop ds
-  };
-}
-
-void vesa_mode_24bit::setline(word x, word y, word length, const byte* line)
-{
-  memcpy(
-    farpointer(segment, calc_offset((x << 1) + x, y)),
-    line,
-    (length << 1) + length);
-}
-
-void vesa_mode_16bit::setpix(word x, word y, const byte* pixel)
-{
-  word _offset = calc_offset(x << 1, y);
-  _AX = segment;
-  asm {
-    mov es, ax
-    mov di, _offset
-    push ds
-    lds si, pixel
-    mov cx, 2
-    rep movsb
-    pop ds
-  }
-}
-
-void vesa_mode_16bit::setline(word x, word y,
-  word length, const byte* pixel)
-{
-  memcpy(
-    farpointer(segment, calc_offset(x << 1, y)),
-    pixel,
-    (length << 1) + length);
-}
-
+#pragma argsused
 void vesa_mode_4bit::setpix(word x, word y, const byte* pixel)
 {
-  word _offset = calc_offset(x >> 3, y);
-  _AX = segment;
-  asm {
-    mov es, ax
-    mov bx, _offset
-    mov cx, x
-    and cl, 7
-    xor cl, 7
-    mov ah, 1
-    shl ah, cl
-    mov dx, 3ceh
-    mov al, 8
-    out dx, ax
-    mov ax, 205h
-    out dx, ax
-    push ds
-    lds si, pixel
-    mov al, es: [bx]
-    lodsb;
-    mov es : [bx] , al
-    pop ds
-    mov ax, 0ff08h
-    out dx, ax
-    mov ax, 5
-    out dx, ax
-  };
+  assert(false); // not implemented!
 }
 
+#pragma argsused
 void vesa_mode_4bit::setline(word x, word y, word length, const byte* line)
 {
-  for (word pos = 0; pos < length; pos++)
-    setpix(x + pos, y, line + pos);
+  assert(false); // not implemented!
 }
 
 void vesa_mode_4bit::set_palette(const palette256 palette)

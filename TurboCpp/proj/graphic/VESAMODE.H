@@ -41,11 +41,9 @@ public:
   virtual byte far* get_framebuffer_ptr(word x, word y);
   virtual void getpix(word x, word y, byte* pixel);
   virtual void set_palette(const palette256 palette);
-
-  // some virtual methods still are abstract
-
-  virtual void setpix(word x, word y, const byte* pixel) = 0;
-  virtual void setline(word x, word y, word length, const byte* line) = 0;
+  virtual void setpix(word x, word y, const byte* pixel);
+  virtual void setline(word x, word y, word
+    length_in_bytes, const byte* line);
 
   // saves state of the video mode, e.g. to change to text mode
   void save_mode();
@@ -68,8 +66,8 @@ private:
     vesa_mode_info_block far* mib, word mode);
 
 protected:
-  // calculates offset to point in framebuffer
-  word calc_offset(word x, word y);
+  // calculates buffer position in window or linear framebuffer
+  byte far* get_buffer_pos(word x, word y);
 
   // sets new page
   void set_page(word page);
@@ -117,8 +115,6 @@ public:
   {
   }
 
-  virtual void setpix(word x, word y, const byte* pixel);
-  virtual void setline(word x, word y, word length, const byte* line);
   virtual void set_palette(const palette256 palette);
 };
 
@@ -132,9 +128,6 @@ public:
     : vesa_mode(mib, mode)
   {
   }
-
-  virtual void setpix(word x, word y, const byte* pixel);
-  virtual void setline(word x, word y, word length, const byte* line);
 };
 
 // vesa mode implementation for 15 and 16-bit pixel formats
@@ -147,9 +140,6 @@ public:
     : vesa_mode(mib, mode)
   {
   }
-
-  virtual void setpix(word x, word y, const byte* pixel);
-  virtual void setline(word x, word y, word length, const byte* line);
 };
 
 // vesa mode implementation for 4-bit pixel formats
