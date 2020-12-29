@@ -58,3 +58,11 @@ As last step you can add the `C:\TC\BIN` path to the `PATH` environment
 variable. The provided .cmd script also does that for you.
 
 Finally, start Turbo C++ using `tc`.
+
+## Turbo Assembler
+
+For several projects, tasm is needed. The necessary `tasm.exe` isn't included
+in Turbo C++ and must be obtained elsewehere.
+
+A good overview of the tasm versions can be found here (no downloads, though):
+https://bytepointer.com/tasm/index.htm
