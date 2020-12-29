@@ -1,0 +1,39 @@
+Publics by module
+
+GRAPHIC 	size = 262
+	graphics::graphics()              graphics::~graphics()
+	graphics::find_mode(unsigned short,unsigned short,unsigned char,unsigned char)
+
+MODEX   	size = 715
+	xmode::xmode()                    xmode::~xmode()
+	xmode::activepage()               xmode::clearpage(unsigned char)
+	xmode::getpix(unsigned short,unsigned short)  xmode::off()
+	xmode::on()                       xmode::pagemove(unsigned char)
+	xmode::print(unsigned short,unsigned short,unsigned char,unsigned char,const char far*)  xmode::printchar(char,unsigned short,unsigned short,unsigned char,unsigned char)
+	xmode::setline(unsigned short,unsigned short,unsigned char far*,unsigned short)  xmode::setpage(unsigned char)
+	xmode::setpix(unsigned short,unsigned short,unsigned char)  xmode::showpage(unsigned char)
+	xmode::switchpage()             
+
+VESAMODE	size = 4471
+	alternate_setframe()              vesa_mode::vesa_mode(vesa_mode_info_block far*,unsigned short)
+	vesa_mode::~vesa_mode()           vesa_mode::create_mode(vesa_mode_info_block far*,unsigned short)
+	vesa_mode::find_mode(unsigned short,unsigned short,unsigned char,unsigned char)  vesa_mode::get_buffer_pos(unsigned short,unsigned short)
+	vesa_mode::get_current_vesa_mode()  vesa_mode::get_framebuffer_ptr(unsigned short,unsigned short)
+	vesa_mode::get_mode_info_block(vesa_mode_info_block far*,unsigned short)  vesa_mode::get_vbe_info_block(vesa_vbe_info_block far*)
+	vesa_mode::getpix(unsigned short,unsigned short,unsigned char far*)  vesa_mode::is_avail()
+	vesa_mode::off()                  vesa_mode::on()
+	vesa_mode::restore_mode()         vesa_mode::save_mode()
+	vesa_mode::set_page(unsigned short)  vesa_mode::set_palette(const const unsigned char[3]far*)
+	vesa_mode::setline(unsigned short,unsigned short,unsigned short,const unsigned char far*)  vesa_mode::setpix(unsigned short,unsigned short,const unsigned char far*)
+	vesa_mode::show_modes()           vesa_mode_4bit::set_palette(const const unsigned char[3]far*)
+	vesa_mode_4bit::setline(unsigned short,unsigned short,unsigned short,const unsigned char far*)  vesa_mode_4bit::setpix(unsigned short,unsigned short,const unsigned char far*)
+	vesa_mode_8bit::set_palette(const const unsigned char[3]far*)
+
+VGAMODE 	size = 677
+	set_vga_palette(const const unsigned char[3]far*)  vga_mode::vga_mode()
+	vga_mode::~vga_mode()             vga_mode::get_framebuffer_ptr(unsigned short,unsigned short)
+	vga_mode::get_palette(unsigned char[256][3]far*)  vga_mode::getpix(unsigned short,unsigned short,unsigned char far*)
+	vga_mode::off()                   vga_mode::on()
+	vga_mode::restore_mode()          vga_mode::save_mode()
+	vga_mode::set_palette(const const unsigned char[3]far*)  vga_mode::setline(unsigned short,unsigned short,unsigned short,const unsigned char far*)
+	vga_mode::setpix(unsigned short,unsigned short,const unsigned char far*)
