@@ -6,7 +6,7 @@ set PATH=%PATH%;C:\...\DOSBOX
 mkdir proj\bin
 mkdir proj\obj
 
-dosbox.exe ^
+start dosbox.exe -noconsole ^
    -c "mount c %CD%" ^
    -c "mount d d:\ -t cdrom " ^
    -c "C:" ^
