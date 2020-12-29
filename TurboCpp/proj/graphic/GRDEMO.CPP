@@ -11,7 +11,7 @@ void draw_line(graphics& gr,
   word tox, word toy)
 {
   byte pixel = 1;
-  float slope = float(toy - fromy) / float(tox - fromx);
+  float slope = (float(toy) - fromy) / (float(tox) - fromx);
   float offset = fromy;
   for (word curx = fromx; curx < tox; curx++)
   {
@@ -32,6 +32,10 @@ void main()
     1024, 768
   };
 
+  palette256 palette;
+  palette[0][0] = palette[0][1] = palette[0][2] = 0x00;
+  palette[1][0] = palette[1][1] = palette[1][2] = 0xff;
+
   for (unsigned int resIndex = 0; resIndex < 8; resIndex += 2)
   {
     word resx = resolutions[resIndex];
@@ -50,6 +54,7 @@ void main()
     }
 
     gr->on();
+    gr->set_palette(palette);
 
     // draw an X across the screen
     draw_line(*gr, 0, 0, resx, resy);
