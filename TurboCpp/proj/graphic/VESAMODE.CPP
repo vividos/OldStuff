@@ -451,11 +451,11 @@ void vesa_mode::set_page(word page)
 
 void vesa_mode_8bit::setpix(word x, word y, const byte* pixel)
 {
-  word offset = calc_offset(x, y);
+  word _offset = calc_offset(x, y);
   _AX = segment;
   asm {
     mov es,ax
-    mov di, offset
+    mov di, _offset
     push ds
     lds si, pixel
     movsb
@@ -478,11 +478,11 @@ void vesa_mode_8bit::set_palette(const palette256 palette)
 
 void vesa_mode_24bit::setpix(word x, word y, const byte* pixel)
 {
-  word offset = calc_offset((x << 1) + x, y);
+  word _offset = calc_offset((x << 1) + x, y);
   _AX = segment;
   asm {
     mov es, ax
-    mov di, offset
+    mov di, _offset
     push ds
     lds si, pixel
     mov cx, 3
@@ -501,11 +501,11 @@ void vesa_mode_24bit::setline(word x, word y, word length, const byte* line)
 
 void vesa_mode_16bit::setpix(word x, word y, const byte* pixel)
 {
-  word offset = calc_offset(x << 1, y);
+  word _offset = calc_offset(x << 1, y);
   _AX = segment;
   asm {
     mov es, ax
-    mov di, offset
+    mov di, _offset
     push ds
     lds si, pixel
     mov cx, 2
@@ -525,11 +525,11 @@ void vesa_mode_16bit::setline(word x, word y,
 
 void vesa_mode_4bit::setpix(word x, word y, const byte* pixel)
 {
-  word offset = calc_offset(x >> 3, y);
+  word _offset = calc_offset(x >> 3, y);
   _AX = segment;
   asm {
     mov es, ax
-    mov bx, offset
+    mov bx, _offset
     mov cx, x
     and cl, 7
     xor cl, 7
