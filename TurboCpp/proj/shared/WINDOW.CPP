@@ -37,7 +37,7 @@ void textwindow::setattr(color foreground, color background,
   bool blink)
 {
   textattr((foreground & 15) |
-    (background & 7) |
+    ((background & 7) << 4) |
     (blink ? BLINK : 0));
 }
 

@@ -56,7 +56,7 @@ void app::run()
   init();
   while (!ende)
   {
-    if (!keyboard::key_pressed())
+    while (!ende && !keyboard::key_pressed())
       idle();
 
     handle_key(keyboard::wait_key());

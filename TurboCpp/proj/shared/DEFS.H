@@ -19,6 +19,10 @@ typedef unsigned long dword;  // see ulong
   #define true 1
 #endif
 
+#if defined (_MSC_VER)
+  #define far
+#endif
+
 #ifndef NULL
   #define NULL 0L
 #endif
