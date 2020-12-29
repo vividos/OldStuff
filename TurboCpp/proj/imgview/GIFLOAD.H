@@ -16,6 +16,10 @@
 
 class lzw_decoder;
 
+#ifdef _MSC_VER
+#pragma pack(push, 1)
+#endif
+
 #pragma option -a-
 #pragma option -b-
 
@@ -71,6 +75,10 @@ struct image_descriptor
 
 #pragma option -a
 #pragma option -b
+
+#ifdef _MSC_VER
+#pragma pack(pop)
+#endif
 
 
 // loader for GIF image format
