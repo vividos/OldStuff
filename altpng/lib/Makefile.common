@@ -1,0 +1,11 @@
+#
+# altpng - a versatile png reading and writing library
+# Copyright (c) 2003,2004,2021 Michael Fink
+#
+
+altpng_sources = util.c stream.c chunk.c image.c scanline.c decoder.c crc32.c
+altpng_headers = util.h stream.h chunk.h image.h scanline.h decoder.h crc32.h
+
+libaltpng_la_SOURCES = \
+	$(altpng_sources) \
+	$(altpng_headers)

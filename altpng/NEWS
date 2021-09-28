@@ -1,0 +1,23 @@
+altpng news
+-----------
+
+2003-03-01 - miscellaneous work
+
+  Beautified some code and added autoconf/automake stuff. Added a Mingw32
+  make file.
+
+2003-02-13 - new Win32 CVS repository
+
+  I set up a local CVS repository using TortoiseCVS to work on altpng. Old
+  project files are used, but a new folder structure. Win32 specific examples
+  and test projects are gone. I'll do a SDL PNG viewer instead. pngmin
+  remains.
+
+2002-10-10 - changed name to altpng
+
+  I changed the name of the library and all prefixes to altpng, to avoid
+  confusion with the libpng library.
+
+2002-01-28 - started pnglib CVS repository
+
+  today I've set up a local CVS repository for pnglib.

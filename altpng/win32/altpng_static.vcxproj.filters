@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source files">
+      <UniqueIdentifier>{801dc864-1633-4996-852c-82aa97008afc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header files">
+      <UniqueIdentifier>{0d1a20ed-a083-4816-b709-5a80558792ce}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\lib\chunk.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\crc32.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\decoder.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\image.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\scanline.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\stream.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\util.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\lib\chunk.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\crc32.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\decoder.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\image.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\scanline.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\stream.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\util.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h" />
+  </ItemGroup>
+</Project>

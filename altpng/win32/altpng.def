@@ -1,0 +1,56 @@
+LIBRARY altpng.dll
+EXPORTS
+
+;
+; misc.
+;
+altpng_version_get         @1
+altpng_check_signature     @2
+;
+; crc32 functions
+;
+altpng_crc32_init          @3
+altpng_crc32_crc           @4
+altpng_crc32_update        @5
+;
+; stream functions
+;
+altpng_stream_init         @6
+altpng_stream_finish       @7
+altpng_stream_skip         @8
+altpng_stream_sync         @9
+altpng_stream_read         @10
+altpng_stream_read16       @11
+altpng_stream_read32       @12
+altpng_stream_write        @13
+altpng_stream_write16      @14
+altpng_stream_write32      @15
+;
+; chunk functions
+;
+altpng_chunk_init          @16
+altpng_chunk_finish        @17
+altpng_chunk_set_data      @18
+altpng_chunk_load          @19
+altpng_chunk_save          @20
+;
+; image info functions
+;
+altpng_image_info_parse    @21
+;
+; scanline decoding functions
+;
+altpng_scanline_init       @22
+altpng_scanline_finish     @23
+altpng_scanline_decode     @24
+altpng_scanline_filter_decode @25
+;
+; decoder functions
+;
+altpng_decoder_init        @26
+altpng_decoder_finish      @27
+altpng_decoder_header      @28
+altpng_decoder_decode      @29
+;
+; end
+;

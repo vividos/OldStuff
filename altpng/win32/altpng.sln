@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "altpng", "altpng.vcxproj", "{7B5F8BBC-A433-4256-A981-A8A2BAFDCF76}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "altpng_static", "altpng_static.vcxproj", "{59B6BF3B-6039-4E90-A5AD-728C85567A4F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "altpngtest", "altpngtest.vcxproj", "{DBF15BB0-3521-4CC9-9FF2-5A9CA9AD6430}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pngmin", "pngmin.vcxproj", "{B5BB20DF-3F48-48A5-A979-73F45D508194}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pngview", "pngview.vcxproj", "{5674B2EA-8E3E-43AB-9723-6604679870AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6BC19A27-FB31-4444-825B-D0CD6C4641CB}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\altpng-doxygen.h = ..\doc\altpng-doxygen.h
+		..\lib\altpng.h = ..\lib\altpng.h
+		..\lib\altpng.h.pl = ..\lib\altpng.h.pl
+		..\doc\doxygen.cfg = ..\doc\doxygen.cfg
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B5F8BBC-A433-4256-A981-A8A2BAFDCF76}.Debug|x86.ActiveCfg = Debug|Win32
+		{7B5F8BBC-A433-4256-A981-A8A2BAFDCF76}.Debug|x86.Build.0 = Debug|Win32
+		{7B5F8BBC-A433-4256-A981-A8A2BAFDCF76}.Release|x86.ActiveCfg = Release|Win32
+		{7B5F8BBC-A433-4256-A981-A8A2BAFDCF76}.Release|x86.Build.0 = Release|Win32
+		{59B6BF3B-6039-4E90-A5AD-728C85567A4F}.Debug|x86.ActiveCfg = Debug|Win32
+		{59B6BF3B-6039-4E90-A5AD-728C85567A4F}.Debug|x86.Build.0 = Debug|Win32
+		{59B6BF3B-6039-4E90-A5AD-728C85567A4F}.Release|x86.ActiveCfg = Release|Win32
+		{59B6BF3B-6039-4E90-A5AD-728C85567A4F}.Release|x86.Build.0 = Release|Win32
+		{DBF15BB0-3521-4CC9-9FF2-5A9CA9AD6430}.Debug|x86.ActiveCfg = Debug|Win32
+		{DBF15BB0-3521-4CC9-9FF2-5A9CA9AD6430}.Debug|x86.Build.0 = Debug|Win32
+		{DBF15BB0-3521-4CC9-9FF2-5A9CA9AD6430}.Release|x86.ActiveCfg = Release|Win32
+		{DBF15BB0-3521-4CC9-9FF2-5A9CA9AD6430}.Release|x86.Build.0 = Release|Win32
+		{B5BB20DF-3F48-48A5-A979-73F45D508194}.Debug|x86.ActiveCfg = Debug|Win32
+		{B5BB20DF-3F48-48A5-A979-73F45D508194}.Debug|x86.Build.0 = Debug|Win32
+		{B5BB20DF-3F48-48A5-A979-73F45D508194}.Release|x86.ActiveCfg = Release|Win32
+		{B5BB20DF-3F48-48A5-A979-73F45D508194}.Release|x86.Build.0 = Release|Win32
+		{5674B2EA-8E3E-43AB-9723-6604679870AA}.Debug|x86.ActiveCfg = Debug|Win32
+		{5674B2EA-8E3E-43AB-9723-6604679870AA}.Debug|x86.Build.0 = Debug|Win32
+		{5674B2EA-8E3E-43AB-9723-6604679870AA}.Release|x86.ActiveCfg = Release|Win32
+		{5674B2EA-8E3E-43AB-9723-6604679870AA}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {278D63F3-5574-4E49-80A9-C8A033DBC83E}
+	EndGlobalSection
+EndGlobal

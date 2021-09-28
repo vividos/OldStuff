@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source files">
+      <UniqueIdentifier>{08d36850-51a9-4993-82c8-61b800da5fb0}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="header files">
+      <UniqueIdentifier>{81ce4c59-1b13-4e02-ae5f-6a5063be94f1}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\lib\chunk.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\crc32.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\decoder.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\image.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\scanline.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\stream.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\util.c">
+      <Filter>source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\lib\chunk.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\crc32.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\decoder.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\image.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\scanline.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\stream.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\util.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="altpng.def">
+      <Filter>source files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

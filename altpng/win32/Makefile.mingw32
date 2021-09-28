@@ -1,0 +1,46 @@
+##
+## altpng - a versatile png reading and writing library
+## copyright (c) 2003,2004,2021 Michael Fink
+##
+
+#
+# compiler settings
+#
+
+CFLAGS = -I. -I../lib -DHAVE_CONFIG_H -O2 -Wall
+LDFLAGS = -lz
+
+#
+# object files
+#
+
+include ../lib/Makefile.common
+
+altpng_OBJS = $(altpng_sources:%.c=../lib/%.o)
+
+#
+# build rules
+#
+
+all: libaltpng altpngdll
+
+# static library
+
+libaltpng: libaltpng.a
+
+libaltpng.a: $(altpng_OBJS)
+	$(AR) cr $@ $(altpng_OBJS)
+
+# dynamic library
+
+altpngdll: altpng.dll
+
+altpng.dll: $(altpng_OBJS)
+	dllwrap -m i386 -o$@ \
+		--def altpng.def --output-lib altpng.lib \
+		$(altpng_OBJS) $(LDFLAGS)
+
+# clean all built files
+
+clean:
+	$(RM) $(altpng_OBJS) libaltpng.a altpng.dll altpng.lib

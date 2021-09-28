@@ -30,6 +30,10 @@ HotDir is a colored directory info viewer, much like an improved DOS ´dir´ com
 
 Recorder is a Windows Mobile app that records GPS tracks.
 
+## [altpng](altpng/README.md "altpng")
+
+altpng is a versatile PNG reading and writing library.
+
 ## [Turbo C++ projects](TurboCpp/Readme.md "Turbo C++ projects")
 
 Several ancient Turbo C++ projects.
