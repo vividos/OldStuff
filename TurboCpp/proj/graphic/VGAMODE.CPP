@@ -72,7 +72,7 @@ void set_vga_palette(const palette256 palette)
     mov ax, 0x1012
     xor bx, bx
     mov cx, 0x100
-    les dx, palette
+    les dx, scaled_palette
     int 10h
   };
 }

@@ -36,7 +36,7 @@ void main()
   palette[0][0] = palette[0][1] = palette[0][2] = 0x00;
   palette[1][0] = palette[1][1] = palette[1][2] = 0xff;
 
-  for (unsigned int resIndex = 0; resIndex < 8; resIndex += 2)
+  for (unsigned int resIndex = 0; resIndex < sizeof(resolutions); resIndex += 2)
   {
     word resx = resolutions[resIndex];
     word resy = resolutions[resIndex + 1];

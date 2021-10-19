@@ -109,7 +109,7 @@ struct vesa_mode_info_block
 
   byte color_mask_and_pos[8];
 
-  byte direct_color_mode_info;  
+  byte direct_color_mode_info;
 
   // VBE 2.0
 
