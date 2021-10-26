@@ -1,0 +1,48 @@
+Publics by module
+
+ADLER32      size = 634
+	_adler32                        
+
+COMPRESS     size = 274
+	_compress                         _compress2
+
+CRC32        size = 1638
+	_crc32                            _get_crc_table
+
+INFBLOCK     size = 4101
+	_inflate_blocks                   _inflate_blocks_free
+	_inflate_blocks_new               _inflate_blocks_reset
+	_inflate_blocks_sync_point        _inflate_set_dictionary
+
+INFCODES     size = 2777
+	_inflate_codes                    _inflate_codes_free
+	_inflate_codes_new              
+
+INFFAST      size = 1341
+	_inflate_fast                   
+
+INFLATE      size = 2937
+	_inflate                          _inflateEnd
+	_inflateInit2_                    _inflateInit_
+	_inflateReset                     _inflateSetDictionary
+	_inflateSync                      _inflateSyncPoint
+
+INFTREES     size = 6305
+	_inflate_copyright                _inflate_trees_bits
+	_inflate_trees_dynamic            _inflate_trees_fixed
+
+INFUTIL      size = 544
+	_inflate_flush                    _inflate_mask
+
+TREES        size = 12921
+	__dist_code                       __length_code
+	__tr_flush_block                  __tr_init
+	__tr_stored_block                 __tr_tally
+
+UNCOMPR      size = 223
+	_uncompress                     
+
+ZUTIL        size = 618
+	_zError                           _z_errmsg
+	_zcalloc                          _zcfree
+	_zlibVersion                    
