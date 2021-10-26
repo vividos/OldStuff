@@ -16,6 +16,9 @@ public:
   // Elemente des Vektors
   float x, y;
 
+  vektor(){ x = 0.0; y = 0.0; }
+  vektor(double x1,double y1){ x = x1; y = y1;}
+
   // Rechenoperationen
   void operator +=(vektor v) { x += v.x; y += v.y; };
   void operator -=(vektor v) { x -= v.x; y -= v.y; };
