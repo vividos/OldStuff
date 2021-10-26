@@ -29,7 +29,7 @@ VESAMODE	size = 4471
 	vesa_mode_4bit::setline(unsigned short,unsigned short,unsigned short,const unsigned char far*)  vesa_mode_4bit::setpix(unsigned short,unsigned short,const unsigned char far*)
 	vesa_mode_8bit::set_palette(const const unsigned char[3]far*)
 
-VGAMODE 	size = 677
+VGAMODE 	size = 678
 	set_vga_palette(const const unsigned char[3]far*)  vga_mode::vga_mode()
 	vga_mode::~vga_mode()             vga_mode::get_framebuffer_ptr(unsigned short,unsigned short)
 	vga_mode::get_palette(unsigned char[256][3]far*)  vga_mode::getpix(unsigned short,unsigned short,unsigned char far*)
