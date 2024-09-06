@@ -138,8 +138,8 @@ bool image_viewer::load_and_show()
 
   if (gr == NULL)
   {
-    printf("Couldn't find proper video mode for image with size %ix%i\n",
-      xres, yres);
+    printf("Couldn't find proper video mode for image with size %ix%ix%i\n",
+      xres, yres, has_palette ? 8 : 24);
     delete loader;
     fclose(fd);
     return false;

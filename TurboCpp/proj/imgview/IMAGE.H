@@ -1,5 +1,5 @@
 // image.h - image class
-// (c) 2020 Michael Fink
+// (c) 2020,2021 Michael Fink
 // https://github.com/vividos/OldStuff/
 
 #pragma once
@@ -30,6 +30,7 @@ public:
 private:
   friend class gif_loader;
   friend class jpeg_loader;
+  friend class png_loader;
 
   // creates a new image object, either with palette, or as true-color image
   image(unsigned int width, unsigned int height,

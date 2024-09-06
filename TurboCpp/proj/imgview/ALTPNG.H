@@ -58,6 +58,10 @@ typedef enum altpng_error
                           a new chunk */
    ape_scanline_eos=-9, /*!< indicates that altpng_scanline_decode reached end
                           of stream */
+   ape_scanline_yield=-10 /*!< this can be used by decoder scanline callbacks
+                               to signal that decoding should stop after one
+                               scanline; decoding can continue by calling
+                               altpng_decoder_decode() */
 } altpng_error;
 
 

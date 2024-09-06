@@ -32,6 +32,12 @@
     <ClInclude Include="..\..\shared\CSTRING.H">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\altpng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PNGLOAD.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="unittest.cpp">
@@ -53,6 +59,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\shared\CSTRING.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ALTPNG.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PNGLOAD.CPP">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

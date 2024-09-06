@@ -184,5 +184,25 @@ namespace imgview
 
         fclose(fd);
       }
+
+      TEST_METHOD(TestLoadPng8bit_ByImage)
+      {
+        image* img = image::load(TESTPICS_FOLDER "cube.png");
+        Assert::IsNotNull(img, L"loaded image must be non-null");
+
+        // write to tga
+        FILE* tga = fopen(OUTPUT_FOLDER "from_png_image.tga", "wb");
+        tga_writeheader(tga, img->get_xres(), img->get_yres(), 1, 1);
+
+        // write palette
+        for (size_t i = 0; i < 256 * 3; i += 3)
+        {
+          std::swap(img->get_palette()[i + 0], img->get_palette()[i + 2]);
+        }
+        fwrite(img->get_palette(), 1, 256 * 3, tga);
+
+        fwrite(img->get_data(), 1, img->get_xres() * img->get_yres(), tga);
+        fclose(tga);
+      }
    };
 }
